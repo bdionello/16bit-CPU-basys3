@@ -20,7 +20,7 @@ signal temp_z, temp_n : std_logic;
 process(clk)
 begin
     case alu_mode is
-    when "000" => temp_result <= temp_result --NOP
+    when "000" => temp_result <= temp_result; --NOP
     when "001" => temp_result <= r1 + r2; --ADD
     when "010" => temp_result <= r1 - r2; --SUB
     when "011" => temp_result <= r1 * r2; --MUL
