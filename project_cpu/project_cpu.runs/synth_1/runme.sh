@@ -40,4 +40,4 @@ EAStep()
      fi
 }
 
-EAStep vivado -log myNANDgate.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source myNANDgate.tcl
+EAStep vivado -log register_file.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source register_file.tcl

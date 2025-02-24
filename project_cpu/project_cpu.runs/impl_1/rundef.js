@@ -23,9 +23,9 @@ eval( EAInclude(ISEJScriptLib) );
 
 
 // pre-commands:
-ISETouchFile( "write_bitstream", "begin" );
+ISETouchFile( "init_design", "begin" );
 ISEStep( "vivado",
-         "-log myNANDgate.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source myNANDgate.tcl -notrace" );
+         "-log register_file.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source register_file.tcl -notrace" );
 
 
 
