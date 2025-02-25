@@ -1,48 +1,73 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
-entity alu_file is
-port(rst : in std_logic; clk: in std_logic;
+use ieee.numeric_std.all;
 
-in1, in2 : in std_logic_vector(3 downto 0);
-alu_mode : in std_logic_vector(3 downto 0);
-result : out std_logic_vector(15 downto 0);
-z_flag, n_flag : in std_logic);
-end alu_file;
+entity ALU is
+    port(
+        in1      : in std_logic_vector(15 downto 0);  -- First operand
+        in2      : in std_logic_vector(15 downto 0);  -- Second operand
 
-architecture behavioural of alu_file is
+        alu_mode : in std_logic_vector(6 downto 0);    -- ALU opcode (7-bit)
+        alu_out   : out std_logic_vector(15 downto 0); -- ALU result
 
---internals signals
-signal r1, r2 : std_logic_vector(3 downto 0);
-signal temp_result : std_logic_vector(15 downto 0);
-signal temp_z, temp_n : std_logic;
+        shift    : in std_logic_vector(3 downto 0);   -- Shift amount
+        zero_flag     : out std_logic;                -- Zero flag (Z)
+        negative_flag : out std_logic;                -- Negative flag (N)
+        clk : in std_logic;
+        rst : in std_logic
+    );
+end ALU;
 
-process(clk)
+architecture behavioral of ALU is
 begin
-    case alu_mode is
-    when "000" => temp_result <= temp_result; --NOP
-    when "001" => temp_result <= r1 + r2; --ADD
-    when "010" => temp_result <= r1 - r2; --SUB
-    when "011" => temp_result <= r1 * r2; --MUL
-    when "100" => temp_result <= r1 NAND r2; --NAND
-    when "101" => temp_result <= temp_result; --SHL
-    when "110" => temp_result <= temp_result; --SHR
-    when "111" => 
-        if (r1 = '0') then
-            temp_z <= '1';
+    process(in1, in2, shift, alu_mode)
+    variable temp_result : std_logic_vector(15 downto 0);
+    begin
+        case alu_mode is
+            -- A-Format Instructions
+            when "0000000" => temp_result := (others => '0');                                                           -- NOP (A0 Format)
+            when "0000001" => temp_result := std_logic_vector(signed(in1) + signed(in2));                               -- ADD (A1 Format)
+            when "0000010" => temp_result := std_logic_vector(signed(in1) - signed(in2));                               -- SUB (A1 Format)
+            when "0000011" => temp_result := std_logic_vector((signed(in1 (7 downto 0)) * signed(in2 (7 downto 0))));   -- MUL (A1 Format)
+            when "0000100" => temp_result := in1 NAND in2;                                                              -- NAND (A1 Format)
+            when "0000101" => temp_result := std_logic_vector(shift_left(unsigned(in1), to_integer(unsigned(shift))));  -- SHL (A2 Format)
+            when "0000110" => temp_result := std_logic_vector(shift_right(unsigned(in1), to_integer(unsigned(shift)))); -- SHR (A2 Format)
+            when "0000111" =>                                                                                           -- TEST (A3 Format)
+                temp_result := (others => '0');
+                if (temp_result = "0000000000000000") then
+                    zero_flag <= '1'; 
+                else
+                    zero_flag <= '0';
+                end if;
+                if (signed(temp_result) < 0) then
+                    negative_flag <= '1';
+                else
+                    negative_flag <= '0';
+                end if;
+               
+            -- when "1000000" => X"FFF2" <= temp_result;                                                                   -- OUT (A3 Format)
+            -- when "1000001" => temp_result <= X"FFF0";                                                                   -- IN (A3 Format)
+
+            -- Default case
+            when others => temp_result := (others => '0'); -- Default NOP
+        end case;
+
+        -- Output result
+        alu_out <= temp_result;
+        
+        -- Set Flags
+        temp_result := (others => '0');
+        if (temp_result = "0000000000000000") then
+            zero_flag <= '1'; 
         else
-            temp_z <= '0';
-        end if
-
-        if (r1 < '0') then
-            temp_n <= '1';
+            zero_flag <= '0';
+        end if;
+        if (signed(temp_result) < 0) then
+            negative_flag <= '1';
         else
-            temp_n <= '0';
-        end if
+            negative_flag <= '0';
+        end if;
 
-end process;
-result <= temp_result;
-z_flag <= temp_z;
-n_flag <= temp_n;
-
-end behavioural;
+    end process;
+end behavioral;

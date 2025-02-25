@@ -3,4 +3,6 @@
 Dec 15 2017
 21:07:18
 C:/Users/bdionello/source/ECE449/sub_modules/RF8_16.vhd,1740435069,vhdl,,,,register_file,,,,,,,,
+C:/Users/bdionello/source/ECE449/sub_modules/alu.vhd,1740447732,vhdl,,,,alu,,,,,,,,
+C:/Users/bdionello/source/ECE449/sub_modules/testbench/ALU_TB.vhd,1740447765,vhdl,,,,alu_tb,,,,,,,,
 C:/Users/bdionello/source/ECE449/sub_modules/testbench/RF8_16TB.vhd,1740433820,vhdl,,,,test_rf8,,,,,,,,
