@@ -1,18 +1,17 @@
 -- controller
 library ieee ;
 use ieee.std_logic_1164.all ;
-use work.averager_types.all ;
+use work.cpu_types.all;
 
 entity controller is
     port (clk, reset: in STD_LOGIC;
     y: out STD_LOGIC);
 end controller ;
 
-architecture rtl of controller is
-    type statetype is (S0, S1, S2);
+architecture rtl of controller is    
     signal state, nextstate: statetype;
+
 begin
-    
     -- select next state
     nextstate <= 
     S1 when state = S0 else
@@ -22,7 +21,7 @@ begin
     -- state register
     process (clk, reset) begin
         if reset = '1' then state <= S0;    
-        elsif clk’event and clk = '1' then    
+        elsif clk'event and clk = '1' then    
             state <= nextstate;    
         end if;    
     end process;
