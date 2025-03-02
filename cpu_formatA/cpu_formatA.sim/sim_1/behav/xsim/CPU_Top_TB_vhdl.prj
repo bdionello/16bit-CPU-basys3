@@ -1,0 +1,10 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../../sub_modules/ALU.vhd" \
+"../../../../../sub_modules/DECODER.vhd" \
+"../../../../../sub_modules/register_file.vhd" \
+"../../../../../sub_modules/top.vhd" \
+"../../../../../sub_modules/testbench/top_tb.vhd" \
+
+# Do not sort compile order
+nosort

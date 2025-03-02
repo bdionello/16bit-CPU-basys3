@@ -1,0 +1,9 @@
+0.6
+2017.4
+Dec 15 2017
+21:07:18
+C:/Users/Brett/source/repos/ECE449/sub_modules/ALU.vhd,1740949589,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/top.vhd,,,alu,,,,,,,,
+C:/Users/Brett/source/repos/ECE449/sub_modules/DECODER.vhd,1740949591,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/top.vhd,,,decoder,,,,,,,,
+C:/Users/Brett/source/repos/ECE449/sub_modules/register_file.vhd,1740953143,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/top.vhd,,,register_file,,,,,,,,
+C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/top_tb.vhd,1740952330,vhdl,,,,cpu_top_tb,,,,,,,,
+C:/Users/Brett/source/repos/ECE449/sub_modules/top.vhd,1740949593,vhdl,,,,cpu_top,,,,,,,,
