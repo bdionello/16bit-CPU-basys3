@@ -29,20 +29,34 @@ architecture rtl of controller is
     signal state, nextstate: statetype;
 
 begin
-    -- select next state
-    nextstate <= 
-    S1 when state = S0 else
-    S2 when state = S1 else
-    S0;
     -- state register
     process (clk, reset_ex, reset_ld) begin
         -- Reset load means ROM mode
         -- Reset Execute means RAM mode
-        if reset_ld = '1' then state <= S0;    
+        if reset_ld | reset_ex = '1' then state <= RESET;    
         elsif clk'event and clk = '1' then    
             state <= nextstate;    
         end if;    
     end process;
+
      -- controller outputs
+     case(state)
+        RESET:
+        begin
+            if
+            reg_dst => '0';
+            branch => '0';
+            RAM_mem_rd => '0';
+            RAM_mem_to_reg => '0';
+            ROM_mem_rd => '0';
+            ROM_mem_to_reg => '0';
+            alu_op => "000";
+            RAM_mem_wr => '0';
+            ROM_mem_wr => '0';
+            alu_src => '0';
+            reg_wr=> '0';
+            nextstate = DECODE;
+        end
+
 
 end rtl ;

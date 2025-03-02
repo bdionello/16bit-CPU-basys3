@@ -15,7 +15,7 @@ entity cpu_top is port (
 end cpu_top ;
 
 architecture rtl of cpu_top is
-    signal sys_rst_s, reg_dest_s, branch_s RAM_mem_rd_s, RAM_mem_to_reg_s, ROM_mem_rd_s, ROM_mem_to_reg_s, RAM_mem_wr_s, ROM_mem_wr_s, alu_src_s, reg_wr_s STD_LOGIC;
+    signal sys_rst_s, reg_dest_s, branch_s RAM_mem_rd_s, RAM_mem_to_reg_s, ROM_mem_rd_s, ROM_mem_to_reg_s, RAM_mem_wr_s, ROM_mem_wr_s, alu_src_s, reg_wr_s, reset_load, STD_LOGIC;
     signal alu_op_s STD_LOGIC_VECTOR(2 DOWNTO 0);
     signal inst_s std_logic_vector (15 downto 0); -- instruction 
 begin
