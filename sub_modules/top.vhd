@@ -20,8 +20,8 @@ architecture Structural of CPU_Top is
     constant SUB      : std_logic_vector(6 downto 0) := "0000010";
     constant MUL      : std_logic_vector(6 downto 0) := "0000011";
     constant NAND_OP  : std_logic_vector(6 downto 0) := "0000100";
-    constant SHL      : std_logic_vector(6 downto 0) := "0000101";
-    constant SHR      : std_logic_vector(6 downto 0) := "0000110";
+    constant SHL_OP      : std_logic_vector(6 downto 0) := "0000101";
+    constant SHR_OP     : std_logic_vector(6 downto 0) := "0000110";
     constant TEST     : std_logic_vector(6 downto 0) := "0000111";
     constant OUT_OP   : std_logic_vector(6 downto 0) := "0100000";
     constant IN_OP    : std_logic_vector(6 downto 0) := "0100001";
@@ -109,11 +109,11 @@ begin
                              opcode = SUB or
                              opcode = MUL or  
                              opcode = NAND_OP or 
-                             opcode = SHL or  
-                             opcode = SHR) else "000";    
+                             opcode = SHL_OP or  
+                             opcode = SHR_OP) else "000";    
                              
-        rd_index1 <= ra when (opcode = SHL or 
-                              opcode = SHR or  
+        rd_index1 <= ra when (opcode = SHL_OP or 
+                              opcode = SHR_OP or  
                               opcode = TEST or 
                               opcode = OUT_OP or  
                               opcode = IN_OP) 
@@ -123,8 +123,8 @@ begin
                               opcode = SUB or  
                               opcode = MUL or  
                               opcode = NAND_OP or  
-                              opcode = SHL or
-                              opcode = SHR) else "000";   
+                              opcode = SHL_OP or
+                              opcode = SHR_OP) else "000";   
                               
     -- Connect ALU inputs
     alu_in1 <= rd_data1; -- ALU input 1

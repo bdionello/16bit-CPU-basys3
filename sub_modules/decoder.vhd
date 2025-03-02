@@ -29,8 +29,8 @@ architecture Behavioural of Decoder is
     constant SUB      : std_logic_vector(6 downto 0) := "0000010";
     constant MUL      : std_logic_vector(6 downto 0) := "0000011";
     constant NAND_OP  : std_logic_vector(6 downto 0) := "0000100";
-    constant SHL      : std_logic_vector(6 downto 0) := "0000101";
-    constant SHR      : std_logic_vector(6 downto 0) := "0000110";
+    constant SHL_OP      : std_logic_vector(6 downto 0) := "0000101";
+    constant SHR_OP      : std_logic_vector(6 downto 0) := "0000110";
     constant TEST     : std_logic_vector(6 downto 0) := "0000111";
     constant OUT_OP   : std_logic_vector(6 downto 0) := "0100000";
     constant IN_OP    : std_logic_vector(6 downto 0) := "0100001";
@@ -83,7 +83,7 @@ begin
                 rb <= instr(5 downto 3);
                 rc <= instr(2 downto 0);
 
-            when SHL | SHR =>
+            when SHL_OP | SHR_OP =>
                 opcode <= instr(15 downto 9);
                 ra <= instr(8 downto 6);
                 shift <= instr(3 downto 0);
