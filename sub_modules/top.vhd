@@ -146,7 +146,7 @@ begin
 
     -- Write data logic
     wr_data <= alu_out; -- Write ALU result to register file
-    wr_enable <= '1' when (opcode = "0000001" or opcode = "0000010" or opcode = "0000011" or opcode = "0000100") else '0'; -- Enable write for ALU operations
+    wr_enable <= '1' when (opcode = "0000001" or opcode = "0000010" or opcode = "0000011" or opcode = "0000100" or opcode = "0000101" or opcode = "0000110") else '0'; -- Enable write for ALU operations
 
     -- Output ALU result for debugging
     alu_result <= alu_out;

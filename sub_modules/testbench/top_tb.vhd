@@ -44,7 +44,7 @@ begin
     -- Clock generation process
     clk_process: process
     begin
-        while now < 200 ns loop -- Run simulation for 200 ns
+        while now < 210 ns loop -- Run simulation for 200 ns
             clk <= '0';
             wait for CLK_PERIOD/2;
             clk <= '1';
@@ -72,7 +72,6 @@ begin
         -- SUB opcode = "0000010"
         instr <= "0000010" & "100" & "101" & "110"; -- SUB R4, R5, R6
         wait for CLK_PERIOD;
-
   
         -- Test MUL instruction: MUL R7, R0, R1 (R7 = R0 * R1)
         -- MUL opcode = "0000011"
@@ -94,10 +93,32 @@ begin
         instr <= "0000110" & "001" & "00" & "0001"; -- SHR R1, #1
         wait for CLK_PERIOD;
         
+        -- ADDED FLAG TEST
+        -- Test TEST instruction: TEST R0 (Check if R0 is zero or negative)
+        -- TEST opcode = "0000111"
+        instr <= "0000111" & "000" & "000" & "000"; -- TEST R0
+        wait for CLK_PERIOD;
+        
+        -- Test SHL instruction: SHL R0, #15 (R0 = R0 << 15)
+        -- SHL opcode = "0000101"
+        instr <= "0000101" & "000" & "00" & X"f"; -- SHL R0, #15
+        wait for CLK_PERIOD;
+        
         -- Test TEST instruction: TEST R1 (Check if R1 is zero or negative)
         -- TEST opcode = "0000111"
-        instr <= "0000111" & "000" & "000" & "000"; -- TEST R1
+        instr <= "0000111" & "000" & "000" & "000"; -- TEST R0
         wait for CLK_PERIOD;
+        
+        -- Test SHL instruction: SHL R0, #1 (R0 = R0 << 1)
+        -- SHL opcode = "0000101"
+        instr <= "0000101" & "000" & "00" & "0001"; -- SHL R0, #1
+        wait for CLK_PERIOD; 
+  
+        -- Test TEST instruction: TEST R1 (Check if R1 is zero or negative)
+        -- TEST opcode = "0000111"
+        instr <= "0000111" & "000" & "000" & "000"; -- TEST R0
+        wait for CLK_PERIOD;
+        
 
         -- End simulation
         wait;
