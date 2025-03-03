@@ -1,4 +1,4 @@
-INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/Brett/source/repos/ECE449/sub_modules/DECODER.vhd" into library xil_defaultlib
-INFO: [VRFC 10-307] analyzing entity Decoder
-INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/Brett/source/repos/ECE449/sub_modules/top.vhd" into library xil_defaultlib
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/bdionello/source/ECE449/sub_modules/alu.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity ALU
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/bdionello/source/ECE449/sub_modules/top.vhd" into library xil_defaultlib
 INFO: [VRFC 10-307] analyzing entity CPU_Top
