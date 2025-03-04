@@ -2,9 +2,9 @@
 2017.4
 Dec 15 2017
 21:07:18
-C:/Users/bdionello/source/ECE449/sub_modules/alu.vhd,1741047791,vhdl,C:/Users/bdionello/source/ECE449/sub_modules/top.vhd,,,alu,,,,,,,,
+C:/Users/bdionello/source/ECE449/sub_modules/alu.vhd,1741053996,vhdl,C:/Users/bdionello/source/ECE449/sub_modules/top.vhd,,,alu,,,,,,,,
 C:/Users/bdionello/source/ECE449/sub_modules/decoder.vhd,1741045372,vhdl,C:/Users/bdionello/source/ECE449/sub_modules/top.vhd,,,decoder,,,,,,,,
 C:/Users/bdionello/source/ECE449/sub_modules/mux.vhd,1741039610,vhdl,C:/Users/bdionello/source/ECE449/sub_modules/top.vhd,,,mux,,,,,,,,
 C:/Users/bdionello/source/ECE449/sub_modules/register_file.vhd,1741026566,vhdl,C:/Users/bdionello/source/ECE449/sub_modules/top.vhd,,,register_file,,,,,,,,
-C:/Users/bdionello/source/ECE449/sub_modules/testbench/top_tb.vhd,1741045361,vhdl,,,,cpu_top_tb,,,,,,,,
+C:/Users/bdionello/source/ECE449/sub_modules/testbench/top_tb.vhd,1741048910,vhdl,,,,cpu_top_tb,,,,,,,,
 C:/Users/bdionello/source/ECE449/sub_modules/top.vhd,1741045627,vhdl,,,,cpu_top,,,,,,,,
