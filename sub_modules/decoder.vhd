@@ -4,21 +4,23 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity Decoder is
     port(
-        instr      : in std_logic_vector(15 downto 0);  -- Input instruction
-        opcode     : out std_logic_vector(6 downto 0);  -- Opcode
-        ra         : out std_logic_vector(2 downto 0);  -- Register A
-        rb         : out std_logic_vector(2 downto 0);  -- Register B
-        rc         : out std_logic_vector(2 downto 0);  -- Register C
-        shift      : out std_logic_vector(3 downto 0);  -- Shift amount
+        instr        : in std_logic_vector(15 downto 0);  -- Input instruction
+        opcode       : out std_logic_vector(6 downto 0);  -- Opcode
+        ra           : out std_logic_vector(2 downto 0);  -- Register A
+        rb           : out std_logic_vector(2 downto 0);  -- Register B
+        rc           : out std_logic_vector(2 downto 0);  -- Register C
+        shift        : out std_logic_vector(3 downto 0);  -- Shift amount
 
-        disp_s     : out std_logic_vector(5 downto 0);  -- Displacement (short)
-        disp_l     : out std_logic_vector(8 downto 0);  -- Displacement (long)
+        disp_s       : out std_logic_vector(5 downto 0);  -- Displacement (short)
+        disp_l       : out std_logic_vector(8 downto 0);  -- Displacement (long)
 
-        m_1        : out std_logic;                     -- Mode bit
-        imm        : out std_logic_vector(7 downto 0);  -- Immediate value
+        m_1          : out std_logic;                     -- Mode bit
+        in_port_ctl  : out std_logic;                     -- Control line for IN inst. mux
+        out_port_ctl : out std_logic;                     -- Control line for OUT inst. mux
+        imm          : out std_logic_vector(7 downto 0);  -- Immediate value
 
-        r_dest     : out std_logic_vector(2 downto 0);  -- Destination register
-        r_src      : out std_logic_vector(2 downto 0)   -- Source register
+        r_dest       : out std_logic_vector(2 downto 0);  -- Destination register
+        r_src        : out std_logic_vector(2 downto 0)   -- Source register
     );
 end Decoder;
 
@@ -29,8 +31,8 @@ architecture Behavioural of Decoder is
     constant SUB      : std_logic_vector(6 downto 0) := "0000010";
     constant MUL      : std_logic_vector(6 downto 0) := "0000011";
     constant NAND_OP  : std_logic_vector(6 downto 0) := "0000100";
-    constant SHL_OP      : std_logic_vector(6 downto 0) := "0000101";
-    constant SHR_OP      : std_logic_vector(6 downto 0) := "0000110";
+    constant SHL_OP   : std_logic_vector(6 downto 0) := "0000101";
+    constant SHR_OP   : std_logic_vector(6 downto 0) := "0000110";
     constant TEST     : std_logic_vector(6 downto 0) := "0000111";
     constant OUT_OP   : std_logic_vector(6 downto 0) := "0100000";
     constant IN_OP    : std_logic_vector(6 downto 0) := "0100001";
@@ -68,6 +70,8 @@ begin
         shift <= (others => '0');
         disp_s <= (others => '0');
         disp_l <= (others => '0');
+        in_port_ctl <= '0';
+        out_port_ctl <= '0';
         m_1 <= '0';
         imm <= (others => '0');
         r_dest <= (others => '0');
@@ -90,11 +94,17 @@ begin
 
             when TEST =>
                 opcode <= instr(15 downto 9);
-                ra <= instr(8 downto 6);
+                ra <= instr(8 downto 6);                
 
-            when OUT_OP | IN_OP =>
+            when OUT_OP =>
                 opcode <= instr(15 downto 9);
                 ra <= instr(8 downto 6);
+                out_port_ctl <= '1';
+                
+            when IN_OP =>
+                opcode <= instr(15 downto 9);
+                ra <= instr(8 downto 6);
+                in_port_ctl <= '1';                                
 
             when BRR | BRR_N | BRR_Z =>
                 opcode <= instr(15 downto 9);

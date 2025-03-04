@@ -13,6 +13,8 @@ architecture Behavioral of CPU_Top_TB is
     signal clk         : std_logic := '0';
     signal rst         : std_logic := '1'; -- Active high reset
     signal instr       : std_logic_vector(15 downto 0) := (others => '0'); -- Instruction
+    signal in_data     : std_logic_vector(15 downto 0) := (others => '0'); -- IN port
+    signal out_data       : std_logic_vector(15 downto 0) := (others => '0'); -- OUT port
     signal alu_result  : std_logic_vector(15 downto 0); -- ALU result (for debugging)
     signal n_flag : std_logic := '0';
     signal z_flag : std_logic := '0';
@@ -23,6 +25,8 @@ architecture Behavioral of CPU_Top_TB is
             clk         : in std_logic;
             rst         : in std_logic;
             instr       : in std_logic_vector(15 downto 0);
+            input_port  : in std_logic_vector(15 downto 0);
+            output_port : out std_logic_vector(15 downto 0);
             alu_result  : out std_logic_vector(15 downto 0);
             n_flag : out std_logic;
             z_flag : out std_logic
@@ -36,6 +40,8 @@ begin
             clk => clk,
             rst => rst,
             instr => instr,
+            input_port => in_data,
+            output_port => out_data,
             alu_result => alu_result,
             n_flag => n_flag,
             z_flag => z_flag
@@ -93,7 +99,7 @@ begin
         instr <= "0000110" & "001" & "00" & "0001"; -- SHR R1, #1
         wait for CLK_PERIOD;
         
-        -- ADDED FLAG TEST
+        ------       FLAG TEST
         -- Test TEST instruction: TEST R0 (Check if R0 is zero or negative)
         -- TEST opcode = "0000111"
         instr <= "0000111" & "000" & "000" & "000"; -- TEST R0
@@ -104,7 +110,7 @@ begin
         instr <= "0000101" & "000" & "00" & X"f"; -- SHL R0, #15
         wait for CLK_PERIOD;
         
-        -- Test TEST instruction: TEST R1 (Check if R1 is zero or negative)
+        -- Test TEST instruction: TEST R0 (Check if R1 is zero or negative)
         -- TEST opcode = "0000111"
         instr <= "0000111" & "000" & "000" & "000"; -- TEST R0
         wait for CLK_PERIOD;
@@ -119,6 +125,14 @@ begin
         instr <= "0000111" & "000" & "000" & "000"; -- TEST R0
         wait for CLK_PERIOD;
         
+        -- Test IN  F7CF = 65404
+        in_data <= X"F7CF";
+        instr <= "0100001" & "111" & "000" & "000"; -- 
+        wait for CLK_PERIOD;
+                
+        -- Test OUT
+        instr <= "0100000" & "111" & "000" & "000"; -- 
+        wait for CLK_PERIOD;          
 
         -- End simulation
         wait;

@@ -31,7 +31,7 @@ begin
             when "0000001" => temp_result := std_logic_vector(signed(in1) + signed(in2));                               -- ADD (A1 Format)
             when "0000010" => temp_result := std_logic_vector(signed(in1) - signed(in2));                               -- SUB (A1 Format)
             when "0000011" => temp_result_mul := std_logic_vector(signed(in1) * signed(in2));                           -- MUL (A1 Format)
-                temp_result:= temp_result_mul(15 downto 0);                           
+                temp_result:= temp_result_mul(15 downto 0);  -- wallacetree                          
             when "0000100" => temp_result := in1 NAND in2;                                                              -- NAND (A1 Format)
             when "0000101" => temp_result := std_logic_vector(shift_left(unsigned(in1), to_integer(unsigned(shift))));    -- SHL (A2 Format)
             when "0000110" => temp_result := std_logic_vector(shift_right(unsigned(in1), to_integer(unsigned(shift))));   -- SHR (A2 Format)
@@ -47,9 +47,6 @@ begin
                 else
                     negative_flag <= '0';
                 end if;
-               
-            -- when "1000000" => X"FFF2" <= temp_result;                                                                   -- OUT (A3 Format)
-            -- when "1000001" => temp_result <= X"FFF0";                                                                   -- IN (A3 Format)
 
             -- Default case
             when others => temp_result := (others => '0'); -- Default NOP
