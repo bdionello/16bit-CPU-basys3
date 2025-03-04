@@ -10,8 +10,8 @@ entity CPU_Top is
         input_port  : in std_logic_vector(15 downto 0);  -- Inport for IN inst
         output_port : out std_logic_vector(15 downto 0);  -- Outport for OUT inst
         alu_result  : out std_logic_vector(15 downto 0);  -- ALU result (for debugging)           
-        n_flag : out std_logic;
-        z_flag : out std_logic
+        n_flag      : out std_logic;
+        z_flag      : out std_logic
     );
 end CPU_Top;
 
@@ -22,8 +22,8 @@ architecture Structural of CPU_Top is
     constant SUB      : std_logic_vector(6 downto 0) := "0000010";
     constant MUL      : std_logic_vector(6 downto 0) := "0000011";
     constant NAND_OP  : std_logic_vector(6 downto 0) := "0000100";
-    constant SHL_OP      : std_logic_vector(6 downto 0) := "0000101";
-    constant SHR_OP     : std_logic_vector(6 downto 0) := "0000110";
+    constant SHL_OP   : std_logic_vector(6 downto 0) := "0000101";
+    constant SHR_OP   : std_logic_vector(6 downto 0) := "0000110";
     constant TEST     : std_logic_vector(6 downto 0) := "0000111";
     constant OUT_OP   : std_logic_vector(6 downto 0) := "0100000";
     constant IN_OP    : std_logic_vector(6 downto 0) := "0100001";
@@ -73,7 +73,7 @@ architecture Structural of CPU_Top is
     signal zero_flag  : std_logic;                     -- Zero flag from ALU
     signal negative_flag : std_logic;                  -- Negative flag from ALU
     
-    signal wr_index : std_logic_vector(2 downto 0);
+    signal wr_index  : std_logic_vector(2 downto 0);
     signal rd_index1 : std_logic_vector(2 downto 0);
     signal rd_index2 : std_logic_vector(2 downto 0);
 

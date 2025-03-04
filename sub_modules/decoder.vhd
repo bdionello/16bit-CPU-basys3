@@ -15,8 +15,8 @@ entity Decoder is
         disp_l       : out std_logic_vector(8 downto 0);  -- Displacement (long)
 
         m_1          : out std_logic;                     -- Mode bit
-        in_port_ctl  : out std_logic; 
-        out_port_ctl : out std_logic;                  
+        in_port_ctl  : out std_logic;                     -- Control line for IN inst. mux
+        out_port_ctl : out std_logic;                     -- Control line for OUT inst. mux
         imm          : out std_logic_vector(7 downto 0);  -- Immediate value
 
         r_dest       : out std_logic_vector(2 downto 0);  -- Destination register
@@ -31,8 +31,8 @@ architecture Behavioural of Decoder is
     constant SUB      : std_logic_vector(6 downto 0) := "0000010";
     constant MUL      : std_logic_vector(6 downto 0) := "0000011";
     constant NAND_OP  : std_logic_vector(6 downto 0) := "0000100";
-    constant SHL_OP      : std_logic_vector(6 downto 0) := "0000101";
-    constant SHR_OP      : std_logic_vector(6 downto 0) := "0000110";
+    constant SHL_OP   : std_logic_vector(6 downto 0) := "0000101";
+    constant SHR_OP   : std_logic_vector(6 downto 0) := "0000110";
     constant TEST     : std_logic_vector(6 downto 0) := "0000111";
     constant OUT_OP   : std_logic_vector(6 downto 0) := "0100000";
     constant IN_OP    : std_logic_vector(6 downto 0) := "0100001";

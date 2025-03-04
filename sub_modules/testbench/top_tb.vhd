@@ -99,7 +99,7 @@ begin
         instr <= "0000110" & "001" & "00" & "0001"; -- SHR R1, #1
         wait for CLK_PERIOD;
         
-        -- ADDED FLAG TEST
+        ------       FLAG TEST
         -- Test TEST instruction: TEST R0 (Check if R0 is zero or negative)
         -- TEST opcode = "0000111"
         instr <= "0000111" & "000" & "000" & "000"; -- TEST R0
@@ -110,7 +110,7 @@ begin
         instr <= "0000101" & "000" & "00" & X"f"; -- SHL R0, #15
         wait for CLK_PERIOD;
         
-        -- Test TEST instruction: TEST R1 (Check if R1 is zero or negative)
+        -- Test TEST instruction: TEST R0 (Check if R1 is zero or negative)
         -- TEST opcode = "0000111"
         instr <= "0000111" & "000" & "000" & "000"; -- TEST R0
         wait for CLK_PERIOD;
@@ -132,10 +132,7 @@ begin
                 
         -- Test OUT
         instr <= "0100000" & "111" & "000" & "000"; -- 
-        wait for CLK_PERIOD;        
-        
-        -- constant OUT_OP   : std_logic_vector(6 downto 0) := "0100000";
-        -- constant IN_OP    : std_logic_vector(6 downto 0) := "0100001";        
+        wait for CLK_PERIOD;          
 
         -- End simulation
         wait;
