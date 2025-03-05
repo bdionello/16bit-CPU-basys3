@@ -6,57 +6,58 @@ use work.cpu_types.all;
 entity controller is
     port (
     -- inputs    
-    clk : in STD_LOGIC;
-    reset_ex: in STD_LOGIC;
-    reset_ld: in STD_LOGIC;
-    inst_in : IN std_logic_vector (15 downto 0);
+    clk : in std_logic;
+    reset_ex: in std_logic;
+    reset_ld: in std_logic;
+    inst_in : in std_logic_vector (15 downto 0);
     -- outputs
-    reg_dst : OUT STD_LOGIC;
-    branch : OUT STD_LOGIC;
-    RAM_mem_rd : OUT STD_LOGIC;
-    RAM_mem_to_reg : OUT STD_LOGIC;
-    ROM_mem_rd : OUT STD_LOGIC;
-    ROM_mem_to_reg : OUT STD_LOGIC;
-    alu_op : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
-    RAM_mem_wr : OUT STD_LOGIC;
-    ROM_mem_wr : OUT STD_LOGIC;
-    alu_src : OUT STD_LOGIC;
-    reg_wr : OUT STD_LOGIC
+    reg_dst : out std_logic;
+    branch : out std_logic;
+    ram_mem_rd : out std_logic;
+    ram_mem_to_reg : out std_logic;
+    rom_mem_rd : out std_logic;
+    rom_mem_to_reg : out std_logic;
+    alu_op : out std_logic_vector(2 downto 0);
+    ram_mem_wr : out std_logic;
+    rom_mem_wr : out std_logic;
+    alu_src : out std_logic;
+    reg_wr : out std_logic
     );
     end controller ;
 
-architecture rtl of controller is    
+architecture controller_arch of controller is    
     signal state, nextstate: statetype;
-
+        
 begin
     -- state register
-    process (clk, reset_ex, reset_ld) begin
+    process (clk, reset_ex, reset_ld)
+        begin
         -- Reset load means ROM mode
         -- Reset Execute means RAM mode
-        if reset_ld | reset_ex = '1' then state <= RESET;    
+        if (reset_ld = '1') or (reset_ex  = '1') then state <= RESET_STATE;    
         elsif clk'event and clk = '1' then    
             state <= nextstate;    
         end if;    
     end process;
-
      -- controller outputs
-     case(state)
-        RESET:
-        begin
-            if
-            reg_dst => '0';
-            branch => '0';
-            RAM_mem_rd => '0';
-            RAM_mem_to_reg => '0';
-            ROM_mem_rd => '0';
-            ROM_mem_to_reg => '0';
-            alu_op => "000";
-            RAM_mem_wr => '0';
-            ROM_mem_wr => '0';
-            alu_src => '0';
-            reg_wr=> '0';
-            nextstate = DECODE;
-        end
-
-
-end rtl ;
+    case state is
+     
+        when RESET =>         
+            reg_dst <= '0';
+            branch <= '0';
+            ram_mem_rd <= '0';
+            ram_mem_to_reg <= '0';
+            rom_mem_rd <=  '0';
+            rom_mem_to_reg <= '0';
+            alu_op <= "000";
+            ram_mem_wr <= '0';
+            rom_mem_wr <= '0';
+            alu_src <= '0';
+            reg_wr <= '0';
+            nextstate <= DECODE;            
+--            when DECODE =>
+--                nextstate <= RESET;
+--            when others =>
+--                nextstate <= RESET;                           
+    end case;
+end controller_arch ;

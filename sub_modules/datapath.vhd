@@ -7,24 +7,24 @@ use work.cpu_types.all ;
 entity datapath is
     port (
         -- system ports
-        sys_clk : IN STD_LOGIC;
-        sys_rst : IN STD_LOGIC;
-        IN_port : IN STD_LOGIC_VECTOR(15 DOWNTO 0);        
+        sys_clk : in std_logic;
+        sys_rst : in std_logic;
+        in_port : in std_logic_vector(15 downto 0);        
         -- controller signal ports
-        regDst : IN STD_LOGIC;
-        branch : IN STD_LOGIC;
-        RAM_mem_rd : IN STD_LOGIC;
-        RAM_mem_to_reg : IN STD_LOGIC;
-        ROM_mem_rd : IN STD_LOGIC;
-        ROM_mem_to_reg : IN STD_LOGIC;
-        alu_op : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
-        RAM_mem_wr : IN STD_LOGIC;
-        ROM_mem_wr : IN STD_LOGIC;
-        alu_src : IN STD_LOGIC;
-        reg_wr : IN STD_LOGIC; 
+        reg_dst : in std_logic;
+        branch : in std_logic;
+        ram_mem_rd : in std_logic;
+        ram_mem_to_reg : in std_logic;
+        rom_mem_rd : in std_logic;
+        rom_mem_to_reg : in std_logic;
+        alu_op : in std_logic_vector(2 downto 0);
+        ram_mem_wr : in std_logic;
+        rom_mem_wr : in std_logic;
+        alu_src : in std_logic;
+        reg_wr : in std_logic; 
         -- outputs
-        data_out : OUT std_logic_vector (15 downto 0);
-        inst_out : OUT std_logic_vector (15 downto 0)
+        data_out : out std_logic_vector (15 downto 0);
+        inst_out : out std_logic_vector (15 downto 0)
     ) ;
 end datapath ;
 
@@ -40,14 +40,6 @@ architecture rtl of datapath is
 --    end component;       
     SIGNAL PC_to_rom_adr : STD_LOGIC_VECTOR(9 DOWNTO 0); -- from Program counter
     SIGNAL rom_data : STD_LOGIC_VECTOR(15 DOWNTO 0); -- instruction
-    
     begin
-        rom0 : ENTITY work.rom PORT MAP(
-           clk => sys_clk,
-           rst => sys_rst,
-           ena => ROM_mem_wr,
-           rd => '1',
-           addr => PC_to_rom_adr,
-           dout => rom_data 
-          );
+
 end rtl ;

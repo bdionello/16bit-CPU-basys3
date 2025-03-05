@@ -4,7 +4,8 @@ use ieee.std_logic_1164.all ;
 use ieee.std_logic_arith.all ;
 
 package cpu_types is
-    type statetype is (RESET, DECODE);    
+    type statetype is (RESET_STATE, DECODE);
+   
         -- ALU Operations        
     constant NOP      : std_logic_vector(6 downto 0) := "0000000";
     constant ADD      : std_logic_vector(6 downto 0) := "0000001";
