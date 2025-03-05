@@ -16,7 +16,7 @@ entity mem_manager is
         bootload_mode : in STD_LOGIC; -- asserted means reset load mode 
         data_in : in STD_LOGIC_VECTOR (15 downto 0); -- All write data
         write_enable : in STD_LOGIC;
-        read_enable : in STD_LOGIC;
+        read_data_enable : in STD_LOGIC;
         clock : in STD_LOGIC;
         reset : in STD_LOGIC;
         data_addr : in STD_LOGIC_VECTOR (15 downto 0) := X"0000";
@@ -24,6 +24,7 @@ entity mem_manager is
         -- Instruction memory "Application code"
         inst_addr : in STD_LOGIC_VECTOR (15 downto 0);
         inst_out : out STD_LOGIC_VECTOR (15 downto 0);
+        read_inst_enable : in STD_LOGIC;
         -- Memory Mapped ports
         in_port : in STD_LOGIC_VECTOR (15 downto 0);
         out_port : out STD_LOGIC_VECTOR (15 downto 0)
@@ -51,13 +52,13 @@ begin
     -------------------
     -- Internal State Logic
     reset_i <= '1' when (reset = '1') else '0';    
-    rom_enable_i <= '1' when (read_enable = '1') AND (data_addr AND X"0400") = X"0000" else 
+    rom_enable_i <= '1' when (read_inst_enable = '1') AND (data_addr AND X"0400") = X"0000" else 
                     '0' when (reset = '1') else
                     '0';                        
-    ram_a_enable_i <= '1' when (read_enable = '1') AND (data_addr AND X"0400") = X"0400" else
+    ram_a_enable_i <= '1' when (read_data_enable = '1') AND (data_addr AND X"0400") = X"0400" else
                       '0' when (reset = '1') else
                       '0';
-    ram_b_enable_i <= '1' when (bootload_mode = '1') AND (read_enable = '1') else
+    ram_b_enable_i <= '1' when (read_inst_enable = '1') AND (bootload_mode = '1') else
                       '0' when (reset = '1') else
                       '0';
     write_enable_i <= "1" when (write_enable = '1') else
@@ -65,8 +66,8 @@ begin
                       "0";     
     ------------------- 
     -- OUTPUT State LOGIC                 
-    inst_out <= ram_b_data_out_i when (data_addr AND X"0400") = X"0400" else rom_data_out_i;                
-    data_out <= in_port when (data_addr = X"FFF2") AND (read_enable = '1') else ram_a_data_out_i;                                    
+    inst_out <= ram_b_data_out_i when (data_addr AND X"0400") = X"0400" AND (bootload_mode = '0') else rom_data_out_i;                
+    data_out <= in_port when (data_addr = X"FFF2") AND (read_data_enable = '1') else ram_a_data_out_i;                                    
     out_port <= data_in when (data_addr = X"FFF0") AND (write_enable = '1') else X"0000";
     
     rom0 : entity work.rom
