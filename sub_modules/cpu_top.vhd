@@ -2,8 +2,8 @@
 library ieee ;
 use ieee.std_logic_1164.all ;
 use ieee.std_logic_arith.all ;
-use work.cpu_types.all ;
-use work.cpu_components.all ;
+use work.all;
+use work.cpu_types.all;
 
 entity cpu_top is port (
     stm_sys_clk : in std_logic;

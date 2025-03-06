@@ -1,8 +1,0 @@
-# compile vhdl design source files
-vhdl xil_defaultlib  \
-"../../../../project_cpu.ip_user_files/bd/design_1/sim/design_1.vhd" \
-"../../../../../sub_modules/RF8_16.vhd" \
-"../../../../../sub_modules/testbench/RF8_16TB.vhd" \
-
-# Do not sort compile order
-nosort

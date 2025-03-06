@@ -5,6 +5,7 @@ use ieee.std_logic_arith.all ;
 
 package cpu_types is
     type statetype is (RESET_STATE, DECODE);
+    constant word_size : std_logic_vector := X"2"; 
    
         -- ALU Operations        
     constant NOP      : std_logic_vector(6 downto 0) := "0000000";

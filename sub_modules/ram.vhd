@@ -10,13 +10,13 @@ entity ram is
         rsta : in std_logic;  
         ena : in std_logic; -- enable r and w    
         wea : in std_logic_vector(0 downto 0); -- enable write port a     
-        addra : in std_logic_vector(9 downto 0);
+        addra : in std_logic_vector(8 downto 0);
         dina : in std_logic_vector(15 downto 0);         
         douta : out std_logic_vector(15 downto 0);    
         -- Port B - read only               
         rstb : in std_logic;                   
         enb : in std_logic;                                  
-        addrb : in std_logic_vector(9 downto 0);                   
+        addrb : in std_logic_vector(8 downto 0);                   
         doutb : out std_logic_vector(15 downto 0)                 
     );
 end ram;
@@ -41,15 +41,15 @@ architecture ram_arch of ram is
             WRITE_DATA_WIDTH_A      => 16,             --positive integer
             READ_DATA_WIDTH_A       => 16,             --positive integer
             BYTE_WRITE_WIDTH_A      => 16,             --integer; 8, 9, or WRITE_DATA_WIDTH_A value
-            ADDR_WIDTH_A            => 10,              --positive integer
+            ADDR_WIDTH_A            => 9,              --positive integer
             READ_RESET_VALUE_A      => "0",            --string
-            READ_LATENCY_A          =>  0,              --non-negative integer
+            READ_LATENCY_A          =>  1,              --non-negative integer
         
             -- Port B module generics
             READ_DATA_WIDTH_B       => 16,             --positive integer
-            ADDR_WIDTH_B            => 10,              --positive integer
+            ADDR_WIDTH_B            => 9,              --positive integer
             READ_RESET_VALUE_B      => "0",            --string
-            READ_LATENCY_B          => 0              --non-negative integer
+            READ_LATENCY_B          => 1              --non-negative integer
           )
           port map (        
             -- Port A module ports
