@@ -31,11 +31,12 @@ entity mem_manager is
 end mem_manager;
 
 architecture mem_manager_arch of mem_manager is
+    signal last_ram_data_read_i: std_logic_vector(15 downto 0) := X"0000";
     -- Control Signals
     signal reset_i : STD_LOGIC := '0';
     signal write_enable_i : STD_LOGIC_VECTOR (0 downto 0) := "0";
     signal rom_enable_i : STD_LOGIC := '0';    
-    signal ram_a_enable_i : STD_LOGIC := '0';        
+    signal ram_a_enable_i : STD_LOGIC := '0';      
     signal ram_b_enable_i : STD_LOGIC := '0';       
     -- Data Signals
     signal out_port_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000"; 
@@ -57,17 +58,20 @@ begin
                     '0';                        
     ram_a_enable_i <= '1' when ((read_data_enable = '1') XOR (write_enable = '1')) AND ((data_addr AND X"0400") = X"0400") else
                       '0' when (reset = '1') else
-                      '0';
+                      '0';    
     ram_b_enable_i <= '1' when ((inst_addr AND X"0400") = X"0400") else
                       '0' when (reset = '1') else
                       '0';
     write_enable_i <= "1" when (write_enable = '1') else
                       "0" when (reset = '1') else
-                      "0";     
+                      "0";    
+     
     -- OUTPUT State LOGIC                 
-    inst_out <= ram_b_data_out_i when (data_addr AND X"0400") = X"0400"  else rom_data_out_i;                
-    data_out <= in_port when (data_addr = X"FFF0") AND (read_data_enable = '1') else ram_a_data_out_i; -- Connect memory to physical input port (read from Dip switch)                                 
+    inst_out <= ram_b_data_out_i when (inst_addr AND X"0400") = X"0400"  else rom_data_out_i;                
+    data_out <= in_port when (data_addr = X"FFF0") AND (read_data_enable = '1') else last_ram_data_read_i; -- Connect memory to physical input port (read from Dip switch)                                 
     out_port <= data_in when (data_addr = X"FFF2") AND (write_enable = '1') else X"0000"; -- Connected to physical output port (Write to Display)
+    last_ram_data_read_i <= ram_a_data_out_i when (read_data_enable = '1') AND (clock = '1') else
+                            X"0000" when (reset = '1');
     
     rom_0 : entity work.rom
         port map(
@@ -86,7 +90,7 @@ begin
             wea => write_enable_i,     
             addra => data_addr_i(8 downto 0),
             dina => data_in,         
-            douta => ram_a_data_out_i,    
+            douta => ram_a_data_out_i,  
             -- Port B - read only               
             rstb => reset_i,                   
             enb => ram_b_enable_i,                                  

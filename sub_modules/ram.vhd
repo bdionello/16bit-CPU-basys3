@@ -12,7 +12,7 @@ entity ram is
         wea : in std_logic_vector(0 downto 0); -- enable write port a     
         addra : in std_logic_vector(8 downto 0);
         dina : in std_logic_vector(15 downto 0);         
-        douta : out std_logic_vector(15 downto 0);    
+        douta : out std_logic_vector(15 downto 0);
         -- Port B - read only               
         rstb : in std_logic;                   
         enb : in std_logic;                                  
@@ -56,7 +56,7 @@ architecture ram_arch of ram is
             clka                    => clk,
             rsta                    => rsta,
             ena                     => ena,
-            regcea                  => '1',   --do not change
+            regcea                  => '1',
             wea                     => wea,
             addra                   => addra,
             dina                    => dina,

@@ -146,12 +146,74 @@ begin
                  end loop test3_ram_read;
                                   
                  -- Reset before next test
+                 data_addr_i <= X"0000";
                  read_data_enable_i <= '0';
                  reset_i <= '1';
                  wait until falling_edge(clk);
                  reset_i <= '0';
                  wait until falling_edge(clk);
-                             
+                 
+                 -- Start at 15440 ns 
+                 -- Test 4 -- simultaneous access instruction and data ROM/RAM
+                 instruction_address := X"0000";
+                 write_address := X"0400";
+                 write_data := X"5555";
+                 read_data_address := X"0400";                 
+                 test4_write_read : for k in 0 to 9 loop
+                    read_data_enable_i <= '0';          -- read disable
+                    write_enable_i <= '1';              -- write enable
+                    inst_addr_i <= instruction_address; -- read rom 
+                    data_addr_i <= write_address;       -- write ram
+                    data_in_i <= write_data;     
+                    wait until falling_edge(clk);                    
+                    read_data_enable_i <= '1';          -- read enable
+                    write_enable_i <= '0';              -- write disable
+                    data_addr_i <= read_data_address;   -- read data
+                    wait until falling_edge(clk);
+                    --assert data_out_i = X"FFFF" report "Unexpected return value. data_out_i = " & integer'image(to_integer(unsigned(data_out_i)));
+                    --assert inst_out_i = instruction_address report "Unexpected return value. inst_out_i = " & integer'image(to_integer(unsigned(inst_out_i)));                 
+                    -- increment variables
+                    instruction_address := std_logic_vector((unsigned(instruction_address)) + 2);
+                    write_address := std_logic_vector((unsigned(write_address)) + 2);
+                    write_data := NOT write_data;
+                    read_data_address := std_logic_vector((unsigned(read_data_address)) + 2);
+                 end loop test4_write_read;                 
+                 
+                 -- Reset before next test
+                 data_addr_i <= X"0000";
+                 data_in_i <= X"0000";
+                 read_data_enable_i <= '0';
+                 reset_i <= '1';
+                 wait until falling_edge(clk);
+                 reset_i <= '0';
+                 wait until falling_edge(clk);
+                 -- Start at 15650 ns 
+                 -- Test 5 -- simultaneous access instruction and data RAM/RAM
+                 instruction_address := X"0414";
+                 write_address := X"0400";
+                 write_data := X"CCCC";
+                 read_data_address := X"0400";                 
+                 test5_write_read : for k in 0 to 9 loop
+                    read_data_enable_i <= '0';          -- read disable
+                    write_enable_i <= '1';              -- write enable
+                    inst_addr_i <= instruction_address; -- read rom 
+                    data_addr_i <= write_address;       -- write ram
+                    data_in_i <= write_data;     
+                    wait until falling_edge(clk);                    
+                    read_data_enable_i <= '1';          -- read enable
+                    write_enable_i <= '0';              -- write disable
+                    data_addr_i <= read_data_address;   -- read data
+                    wait until falling_edge(clk);
+                    --assert data_out_i = X"FFFF" report "Unexpected return value. data_out_i = " & integer'image(to_integer(unsigned(data_out_i)));
+                    --assert inst_out_i = instruction_address report "Unexpected return value. inst_out_i = " & integer'image(to_integer(unsigned(inst_out_i)));                 
+                    -- increment variables
+                    instruction_address := std_logic_vector((unsigned(instruction_address)) + 2);
+                    write_address := std_logic_vector((unsigned(write_address)) + 2);
+                    write_data := NOT write_data;
+                    read_data_address := std_logic_vector((unsigned(read_data_address)) + 2);
+                 end loop test5_write_read;           
+                 
+                  
              assert false report "Test: End - Force stop" severity failure;
      end process;         
 end Behavioral;
