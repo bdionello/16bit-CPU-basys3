@@ -4,28 +4,60 @@ use ieee.std_logic_1164.all ;
 use work.cpu_types.all;
 
 entity controller is
-    port (clk, reset: in STD_LOGIC;
-    y: out STD_LOGIC);
-end controller ;
+    port (
+    -- inputs    
+    clk : in std_logic;
+    reset_ex: in std_logic;
+    reset_ld: in std_logic;
+    inst_in : in std_logic_vector (15 downto 0);
+    -- outputs
+    reg_dst : out std_logic;
+    branch : out std_logic;
+    ram_mem_rd : out std_logic;
+    ram_mem_to_reg : out std_logic;
+    rom_mem_rd : out std_logic;
+    rom_mem_to_reg : out std_logic;
+    alu_op : out std_logic_vector(2 downto 0);
+    ram_mem_wr : out std_logic;
+    rom_mem_wr : out std_logic;
+    alu_src : out std_logic;
+    reg_wr : out std_logic
+    );
+    end controller ;
 
-architecture rtl of controller is    
+architecture controller_arch of controller is    
     signal state, nextstate: statetype;
-
+        
 begin
-    -- select next state
-    nextstate <= 
-    S1 when state = S0 else
-    S2 when state = S1 else
-    S0;
-
     -- state register
-    process (clk, reset) begin
-        if reset = '1' then state <= S0;    
+    process (clk, reset_ex, reset_ld)
+        begin
+        -- Reset load means ROM mode
+        -- Reset Execute means RAM mode
+        if (reset_ld = '1') or (reset_ex  = '1') then state <= RESET_STATE;    
         elsif clk'event and clk = '1' then    
             state <= nextstate;    
         end if;    
     end process;
-
      -- controller outputs
-     y <= '1 when state = S0 else '0'';
-end rtl ;
+    case state is
+     
+        when RESET =>         
+            reg_dst <= '0';
+            branch <= '0';
+            ram_mem_rd <= '0';
+            ram_mem_to_reg <= '0';
+            rom_mem_rd <=  '0';
+            rom_mem_to_reg <= '0';
+            alu_op <= "000";
+            ram_mem_wr <= '0';
+            rom_mem_wr <= '0';
+            alu_src <= '0';
+            reg_wr <= '0';
+            nextstate <= DECODE;            
+--            when DECODE =>
+--                nextstate <= RESET;
+--            when others =>
+--                nextstate <= RESET;                           
+    end case;
+end controller_arch ;

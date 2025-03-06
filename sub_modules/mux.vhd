@@ -1,12 +1,13 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use work.all;
 
 entity mux is
     port (
-        A, B: in unsigned(7 downto 0);
+        A, B: in unsigned(15 downto 0);
         Selector: in std_logic;
-        C : out unsigned (7 downto 0)
+        C : out unsigned (15 downto 0)
         );
     end mux;
 

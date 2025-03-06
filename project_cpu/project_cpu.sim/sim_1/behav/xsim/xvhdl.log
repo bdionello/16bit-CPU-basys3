@@ -1,4 +1,0 @@
-INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/bdionello/source/ECE449/sub_modules/alu.vhd" into library xil_defaultlib
-INFO: [VRFC 10-307] analyzing entity ALU
-INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/bdionello/source/ECE449/sub_modules/testbench/ALU_TB.vhd" into library xil_defaultlib
-INFO: [VRFC 10-307] analyzing entity ALU_TB
