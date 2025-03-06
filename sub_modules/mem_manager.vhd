@@ -32,13 +32,13 @@ end mem_manager;
 
 architecture mem_manager_arch of mem_manager is
     signal last_ram_data_read_i: std_logic_vector(15 downto 0) := X"0000";
-    -- Control Signals
+    ----------- Control Signals
     signal reset_i : STD_LOGIC := '0';
     signal write_enable_i : STD_LOGIC_VECTOR (0 downto 0) := "0";
     signal rom_enable_i : STD_LOGIC := '0';    
     signal ram_a_enable_i : STD_LOGIC := '0';      
     signal ram_b_enable_i : STD_LOGIC := '0';       
-    -- Data Signals
+    ----------- Data Signals
     signal out_port_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000"; 
     signal data_addr_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000";
     signal inst_addr_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000";
@@ -50,29 +50,34 @@ architecture mem_manager_arch of mem_manager is
 begin
     -- Shift Byte addressable address to word addressable due to internal memory configuration of rom/ram 
     inst_addr_i <= std_logic_vector(shift_right(unsigned(inst_addr),1));
-    data_addr_i <= std_logic_vector(shift_right(unsigned(data_addr),1));          
-    -- Internal State Logic
-    reset_i <= '1' when (reset = '1') else '0';    
-    rom_enable_i <= '1' when (inst_addr AND X"0400") = X"0000" else 
-                    '0' when (reset = '1') else
-                    '0';                        
-    ram_a_enable_i <= '1' when ((read_data_enable = '1') XOR (write_enable = '1')) AND ((data_addr AND X"0400") = X"0400") else
-                      '0' when (reset = '1') else
-                      '0';    
-    ram_b_enable_i <= '1' when ((inst_addr AND X"0400") = X"0400") else
-                      '0' when (reset = '1') else
-                      '0';
-    write_enable_i <= "1" when (write_enable = '1') else
-                      "0" when (reset = '1') else
-                      "0";    
-     
-    -- OUTPUT State LOGIC                 
-    inst_out <= ram_b_data_out_i when (inst_addr AND X"0400") = X"0400"  else rom_data_out_i;                
-    data_out <= in_port when (data_addr = X"FFF0") AND (read_data_enable = '1') else last_ram_data_read_i; -- Connect memory to physical input port (read from Dip switch)                                 
-    out_port <= data_in when (data_addr = X"FFF2") AND (write_enable = '1') else X"0000"; -- Connected to physical output port (Write to Display)
-    last_ram_data_read_i <= ram_a_data_out_i when (read_data_enable = '1') AND (clock = '1') else
-                            X"0000" when (reset = '1');
+    data_addr_i <= std_logic_vector(shift_right(unsigned(data_addr),1)); 
+             
+    ----------- Internal State Logic: control signals
+    -- Reset condition send signal to ROM and RAM 
+    reset_i <= '1' when (reset = '1') else '0'; 
+    -- Rom is accessed for instruction address space below 0x0400   
+    rom_enable_i <= '1' when (inst_addr AND X"0400") = X"0000" else '0'; 
+    -- ram port_a for data memory and writing user code, enabled for read or write not both, and address space above 0x0400 (assembly code must conform)                                        
+    ram_a_enable_i <= '1' when ((read_data_enable = '1') XOR (write_enable = '1')) AND ((data_addr AND X"0400") = X"0400") else '0';
+    -- ram port_b for user code instruction read, memory space above 0x0400                     
+    ram_b_enable_i <= '1' when ((inst_addr AND X"0400") = X"0400") else '0';
+    write_enable_i <= "1" when (write_enable = '1') else "0";
+                                            
+    ----------- OUTPUT State LOGIC: data signals
+    -- Change instruction output from rom or ram based on address range                  
+    inst_out <= ram_b_data_out_i when ((inst_addr AND X"0400") = X"0400") AND (clock = '1') else
+                rom_data_out_i when (clock = '1') else
+                X"0000" when (reset_i ='1');    
     
+    -- Connect memory to physical input port (read from Dip switch)               
+    data_out <= in_port when (data_addr = X"FFF0") AND (read_data_enable = '1') AND (clock = '1') else
+                ram_a_data_out_i when (read_data_enable = '1') AND (clock = '1') else
+                X"0000" when (reset_i ='1');                              
+    
+    -- Connected to physical output port (Write to Display)                                  
+    out_port <= data_in when (data_addr = X"FFF2") AND (write_enable = '1') AND (clock = '1') else
+                X"0000" when (reset_i ='1');
+        
     rom_0 : entity work.rom
         port map(
             clk => clock,

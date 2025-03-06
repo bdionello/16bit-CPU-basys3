@@ -1,24 +1,3 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 03/05/2025 12:56:28 PM
--- Design Name: 
--- Module Name: memory_TB - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 -- Uncomment the following library declaration if using
@@ -46,12 +25,13 @@ architecture Behavioral of memory_TB is
     -- signal read_inst_enable_i : STD_LOGIC := '0';
     signal data_in_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000"; -- All write data       
     signal data_addr_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000";   
-    signal inst_addr_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000";     
-    signal in_port_i :  STD_LOGIC_VECTOR (15 downto 0) := X"0000";    
+    signal inst_addr_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000";        
     -- Measurment Signals
     signal data_out_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000";
-    signal inst_out_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000";
-    signal out_port_i :  STD_LOGIC_VECTOR (15 downto 0) := X"0000";   
+    signal inst_out_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000";    
+    -- Memory mapped ports
+    signal in_port_i :  STD_LOGIC_VECTOR (15 downto 0) := X"0000";  -- Read from Dip switches
+    signal out_port_i :  STD_LOGIC_VECTOR (15 downto 0) := X"0000"; -- Write to Display   
        
 begin
     -- Test unit
@@ -128,6 +108,7 @@ begin
                
                -- Reset before next test
                data_in_i <= X"0000";
+               data_addr_i <= X"0000";
                write_enable_i <= '0';
                reset_i <= '1';
                wait until falling_edge(clk);
@@ -170,8 +151,8 @@ begin
                     write_enable_i <= '0';              -- write disable
                     data_addr_i <= read_data_address;   -- read data
                     wait until falling_edge(clk);
-                    --assert data_out_i = X"FFFF" report "Unexpected return value. data_out_i = " & integer'image(to_integer(unsigned(data_out_i)));
-                    --assert inst_out_i = instruction_address report "Unexpected return value. inst_out_i = " & integer'image(to_integer(unsigned(inst_out_i)));                 
+                    assert data_out_i = write_data report "Unexpected return value. data_out_i = " & integer'image(to_integer(unsigned(data_out_i)));
+                    assert inst_out_i = instruction_address report "Unexpected return value. inst_out_i = " & integer'image(to_integer(unsigned(inst_out_i)));                 
                     -- increment variables
                     instruction_address := std_logic_vector((unsigned(instruction_address)) + 2);
                     write_address := std_logic_vector((unsigned(write_address)) + 2);
@@ -204,16 +185,111 @@ begin
                     write_enable_i <= '0';              -- write disable
                     data_addr_i <= read_data_address;   -- read data
                     wait until falling_edge(clk);
-                    --assert data_out_i = X"FFFF" report "Unexpected return value. data_out_i = " & integer'image(to_integer(unsigned(data_out_i)));
-                    --assert inst_out_i = instruction_address report "Unexpected return value. inst_out_i = " & integer'image(to_integer(unsigned(inst_out_i)));                 
+                    assert data_out_i = write_data report "Unexpected return value. data_out_i = " & integer'image(to_integer(unsigned(data_out_i)));
+                    assert inst_out_i = (instruction_address AND NOT X"0400") report "Unexpected return value. inst_out_i = " & integer'image(to_integer(unsigned(inst_out_i)));                 
                     -- increment variables
                     instruction_address := std_logic_vector((unsigned(instruction_address)) + 2);
                     write_address := std_logic_vector((unsigned(write_address)) + 2);
                     write_data := NOT write_data;
                     read_data_address := std_logic_vector((unsigned(read_data_address)) + 2);
-                 end loop test5_write_read;           
+                 end loop test5_write_read;
                  
-                  
-             assert false report "Test: End - Force stop" severity failure;
+                 -- Reset before next test
+                 data_addr_i <= X"0000";
+                 data_in_i <= X"0000";
+                 inst_addr_i <= X"0000";
+                 read_data_enable_i <= '0';
+                 write_enable_i <= '0';
+                 reset_i <= '1';
+                 wait until falling_edge(clk);
+                 reset_i <= '0';
+                 wait until falling_edge(clk);
+                                  
+                 -- Start at 15880ns 
+                 -- Test 6 -- Read from IN port for memory mapped IO               
+                 in_port_i <= X"ABCD";                
+                 read_data_enable_i <= '1';
+                 data_addr_i <= X"FFF0";
+                 wait until falling_edge(clk);
+                 assert data_out_i = X"ABCD" report "Unexpected return value. data_out_i = " & integer'image(to_integer(unsigned(data_out_i)));
+                 
+                 -- Reset before next test
+                 in_port_i <= X"0000";
+                 data_addr_i <= X"0000";
+                 read_data_enable_i <= '0';
+                 reset_i <= '1';
+                 wait until falling_edge(clk);
+                 reset_i <= '0';
+                 wait until falling_edge(clk);     
+                                         
+                 -- Start at 15890ns 
+                 -- Test 7 -- write to OUT port for memory mapped IO
+                 write_enable_i <= '1';                
+                 data_addr_i <= X"FFF2";
+                 data_in_i <= X"DCBA";
+                 wait until falling_edge(clk);
+                 assert out_port_i = X"DCBA" report "Unexpected return value. out_port_i = " & integer'image(to_integer(unsigned(out_port_i)));
+             
+                 -- Reset before next test
+                 data_addr_i <= X"0000";
+                 data_in_i <= X"0000";
+                 inst_addr_i <= X"0000";
+                 read_data_enable_i <= '0';
+                 write_enable_i <= '0';
+                 reset_i <= '1';
+                 wait until falling_edge(clk);
+                 reset_i <= '0';
+                 wait until falling_edge(clk);
+                 
+                 -- Start at 15940ns 
+                 -- Test 8 -- simultaneous data read and write             
+                 read_data_enable_i <= '1';
+                 data_addr_i <= X"0414";
+                 wait until falling_edge(clk);
+                 assert data_out_i = X"0014" report "Unexpected return value. data_out_i = " & integer'image(to_integer(unsigned(data_out_i)));                  
+                 write_enable_i <= '1';                
+                 data_addr_i <= X"0414";
+                 data_in_i <= X"FFFF";
+                 wait until falling_edge(clk);
+                 write_enable_i <= '0';
+                 wait until falling_edge(clk);
+                 assert data_out_i = X"0014" report "Unexpected return value. data_out_i = " & integer'image(to_integer(unsigned(data_out_i))); 
+                 
+                 data_addr_i <= X"0000";
+                 data_in_i <= X"0000";
+                 read_data_enable_i <= '0';
+                 write_enable_i <= '0';
+                 reset_i <= '1';
+                 wait until falling_edge(clk);
+                 reset_i <= '0';
+                 wait until falling_edge(clk);
+                 
+                 -- Start at 15990ns 
+                 -- Test 9 -- Test reset with Read and write
+                 -- Reset clears output but does not block write access
+                 reset_i <= '1';
+                 wait until falling_edge(clk);
+                  -- test rom  
+                 inst_addr_i <= X"0014"; 
+                 wait until falling_edge(clk);
+                 assert inst_out_i = X"0000" report "Unexpected return value. inst_out_i = " & integer'image(to_integer(unsigned(inst_out_i)));                 
+                  -- test ram port b
+                 inst_addr_i <= X"0414";
+                 wait until falling_edge(clk);
+                 assert inst_out_i = X"0000" report "Unexpected return value. inst_out_i = " & integer'image(to_integer(unsigned(inst_out_i)));                 
+                 -- test write port a                 
+                 write_enable_i <= '1';                
+                 data_addr_i <= X"0414";
+                 data_in_i <= X"FFFF";
+                 wait until falling_edge(clk);
+                 write_enable_i <= '0';
+                 read_data_enable_i <= '1';
+                 wait until falling_edge(clk);
+                 assert data_out_i = X"0000" report "Unexpected return value. data_out_i = " & integer'image(to_integer(unsigned(data_out_i))); 
+                 reset_i <= '0';
+                 wait until falling_edge(clk);                 
+                 assert data_out_i = X"FFFF" report "Unexpected return value. data_out_i = " & integer'image(to_integer(unsigned(data_out_i)));             
+                 -- Hard stop
+                 assert false report "Test: End - Force stop" severity failure;
      end process;         
 end Behavioral;

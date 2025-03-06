@@ -44,8 +44,8 @@
 #endif
 typedef void (*funcp)(char *, char *);
 extern int main(int, char**);
+extern void execute_64(char*, char *);
 extern void execute_65(char*, char *);
-extern void execute_66(char*, char *);
 extern void execute_27(char*, char *);
 extern void execute_28(char*, char *);
 extern void execute_29(char*, char *);
@@ -56,30 +56,29 @@ extern void execute_33(char*, char *);
 extern void execute_34(char*, char *);
 extern void execute_35(char*, char *);
 extern void execute_36(char*, char *);
-extern void execute_37(char*, char *);
 extern void vlog_const_rhs_process_execute_0_fast_no_reg_no_agg(char*, char*, char*);
-extern void execute_95(char*, char *);
+extern void execute_94(char*, char *);
+extern void execute_100(char*, char *);
 extern void execute_101(char*, char *);
-extern void execute_102(char*, char *);
-extern void execute_42(char*, char *);
-extern void execute_44(char*, char *);
-extern void execute_46(char*, char *);
+extern void execute_41(char*, char *);
+extern void execute_43(char*, char *);
+extern void execute_45(char*, char *);
+extern void execute_47(char*, char *);
 extern void execute_48(char*, char *);
-extern void execute_49(char*, char *);
 extern void vlog_simple_process_execute_0_fast_no_reg_no_agg(char*, char*, char*);
-extern void execute_81(char*, char *);
-extern void execute_84(char*, char *);
-extern void execute_137(char*, char *);
-extern void execute_53(char*, char *);
-extern void execute_55(char*, char *);
+extern void execute_80(char*, char *);
+extern void execute_83(char*, char *);
+extern void execute_136(char*, char *);
+extern void execute_52(char*, char *);
+extern void execute_54(char*, char *);
+extern void execute_56(char*, char *);
 extern void execute_57(char*, char *);
-extern void execute_58(char*, char *);
+extern void execute_59(char*, char *);
 extern void execute_60(char*, char *);
-extern void execute_61(char*, char *);
+extern void execute_62(char*, char *);
 extern void execute_63(char*, char *);
-extern void execute_64(char*, char *);
-extern void execute_117(char*, char *);
-extern void execute_121(char*, char *);
+extern void execute_116(char*, char *);
+extern void execute_120(char*, char *);
 extern void transaction_0(char*, char*, unsigned, unsigned, unsigned);
 extern void transaction_4(char*, char*, unsigned, unsigned, unsigned);
 extern void vhdl_transfunc_eventcallback(char*, char*, unsigned, unsigned, unsigned, char *);
@@ -124,12 +123,12 @@ extern void transaction_95(char*, char*, unsigned, unsigned, unsigned);
 extern void transaction_96(char*, char*, unsigned, unsigned, unsigned);
 extern void transaction_97(char*, char*, unsigned, unsigned, unsigned);
 extern void transaction_98(char*, char*, unsigned, unsigned, unsigned);
-funcp funcTab[80] = {(funcp)execute_65, (funcp)execute_66, (funcp)execute_27, (funcp)execute_28, (funcp)execute_29, (funcp)execute_30, (funcp)execute_31, (funcp)execute_32, (funcp)execute_33, (funcp)execute_34, (funcp)execute_35, (funcp)execute_36, (funcp)execute_37, (funcp)vlog_const_rhs_process_execute_0_fast_no_reg_no_agg, (funcp)execute_95, (funcp)execute_101, (funcp)execute_102, (funcp)execute_42, (funcp)execute_44, (funcp)execute_46, (funcp)execute_48, (funcp)execute_49, (funcp)vlog_simple_process_execute_0_fast_no_reg_no_agg, (funcp)execute_81, (funcp)execute_84, (funcp)execute_137, (funcp)execute_53, (funcp)execute_55, (funcp)execute_57, (funcp)execute_58, (funcp)execute_60, (funcp)execute_61, (funcp)execute_63, (funcp)execute_64, (funcp)execute_117, (funcp)execute_121, (funcp)transaction_0, (funcp)transaction_4, (funcp)vhdl_transfunc_eventcallback, (funcp)transaction_12, (funcp)transaction_13, (funcp)transaction_14, (funcp)transaction_15, (funcp)transaction_16, (funcp)transaction_18, (funcp)transaction_19, (funcp)transaction_21, (funcp)transaction_22, (funcp)transaction_23, (funcp)transaction_24, (funcp)transaction_25, (funcp)transaction_26, (funcp)transaction_27, (funcp)transaction_28, (funcp)transaction_29, (funcp)transaction_30, (funcp)transaction_31, (funcp)transaction_32, (funcp)transaction_33, (funcp)transaction_34, (funcp)transaction_35, (funcp)transaction_36, (funcp)vlog_transfunc_eventcallback, (funcp)transaction_82, (funcp)transaction_83, (funcp)transaction_84, (funcp)transaction_85, (funcp)transaction_86, (funcp)transaction_87, (funcp)transaction_88, (funcp)transaction_89, (funcp)transaction_90, (funcp)transaction_91, (funcp)transaction_92, (funcp)transaction_93, (funcp)transaction_94, (funcp)transaction_95, (funcp)transaction_96, (funcp)transaction_97, (funcp)transaction_98};
-const int NumRelocateId= 80;
+funcp funcTab[79] = {(funcp)execute_64, (funcp)execute_65, (funcp)execute_27, (funcp)execute_28, (funcp)execute_29, (funcp)execute_30, (funcp)execute_31, (funcp)execute_32, (funcp)execute_33, (funcp)execute_34, (funcp)execute_35, (funcp)execute_36, (funcp)vlog_const_rhs_process_execute_0_fast_no_reg_no_agg, (funcp)execute_94, (funcp)execute_100, (funcp)execute_101, (funcp)execute_41, (funcp)execute_43, (funcp)execute_45, (funcp)execute_47, (funcp)execute_48, (funcp)vlog_simple_process_execute_0_fast_no_reg_no_agg, (funcp)execute_80, (funcp)execute_83, (funcp)execute_136, (funcp)execute_52, (funcp)execute_54, (funcp)execute_56, (funcp)execute_57, (funcp)execute_59, (funcp)execute_60, (funcp)execute_62, (funcp)execute_63, (funcp)execute_116, (funcp)execute_120, (funcp)transaction_0, (funcp)transaction_4, (funcp)vhdl_transfunc_eventcallback, (funcp)transaction_12, (funcp)transaction_13, (funcp)transaction_14, (funcp)transaction_15, (funcp)transaction_16, (funcp)transaction_18, (funcp)transaction_19, (funcp)transaction_21, (funcp)transaction_22, (funcp)transaction_23, (funcp)transaction_24, (funcp)transaction_25, (funcp)transaction_26, (funcp)transaction_27, (funcp)transaction_28, (funcp)transaction_29, (funcp)transaction_30, (funcp)transaction_31, (funcp)transaction_32, (funcp)transaction_33, (funcp)transaction_34, (funcp)transaction_35, (funcp)transaction_36, (funcp)vlog_transfunc_eventcallback, (funcp)transaction_82, (funcp)transaction_83, (funcp)transaction_84, (funcp)transaction_85, (funcp)transaction_86, (funcp)transaction_87, (funcp)transaction_88, (funcp)transaction_89, (funcp)transaction_90, (funcp)transaction_91, (funcp)transaction_92, (funcp)transaction_93, (funcp)transaction_94, (funcp)transaction_95, (funcp)transaction_96, (funcp)transaction_97, (funcp)transaction_98};
+const int NumRelocateId= 79;
 
 void relocate(char *dp)
 {
-	iki_relocate(dp, "xsim.dir/memory_TB_behav/xsim.reloc",  (void **)funcTab, 80);
+	iki_relocate(dp, "xsim.dir/memory_TB_behav/xsim.reloc",  (void **)funcTab, 79);
 	iki_vhdl_file_variable_register(dp + 32632);
 	iki_vhdl_file_variable_register(dp + 32688);
 
@@ -147,45 +146,45 @@ void simulate(char *dp)
 	iki_schedule_processes_at_time_zero(dp, "xsim.dir/memory_TB_behav/xsim.reloc");
 	// Initialize Verilog nets in mixed simulation, for the cases when the value at time 0 should be propagated from the mixed language Vhdl net
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 39648, dp + 39912, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 39536, dp + 39800, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 35152, dp + 39968, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 35152, dp + 39856, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 37008, dp + 40024, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 37064, dp + 39912, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 37104, dp + 40080, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 37160, dp + 39968, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 39704, dp + 40136, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 39592, dp + 40024, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 37352, dp + 40192, 0, 8, 7, 15, 9, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 37408, dp + 40080, 0, 8, 7, 15, 9, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 39760, dp + 40248, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 39648, dp + 40136, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 39816, dp + 40304, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 39704, dp + 40192, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 35152, dp + 52872, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 35152, dp + 52760, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 37008, dp + 52928, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 37064, dp + 52816, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 37160, dp + 52984, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 37216, dp + 52872, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 52664, dp + 53040, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 52552, dp + 52928, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 37064, dp + 53096, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 37120, dp + 52984, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 37312, dp + 53152, 0, 8, 7, 15, 9, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 37368, dp + 53040, 0, 8, 7, 15, 9, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 35376, dp + 53208, 0, 15, 0, 15, 16, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 35376, dp + 53096, 0, 15, 0, 15, 16, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 52720, dp + 53320, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 52608, dp + 53208, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 37008, dp + 53376, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 37064, dp + 53264, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 37216, dp + 53432, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 37272, dp + 53320, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 52776, dp + 53488, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 52664, dp + 53376, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 37352, dp + 53544, 0, 8, 7, 15, 9, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 37408, dp + 53432, 0, 8, 7, 15, 9, 1);
 	iki_execute_processes();
 
 	// Schedule resolution functions for the multiply driven Verilog nets that have strength
