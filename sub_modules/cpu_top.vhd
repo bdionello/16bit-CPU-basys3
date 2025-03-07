@@ -2,63 +2,63 @@
 library ieee ;
 use ieee.std_logic_1164.all ;
 use ieee.std_logic_arith.all ;
-use work.all;
 use work.cpu_types.all;
 
 entity cpu_top is port (
     stm_sys_clk : in std_logic;
     rst_ex : in std_logic; -- btnr button on baysys3 "right for run"
-    rst_ld : in std_logic; -- btnl button on baysys3  "left for load"
-    in_port : in std_logic_vector (15 downto 0); -- only 15 to 5 is used
-    out_port : out std_logic_vector (15 downto 0)
+    rst_ld : in std_logic; -- btnl button on baysys3 "left for load"
+    in_port : in word_t; -- only 15 to 5 is used
+    out_port : out word_t
     );
 end entity cpu_top ;
 
 architecture rtl of cpu_top is
-    signal sys_rst_s, reg_dest_s, branch_s, ram_mem_rd_s, ram_mem_to_reg_s, rom_mem_rd_s, rom_mem_to_reg_s, ram_mem_wr_s, rom_mem_wr_s, alu_src_s, reg_wr_s, reset_load: std_logic;
-    signal alu_op_s : std_logic_vector(2 downto 0);
-    signal inst_s : std_logic_vector (15 downto 0); -- instruction 
+    signal sys_rst_i : std_logic;
+    signal reg_dest_i : std_logic;
+    signal branch_i : std_logic;
+    signal mem_to_reg_i : std_logic;
+    signal mem_read_i : std_logic;
+    signal mem_write_i : std_logic;
+    signal alu_src_i : std_logic;
+    signal reg_write_i : std_logic;
+    signal alu_op_i : alu_op_t;
+    signal op_code_i : word_t; -- instruction 
+        
 begin
     dp_0: entity work.datapath port map(
         -- system ports
         sys_clk => stm_sys_clk,
-        sys_rst => sys_rst_s,
         in_port => in_port, 
         -- controller signal ports
-        reg_dst => reg_dest_s, -- mux control for which register to use from instruction; 
-        branch => branch_s,
-        ram_mem_rd => ram_mem_rd_s,
-        ram_mem_to_reg => ram_mem_to_reg_s,
-        rom_mem_rd => rom_mem_rd_s,
-        rom_mem_to_reg => rom_mem_to_reg_s,
-        alu_op => alu_op_s,
-        ram_mem_wr => ram_mem_wr_s,
-        rom_mem_wr => rom_mem_wr_s,
-        alu_src => alu_src_s,
-        reg_wr => reg_wr_s,
+        sys_rst => sys_rst_i,
+        alu_op => alu_op_i,                
+        alu_src => alu_src_i,        
+        reg_dst => reg_dest_i,
+        branch => branch_i,
+        mem_read => mem_read_i,
+        mem_write => mem_write_i,
+        mem_to_reg => mem_to_reg_i,
+        reg_write => reg_write_i,
         -- outputs
         data_out => out_port,
-        inst_out => inst_s
+        op_code_out => op_code_i
         );    
     ctrl_0: entity work.controller port map (
         -- inputs    
         clk => stm_sys_clk,
         reset_ex => rst_ex,
         reset_ld => rst_ld,
-        inst_in => inst_s,
+        op_code => op_code_i,
         -- output
-        reg_dst => reg_dest_s,
-        branch => branch_s,
-        ram_mem_rd => ram_mem_rd_s,
-        ram_mem_to_reg => ram_mem_to_reg_s,
-        rom_mem_rd => rom_mem_rd_s,
-        rom_mem_to_reg => rom_mem_to_reg_s,
-        alu_op => alu_op_s,
-        ram_mem_wr => ram_mem_wr_s,
-        rom_mem_wr => rom_mem_wr_s,
-        alu_src => alu_src_s,
-        reg_wr => reg_wr_s 
+        sys_rst => sys_rst_i,
+        alu_op => alu_op_i,                
+        alu_src => alu_src_i,        
+        reg_dst => reg_dest_i,
+        branch => branch_i,
+        mem_read => mem_read_i,
+        mem_write => mem_write_i,
+        mem_to_reg => mem_to_reg_i,
+        reg_write => reg_write_i       
         );
-
 end rtl ;
-

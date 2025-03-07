@@ -9,19 +9,17 @@ entity controller is
     clk : in std_logic;
     reset_ex: in std_logic;
     reset_ld: in std_logic;
-    inst_in : in std_logic_vector (15 downto 0);
+    op_code : in op_code_t;
     -- outputs
-    reg_dst : out std_logic;
-    branch : out std_logic;
-    ram_mem_rd : out std_logic;
-    ram_mem_to_reg : out std_logic;
-    rom_mem_rd : out std_logic;
-    rom_mem_to_reg : out std_logic;
-    alu_op : out std_logic_vector(2 downto 0);
-    ram_mem_wr : out std_logic;
-    rom_mem_wr : out std_logic;
+    sys_rst : out std_logic;
+    alu_op : out alu_op_t;
     alu_src : out std_logic;
-    reg_wr : out std_logic
+    reg_dst : out std_logic;
+    branch : out std_logic;    
+    mem_read : out std_logic;
+    mem_write : out std_logic;
+    mem_to_reg : out std_logic;    
+    reg_write : out std_logic    
     );
     end controller ;
 
@@ -40,24 +38,24 @@ begin
         end if;    
     end process;
      -- controller outputs
-    case state is
+--    case state is
      
-        when RESET =>         
-            reg_dst <= '0';
-            branch <= '0';
-            ram_mem_rd <= '0';
-            ram_mem_to_reg <= '0';
-            rom_mem_rd <=  '0';
-            rom_mem_to_reg <= '0';
-            alu_op <= "000";
-            ram_mem_wr <= '0';
-            rom_mem_wr <= '0';
-            alu_src <= '0';
-            reg_wr <= '0';
-            nextstate <= DECODE;            
+--        when RESET =>         
+--            reg_dst <= '0';
+--            branch <= '0';
+--            ram_mem_rd <= '0';
+--            ram_mem_to_reg <= '0';
+--            rom_mem_rd <=  '0';
+--            rom_mem_to_reg <= '0';
+--            alu_op <= "000";
+--            ram_mem_wr <= '0';
+--            rom_mem_wr <= '0';
+--            alu_src <= '0';
+--            reg_wr <= '0';
+--            nextstate <= DECODE;            
 --            when DECODE =>
 --                nextstate <= RESET;
 --            when others =>
 --                nextstate <= RESET;                           
-    end case;
+--    end case;
 end controller_arch ;

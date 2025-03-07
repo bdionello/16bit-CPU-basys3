@@ -1,3 +1,4 @@
+-- memory manager
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use work.cpu_types.all;
@@ -17,21 +18,21 @@ entity mem_manager is
         reset : in STD_LOGIC := '0';        
         write_enable : in STD_LOGIC := '0';
         read_data_enable : in STD_LOGIC := '0';
-        data_addr : in STD_LOGIC_VECTOR (15 downto 0) := X"0000";
-        data_in : in STD_LOGIC_VECTOR (15 downto 0):= X"0000"; -- All write data
-        data_out : out STD_LOGIC_VECTOR (15 downto 0):= X"0000";
+        data_addr : in STD_LOGIC_VECTOR (15 downto 0) := (others => '0');
+        data_in : in STD_LOGIC_VECTOR (15 downto 0):= (others => '0'); -- All write data
+        data_out : out STD_LOGIC_VECTOR (15 downto 0):= (others => '0');
         -- Instruction memory - read only
-        inst_addr : in STD_LOGIC_VECTOR (15 downto 0):= X"0000";
-        inst_out : out STD_LOGIC_VECTOR (15 downto 0):= X"0000";
+        inst_addr : in STD_LOGIC_VECTOR (15 downto 0):= (others => '0');
+        inst_out : out STD_LOGIC_VECTOR (15 downto 0):= (others => '0');
         -- read_inst_enable : in STD_LOGIC := '0'; -- used for debugging may not be needed for read only memory
         -- Memory Mapped ports
-        in_port : in STD_LOGIC_VECTOR (15 downto 0):= X"0000";
-        out_port : out STD_LOGIC_VECTOR (15 downto 0) := X"0000"
+        in_port : in STD_LOGIC_VECTOR (15 downto 0):= (others => '0');
+        out_port : out STD_LOGIC_VECTOR (15 downto 0) := (others => '0')
         );
 end mem_manager;
 
 architecture mem_manager_arch of mem_manager is
-    signal last_ram_data_read_i: std_logic_vector(15 downto 0) := X"0000";
+    signal last_ram_data_read_i: std_logic_vector(15 downto 0) := (others => '0');
     ----------- Control Signals
     signal reset_i : STD_LOGIC := '0';
     signal write_enable_i : STD_LOGIC_VECTOR (0 downto 0) := "0";
@@ -39,13 +40,13 @@ architecture mem_manager_arch of mem_manager is
     signal ram_a_enable_i : STD_LOGIC := '0';      
     signal ram_b_enable_i : STD_LOGIC := '0';       
     ----------- Data Signals
-    signal out_port_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000"; 
-    signal data_addr_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000";
-    signal inst_addr_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000";
-    signal data_in_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000";
-    signal rom_data_out_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000";
-    signal ram_a_data_out_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000";
-    signal ram_b_data_out_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000";    
+    signal out_port_i : STD_LOGIC_VECTOR (15 downto 0) := (others => '0'); 
+    signal data_addr_i : STD_LOGIC_VECTOR (15 downto 0) := (others => '0');
+    signal inst_addr_i : STD_LOGIC_VECTOR (15 downto 0) := (others => '0');
+    signal data_in_i : STD_LOGIC_VECTOR (15 downto 0) := (others => '0');
+    signal rom_data_out_i : STD_LOGIC_VECTOR (15 downto 0) := (others => '0');
+    signal ram_a_data_out_i : STD_LOGIC_VECTOR (15 downto 0) := (others => '0');
+    signal ram_b_data_out_i : STD_LOGIC_VECTOR (15 downto 0) := (others => '0');    
            
 begin
     -- Shift Byte addressable address to word addressable due to internal memory configuration of rom/ram 

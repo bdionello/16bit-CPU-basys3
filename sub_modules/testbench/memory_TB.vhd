@@ -23,15 +23,15 @@ architecture Behavioral of memory_TB is
     signal write_enable_i : STD_LOGIC := '0';
     signal read_data_enable_i : STD_LOGIC := '0';
     -- signal read_inst_enable_i : STD_LOGIC := '0';
-    signal data_in_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000"; -- All write data       
-    signal data_addr_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000";   
-    signal inst_addr_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000";        
+    signal data_in_i : STD_LOGIC_VECTOR (15 downto 0) := (others => '0'); -- All write data       
+    signal data_addr_i : STD_LOGIC_VECTOR (15 downto 0) := (others => '0');   
+    signal inst_addr_i : STD_LOGIC_VECTOR (15 downto 0) := (others => '0');        
     -- Measurment Signals
-    signal data_out_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000";
-    signal inst_out_i : STD_LOGIC_VECTOR (15 downto 0) := X"0000";    
+    signal data_out_i : STD_LOGIC_VECTOR (15 downto 0) := (others => '0');
+    signal inst_out_i : STD_LOGIC_VECTOR (15 downto 0) := (others => '0');    
     -- Memory mapped ports
-    signal in_port_i :  STD_LOGIC_VECTOR (15 downto 0) := X"0000";  -- Read from Dip switches
-    signal out_port_i :  STD_LOGIC_VECTOR (15 downto 0) := X"0000"; -- Write to Display   
+    signal in_port_i :  STD_LOGIC_VECTOR (15 downto 0) := (others => '0');  -- Read from Dip switches
+    signal out_port_i :  STD_LOGIC_VECTOR (15 downto 0) := (others => '0'); -- Write to Display   
        
 begin
     -- Test unit
@@ -75,7 +75,7 @@ begin
              wait until falling_edge(clk);
                                                 
              -- TEST 1 -- ROM READ all addresses 
-             instruction_address := X"0000";
+             instruction_address := (others => '0');
              -- run 512 times to read 1024 bytes
              -- start at 20ns  
              test1_rom_read : for k in 0 to (memory_size/2)-1 loop                            
@@ -154,10 +154,10 @@ begin
                     assert data_out_i = write_data report "Unexpected return value. data_out_i = " & integer'image(to_integer(unsigned(data_out_i)));
                     assert inst_out_i = instruction_address report "Unexpected return value. inst_out_i = " & integer'image(to_integer(unsigned(inst_out_i)));                 
                     -- increment variables
-                    instruction_address := std_logic_vector((unsigned(instruction_address)) + 2);
-                    write_address := std_logic_vector((unsigned(write_address)) + 2);
+                    instruction_address := std_logic_vector(unsigned(instruction_address) + 2);
+                    write_address := std_logic_vector(unsigned(write_address)+ 2);
                     write_data := NOT write_data;
-                    read_data_address := std_logic_vector((unsigned(read_data_address)) + 2);
+                    read_data_address := std_logic_vector(unsigned(read_data_address) + 2);
                  end loop test4_write_read;                 
                  
                  -- Reset before next test
