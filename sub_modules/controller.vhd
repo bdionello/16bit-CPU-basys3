@@ -12,19 +12,14 @@ entity controller is
     op_code : in op_code_t;
     -- outputs
     sys_rst : out std_logic;
-    alu_op : out alu_op_t;
-    alu_src : out std_logic;
-    reg_dst : out std_logic;
-    branch : out std_logic;    
-    mem_read : out std_logic;
-    mem_write : out std_logic;
-    mem_to_reg : out std_logic;    
-    reg_write : out std_logic    
+    execute_ctl : out execute_type := execute_type_init_c; 
+    memory_ctl : out memory_type := memory_type_init_c;   
+    write_back_ctl : out write_back_type := write_back_type_init_c 
     );
     end controller ;
-
+-- RESET_STATE, NOP, ALU_OP, BRANCH, RETURN_OP, LOAD, STORE
 architecture controller_arch of controller is    
-    signal state, nextstate: statetype;
+    signal state, nextstate: ctrl_state_type;
         
 begin
     -- state register

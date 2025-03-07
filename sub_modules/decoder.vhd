@@ -6,23 +6,8 @@ use work.cpu_types.all ;
 
 entity decoder is
     port(
-        instr        : in std_logic_vector(15 downto 0);  -- Input instruction
-        opcode       : out std_logic_vector(6 downto 0);  -- Opcode
-        ra           : out std_logic_vector(2 downto 0);  -- Register A
-        rb           : out std_logic_vector(2 downto 0);  -- Register B
-        rc           : out std_logic_vector(2 downto 0);  -- Register C
-        shift        : out std_logic_vector(3 downto 0);  -- Shift amount
-
-        disp_s       : out std_logic_vector(5 downto 0);  -- Displacement (short)
-        disp_l       : out std_logic_vector(8 downto 0);  -- Displacement (long)
-
-        m_1          : out std_logic;                     -- Mode bit
-        in_port_ctl  : out std_logic;                     -- Control line for IN inst. mux
-        out_port_ctl : out std_logic;                     -- Control line for OUT inst. mux
-        imm          : out std_logic_vector(7 downto 0);  -- Immediate value
-
-        r_dest       : out std_logic_vector(2 downto 0);  -- Destination register
-        r_src        : out std_logic_vector(2 downto 0)   -- Source register
+        instr            : in std_logic_vector(15 downto 0);  -- Input instruction
+        instr_decoded    : out  instruction_type
     );
 end decoder;
 
@@ -37,69 +22,57 @@ begin
     -- Decode process
     decode: process(operation, instr) is
     begin
-        -- Default values
-        opcode <= (others => '0');
-        ra <= (others => '0');
-        rb <= (others => '0');
-        rc <= (others => '0');
-        shift <= (others => '0');
-        disp_s <= (others => '0');
-        disp_l <= (others => '0');
-        in_port_ctl <= '0';
-        out_port_ctl <= '0';
-        m_1 <= '0';
-        imm <= (others => '0');
-        r_dest <= (others => '0');
-        r_src <= (others => '0');
+     -- default
+     instr_decoded <= instruction_type_init_c;
 
         case operation is
             when NOP | RETURN_OP =>
-                opcode <= instr(15 downto 9);
+                instr_decoded.opcode <= instr(15 downto 9);
 
             when ADD | SUB | MUL | NAND_OP =>
-                opcode <= instr(15 downto 9);
-                ra <= instr(8 downto 6);
-                rb <= instr(5 downto 3);
-                rc <= instr(2 downto 0);
+                instr_decoded.opcode <= instr(15 downto 9);
+                instr_decoded.ra <= instr(8 downto 6);
+                instr_decoded.rb <= instr(5 downto 3);
+                instr_decoded.rc <= instr(2 downto 0);
 
             when SHL_OP | SHR_OP =>
-                opcode <= instr(15 downto 9);
-                ra <= instr(8 downto 6);
-                shift <= instr(3 downto 0);
+                instr_decoded.opcode <= instr(15 downto 9);
+                instr_decoded.ra <= instr(8 downto 6);
+                instr_decoded.shift <= instr(3 downto 0);
 
             when TEST =>
-                opcode <= instr(15 downto 9);
-                ra <= instr(8 downto 6);                
+                instr_decoded.opcode <= instr(15 downto 9);
+                instr_decoded.ra <= instr(8 downto 6);                
 
             when OUT_OP =>
-                opcode <= instr(15 downto 9);
-                ra <= instr(8 downto 6);
-                out_port_ctl <= '1';
+                instr_decoded.opcode <= instr(15 downto 9);
+                instr_decoded.ra <= instr(8 downto 6);
+                instr_decoded.out_port_ctl <= '1';
                 
             when IN_OP =>
-                opcode <= instr(15 downto 9);
-                ra <= instr(8 downto 6);
-                in_port_ctl <= '1';                                
+                instr_decoded.opcode <= instr(15 downto 9);
+                instr_decoded.ra <= instr(8 downto 6);
+                instr_decoded.in_port_ctl <= '1';                                
 
             when BRR | BRR_N | BRR_Z =>
-                opcode <= instr(15 downto 9);
-                disp_l <= instr(8 downto 0);
+                instr_decoded.opcode <= instr(15 downto 9);
+                instr_decoded.disp_l <= instr(8 downto 0);
 
             when BR | BR_N | BR_Z | BR_SUB =>
-                opcode <= instr(15 downto 9);
-                ra <= instr(8 downto 6);
-                disp_s <= instr(5 downto 0);
+                instr_decoded.opcode <= instr(15 downto 9);
+                instr_decoded.ra <= instr(8 downto 6);
+                instr_decoded.disp_s <= instr(5 downto 0);
 
             when LOAD | STORE | MOV =>
-                opcode <= instr(15 downto 9);
-                r_dest <= instr(8 downto 6);
-                r_src <= instr(5 downto 3);
+                instr_decoded.opcode <= instr(15 downto 9);
+                instr_decoded.r_dest <= instr(8 downto 6);
+                instr_decoded.r_src <= instr(5 downto 3);
 
             when LOADIMM =>
-                opcode <= instr(15 downto 9);
-                m_1 <= instr(8);
-                imm <= instr(7 downto 0);
-
+                instr_decoded.opcode <= instr(15 downto 9);
+                instr_decoded.m_1 <= instr(8);
+                instr_decoded.imm <= instr(7 downto 0);
+                
             when others => NULL;
         end case;
     end process; -- Decode

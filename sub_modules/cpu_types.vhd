@@ -4,11 +4,70 @@ use ieee.std_logic_1164.all ;
 use ieee.std_logic_arith.all ;
 
 package cpu_types is
-    type state_type is (RESET_STATE, DECODE);
+    type ctrl_state_type is (RESET_STATE, NOP_STATE, ALU_STATE, BRANCH_STATE, RETURN_OP_STATE, LOAD_STATE, STORE_STATE);
     subtype word_t is std_logic_vector(15 downto 0); -- 2 bytes word = 16 bits
     subtype op_code_t is std_logic_vector(6 downto 0);
     subtype alu_op_t is std_logic_vector(2 downto 0);
     
+    type execute_type is record
+        alu_op : alu_op_t;
+        alu_src : std_logic;
+        reg_dst : std_logic;        
+    end record execute_type;
+
+    type memory_type is record
+        branch : std_logic;    
+        memory_read : std_logic;
+        memory_write : std_logic;  
+    end record memory_type;
+
+    type write_back_type is record
+        mem_to_reg : std_logic;    
+        reg_write : std_logic;   
+    end record write_back_type;
+    
+    type instruction_type is record
+        opcode       :  std_logic_vector(6 downto 0);  -- Opcode
+        ra           :  std_logic_vector(2 downto 0);  -- Register A
+        rb           :  std_logic_vector(2 downto 0);  -- Register B
+        rc           :  std_logic_vector(2 downto 0);  -- Register C
+        shift        :  std_logic_vector(3 downto 0);  -- Shift amount
+        
+        disp_s       :  std_logic_vector(5 downto 0);  -- Displacement (short)
+        disp_l       :  std_logic_vector(8 downto 0);  -- Displacement (long)
+        
+        m_1          :  std_logic;                     -- Mode bit
+        in_port_ctl  :  std_logic;                     -- Control line for IN inst. mux
+        out_port_ctl :  std_logic;                     -- Control line for OUT inst. mux
+        imm          :  std_logic_vector(7 downto 0);  -- Immediate value
+        
+        r_dest       :  std_logic_vector(2 downto 0);  -- Destination register
+        r_src        :  std_logic_vector(2 downto 0);  -- Source register    
+    end record instruction_type;
+    
+    constant instruction_type_init_c : instruction_type := (opcode => (others => '0'),
+                                                            ra => (others => '0'),
+                                                            rb => (others => '0'),
+                                                            rc => (others => '0'),
+                                                            shift => (others => '0'),
+                                                            disp_s => (others => '0'),
+                                                            disp_l => (others => '0'),
+                                                            in_port_ctl => '0',
+                                                            out_port_ctl => '0',
+                                                            m_1 => '0',
+                                                            imm => (others => '0'),
+                                                            r_dest => (others => '0'),
+                                                            r_src => (others => '0') );
+        
+    constant execute_type_init_c : execute_type := (alu_op => (others => '0'),
+                                                    alu_src => '0',
+                                                    reg_dst => '0');
+    constant memory_type_init_c : memory_type := (branch => '0',   
+                                                  memory_read => '0', 
+                                                  memory_write => '0');  
+    constant write_back_type_init_c : write_back_type := ( mem_to_reg  => '0',    
+                                                           reg_write  => '0');  
+                                                             
     constant step_size_c : word_t := X"0002";
            
     -- ALU Operations

@@ -14,34 +14,24 @@ entity cpu_top is port (
 end entity cpu_top ;
 
 architecture rtl of cpu_top is
-    signal sys_rst_i : std_logic;
-    signal reg_dest_i : std_logic;
-    signal branch_i : std_logic;
-    signal mem_to_reg_i : std_logic;
-    signal mem_read_i : std_logic;
-    signal mem_write_i : std_logic;
-    signal alu_src_i : std_logic;
-    signal reg_write_i : std_logic;
-    signal alu_op_i : alu_op_t;
-    signal op_code_i : word_t; -- instruction 
+    signal sys_rst_i : std_logic;    
+    signal ex_stage_ctl_i : execute_type;
+    signal mem_stage_ctl_i : memory_type;   
+    signal wb_stage_ctl_i : write_back_type;    
+    signal op_code_i : op_code_t; -- instruction 
         
 begin
     dp_0: entity work.datapath port map(
-        -- system ports
+        -- inputs
         sys_clk => stm_sys_clk,
-        in_port => in_port, 
-        -- controller signal ports
         sys_rst => sys_rst_i,
-        alu_op => alu_op_i,                
-        alu_src => alu_src_i,        
-        reg_dst => reg_dest_i,
-        branch => branch_i,
-        mem_read => mem_read_i,
-        mem_write => mem_write_i,
-        mem_to_reg => mem_to_reg_i,
-        reg_write => reg_write_i,
+        in_port => in_port,
+        -- control inputs
+        execute_ctl => ex_stage_ctl_i,
+        memory_ctl => mem_stage_ctl_i,
+        write_back_ctl => wb_stage_ctl_i, 
         -- outputs
-        data_out => out_port,
+        out_port => out_port,
         op_code_out => op_code_i
         );    
     ctrl_0: entity work.controller port map (
@@ -52,13 +42,8 @@ begin
         op_code => op_code_i,
         -- output
         sys_rst => sys_rst_i,
-        alu_op => alu_op_i,                
-        alu_src => alu_src_i,        
-        reg_dst => reg_dest_i,
-        branch => branch_i,
-        mem_read => mem_read_i,
-        mem_write => mem_write_i,
-        mem_to_reg => mem_to_reg_i,
-        reg_write => reg_write_i       
+        execute_ctl => ex_stage_ctl_i,
+        memory_ctl => mem_stage_ctl_i,
+        write_back_ctl => wb_stage_ctl_i    
         );
 end rtl ;
