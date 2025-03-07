@@ -17,7 +17,7 @@ entity controller is
     write_back_ctl : out write_back_type := write_back_type_init_c 
     );
     end controller ;
--- RESET_STATE, NOP, ALU_OP, BRANCH, RETURN_OP, LOAD, STORE
+-- RESET_STATE, NOP_STATE, ALU_STATE, BRANCH_STATE, RETURN_OP_STATE, LOAD_STATE, STORE_STATE
 architecture controller_arch of controller is    
     signal state, nextstate: ctrl_state_type;
         
@@ -32,25 +32,31 @@ begin
             state <= nextstate;    
         end if;    
     end process;
+    -- Update state
+    nextstate <= NOP_STATE when op_code = NOP else
+                 ALU_STATE when (op_code = ADD or
+                                 op_code = SUB or
+                                 op_code = MUL or
+                                 op_code = NAND_OP or
+                                 op_code = SHL_OP or
+                                 op_code = TEST) else
+                 BRANCH_STATE when (op_code = BRR or
+                                    op_code = BRR_N or 
+                                    op_code = BRR_Z or
+                                    op_code = BR or
+                                    op_code = BR_N or
+                                    op_code = BR_Z or
+                                    op_code = BR_SUB) else 
+                 RETURN_OP_STATE when op_code = RETURN_OP else
+                 LOAD_STATE when op_code = LOAD else
+                 STORE_STATE when op_code = STORE else
+                 RESET_STATE;
      -- controller outputs
---    case state is
+          
+     sys_rst <= '1' when state = RESET_STATE else
+                '0'; 
+     execute_ctl <= execute_type_init_c when state = RESET_STATE;
+     memory_ctl <= memory_type_init_c when state = RESET_STATE;  
+     write_back_ctl <= write_back_type_init_c when state = RESET_STATE;
      
---        when RESET =>         
---            reg_dst <= '0';
---            branch <= '0';
---            ram_mem_rd <= '0';
---            ram_mem_to_reg <= '0';
---            rom_mem_rd <=  '0';
---            rom_mem_to_reg <= '0';
---            alu_op <= "000";
---            ram_mem_wr <= '0';
---            rom_mem_wr <= '0';
---            alu_src <= '0';
---            reg_wr <= '0';
---            nextstate <= DECODE;            
---            when DECODE =>
---                nextstate <= RESET;
---            when others =>
---                nextstate <= RESET;                           
---    end case;
 end controller_arch ;
