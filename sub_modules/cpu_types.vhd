@@ -4,19 +4,26 @@ use ieee.std_logic_1164.all ;
 use ieee.std_logic_arith.all ;
 
 package cpu_types is
-    type ctrl_state_type is (RESET_STATE, NOP_STATE, ALU_STATE, BRANCH_STATE, RETURN_OP_STATE, LOAD_STATE, STORE_STATE);
+    type boot_mode_type is (BOOT_LOAD, BOOT_EXECUTE, RUN);
+    type ctrl_state_type is (RESET_STATE, BOOT_STATE, NOP_STATE, A1_STATE, A2_STATE, A3_STATE, B1_STATE, B2_STATE, RETURN_STATE, L1_LOAD_IMM_STATE, L2_LOAD_STATE, L2_STORE_STATE);
     subtype word_t is std_logic_vector(15 downto 0); -- 2 bytes word = 16 bits
     subtype op_code_t is std_logic_vector(6 downto 0);
     subtype alu_op_t is std_logic_vector(2 downto 0);
     
+    -- Record types
+    type decode_type is record
+        reg_src : std_logic;
+        reg_dst : std_logic;        
+    end record decode_type;
+        
     type execute_type is record
         alu_op : alu_op_t;
-        alu_src : std_logic;
-        reg_dst : std_logic;        
+        alu_src : std_logic;        
     end record execute_type;
 
     type memory_type is record
-        branch : std_logic;    
+        branch_n : std_logic;
+        branch_z : std_logic;    
         memory_read : std_logic;
         memory_write : std_logic;  
     end record memory_type;
@@ -45,6 +52,7 @@ package cpu_types is
         r_src        :  std_logic_vector(2 downto 0);  -- Source register    
     end record instruction_type;
     
+    -- Initalization constants for record types
     constant instruction_type_init_c : instruction_type := (opcode => (others => '0'),
                                                             ra => (others => '0'),
                                                             rb => (others => '0'),
@@ -58,13 +66,18 @@ package cpu_types is
                                                             imm => (others => '0'),
                                                             r_dest => (others => '0'),
                                                             r_src => (others => '0') );
-        
-    constant execute_type_init_c : execute_type := (alu_op => (others => '0'),
-                                                    alu_src => '0',
-                                                    reg_dst => '0');
-    constant memory_type_init_c : memory_type := (branch => '0',   
-                                                  memory_read => '0', 
-                                                  memory_write => '0');  
+                                                            
+    constant decode_type_init_c : decode_type := ( reg_src => '0',
+                                                   reg_dst => '0');
+                                                        
+    constant execute_type_init_c : execute_type := ( alu_op => (others => '0'),
+                                                     alu_src => '0');
+                                                     
+    constant memory_type_init_c : memory_type := ( branch_n => '0',
+                                                   branch_z => '0',   
+                                                   memory_read => '0', 
+                                                   memory_write => '0')
+                                                   ;  
     constant write_back_type_init_c : write_back_type := ( mem_to_reg  => '0',    
                                                            reg_write  => '0');  
                                                              
