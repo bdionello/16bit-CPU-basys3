@@ -1,8 +1,8 @@
 -- datapath
 library ieee ;
 use ieee.std_logic_1164.all;
-use ieee.std_logic_arith.all;
---use IEEE.NUMERIC_STD.ALL;
+use ieee.numeric_std.all;
+use ieee.std_logic_unsigned.all;
 use work.cpu_types.all;
 
 entity datapath is
@@ -32,12 +32,12 @@ architecture data_path_arch of datapath is
     signal inst_addr_f : word_t := (others => '0');
     signal pc_next_f : word_t := (others => '0');    
     signal instruction_f : word_t := (others => '0');
-    signal instr_decoded_f : instruction_type := instruction_type_init_c;
-  
+      
     
     -- Decode stage signals -- Denoted by:'_d'
     signal decode_ctl_d :  decode_type := decode_type_init_c; -- used in decode stage
     signal instruction_d : word_t := (others => '0');
+    signal instr_decoded_d : instruction_type := instruction_type_init_c;
     signal pc_next_d : word_t := (others => '0');
     -- Signals for register_file
     signal rd_data1_d    : word_t; -- Read data 1 from register file
@@ -48,16 +48,18 @@ architecture data_path_arch of datapath is
     signal wr_index_d  : std_logic_vector(2 downto 0);
     signal rd_index1_d : std_logic_vector(2 downto 0);
     signal rd_index2_d : std_logic_vector(2 downto 0);      
-      
+    signal imm_fwd_d   : std_logic_vector(7 downto 0);
     -- Execute stage signals -- Denoted by:'_ex'
     signal execute_ctl_ex :  execute_type := execute_type_init_c; -- used in execute stage
     signal memory_ctl_ex :  memory_type := memory_type_init_c;    -- pass through
     signal writeback_ctl_ex :  write_back_type := write_back_type_init_c; -- pass through
+    signal pc_next_ex : word_t := (others => '0');
     signal wr_index_ex  : std_logic_vector(2 downto 0);
-        
+    signal imm_fwd_ex     : std_logic_vector(7 downto 0);    
     -- Memory stage signals -- Denoted by:'_mem'
     signal memory_ctl_mem :  memory_type := memory_type_init_c; -- used in memory stage
     signal writeback_ctl_mem :  write_back_type := write_back_type_init_c; -- pass through
+    signal pc_next_mem : word_t := (others => '0');
     signal alu_z_mem : std_logic := '0';
     signal alu_n_mem : std_logic := '0';
     signal pc_src_mem : std_logic := '0'; -- signal to select pc mux        
@@ -65,13 +67,16 @@ architecture data_path_arch of datapath is
     signal data_address_mem : word_t := (others => '0');
     signal write_data_mem : word_t := (others => '0');
     signal memory_data_mem : word_t := (others => '0');
+    signal wr_data_fwd_mem     : word_t; -- Data to write to register file
     signal wr_index_mem  : std_logic_vector(2 downto 0); 
-    
+    signal imm_fwd_mem    : std_logic_vector(7 downto 0); 
     -- Write back stage signals -- Denoted by:'_wb'
-    signal writeback_ctl_wb :  write_back_type := write_back_type_init_c; -- used in wb stage
-    signal memory_data_wb : word_t := (others => '0');
-    signal wr_index_wb  : std_logic_vector(2 downto 0); 
-    
+    signal writeback_ctl_wb   : write_back_type := write_back_type_init_c; -- used in wb stage
+    signal pc_next_wb     : word_t := (others => '0');
+    signal memory_data_wb     : word_t := (others => '0');
+    signal wr_data_fwd_wb     : word_t; -- Data to write to register file
+    signal wr_index_wb        : std_logic_vector(2 downto 0); 
+    signal imm_fwd_wb    : std_logic_vector(7 downto 0);
     signal alu_result_wb : word_t; -- Data to write to register file
        
     begin
@@ -88,14 +93,22 @@ architecture data_path_arch of datapath is
                        pc_out_f;
         ---------- Decode
         -- Write index mux       
-        wr_index_d <= instr_decoded_f.ra when decode_ctl_d.reg_dst = '0' else "111"; -- Write to ra or r7 for LOADIMM     
+        wr_index_d <= instr_decoded_d.ra when decode_ctl_d.reg_dst = '0' else "111"; -- Write to ra or r7 for LOADIMM and BR.SUB     
         -- register index mux                    
-        rd_index1_d <= instr_decoded_f.rb when decode_ctl_d.reg_src = '0' else 
-                       instr_decoded_f.ra;                             
-        rd_index2_d <= instr_decoded_f.rc when decode_ctl_d.reg_src = '0' else "000";        
+        rd_index1_d <= instr_decoded_d.rb when decode_ctl_d.reg_src = '0' else 
+                       instr_decoded_d.ra;                             
+        rd_index2_d <= instr_decoded_d.rc when decode_ctl_d.reg_src = '0' else "000";
+        imm_fwd_d <=   std_logic_vector(shift_left(unsigned(instr_decoded_d.imm) , 8)) when decode_ctl_d.imm_mode = '1' else
+                       instr_decoded_d.imm when decode_ctl_d.imm_mode = '0';
+        
+              
         ---------- Write back 
         -- register file write data mux
-        wr_data_d <= memory_data_wb when writeback_ctl_wb.mem_to_reg = '1' else alu_result_wb;         
+        wr_data_d <= memory_data_wb when writeback_ctl_wb.wb_src = MEMORY_DATA else
+                     alu_result_wb when writeback_ctl_wb.wb_src = ALU_RES else
+                     imm_fwd_wb when writeback_ctl_wb.wb_src = IMM_FWD else
+                     pc_next_wb when writeback_ctl_wb.wb_src = RETURN_PC else
+                     X"0000" when writeback_ctl_wb.wb_src = NONE;          
              
         mem: entity work.mem_manager
             port map (
@@ -149,7 +162,7 @@ architecture data_path_arch of datapath is
         decoder: entity work.decoder
             port map (
                 instr => instruction_d,   -- Input instruction
-                instr_decoded => instr_decoded_f 
+                instr_decoded => instr_decoded_d 
         );       
         -- Instantiate the register_file
         Register_File_inst: entity work.register_file
