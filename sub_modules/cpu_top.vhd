@@ -1,7 +1,7 @@
 -- CPU
 library ieee ;
 use ieee.std_logic_1164.all ;
-use ieee.std_logic_arith.all ;
+use ieee.numeric_std.all;
 use work.cpu_types.all;
 
 entity cpu_top is port (
