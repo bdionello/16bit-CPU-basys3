@@ -1,9 +1,11 @@
 -- subtype and constants used in design
 library ieee ;
 use ieee.std_logic_1164.all ;
-use ieee.std_logic_arith.all ;
+use ieee.numeric_std.all;
 
 package cpu_types is
+    type alu_op_type is (alu_NOP, alu_ADD, alu_SUB, alu_MUL, alu_NAND, alu_SHL, alu_SHR, alu_TEST); 
+    type wb_src_type is (ALU_RES, MEMORY_DATA, RETURN_PC, IMM_FWD, NONE);
     type boot_mode_type is (BOOT_LOAD, BOOT_EXECUTE, RUN);
     type ctrl_state_type is (RESET_STATE, BOOT_STATE, NOP_STATE, A1_STATE, A2_STATE, A3_STATE, B1_STATE, B2_STATE, RETURN_STATE, L1_LOAD_IMM_STATE, L2_LOAD_STATE, L2_STORE_STATE);
     subtype word_t is std_logic_vector(15 downto 0); -- 2 bytes word = 16 bits
@@ -13,11 +15,12 @@ package cpu_types is
     -- Record types
     type decode_type is record
         reg_src : std_logic;
-        reg_dst : std_logic;        
+        reg_dst : std_logic;
+        imm_mode : std_logic;        
     end record decode_type;
         
     type execute_type is record
-        alu_op : alu_op_t;
+        alu_op : alu_op_type;
         alu_src : std_logic;        
     end record execute_type;
 
@@ -29,7 +32,7 @@ package cpu_types is
     end record memory_type;
 
     type write_back_type is record
-        mem_to_reg : std_logic;    
+        wb_src : wb_src_type;    
         reg_write : std_logic;   
     end record write_back_type;
     
@@ -68,9 +71,10 @@ package cpu_types is
                                                             r_src => (others => '0') );
                                                             
     constant decode_type_init_c : decode_type := ( reg_src => '0',
-                                                   reg_dst => '0');
+                                                   reg_dst => '0',
+                                                   imm_mode => '0');
                                                         
-    constant execute_type_init_c : execute_type := ( alu_op => (others => '0'),
+    constant execute_type_init_c : execute_type := ( alu_op => alu_NOP,
                                                      alu_src => '0');
                                                      
     constant memory_type_init_c : memory_type := ( branch_n => '0',
@@ -78,7 +82,7 @@ package cpu_types is
                                                    memory_read => '0', 
                                                    memory_write => '0')
                                                    ;  
-    constant write_back_type_init_c : write_back_type := ( mem_to_reg  => '0',    
+    constant write_back_type_init_c : write_back_type := ( wb_src  => NONE,    
                                                            reg_write  => '0');  
                                                              
     constant step_size_c : word_t := X"0002";
