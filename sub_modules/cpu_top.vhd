@@ -14,11 +14,14 @@ entity cpu_top is port (
 end entity cpu_top ;
 
 architecture rtl of cpu_top is
-    signal sys_rst_i : std_logic;    
+    signal sys_rst_i : std_logic;
+    signal reg_src_i : std_logic;
+    signal decode_ctl_i : decode_type;   
     signal ex_stage_ctl_i : execute_type;
     signal mem_stage_ctl_i : memory_type;   
     signal wb_stage_ctl_i : write_back_type;    
-    signal op_code_i : op_code_t; -- instruction 
+    signal op_code_i : op_code_t; -- instruction
+    signal boot_mode_i : boot_mode_type := BOOT_LOAD; 
         
 begin
     dp_0: entity work.datapath port map(
@@ -27,6 +30,8 @@ begin
         sys_rst => sys_rst_i,
         in_port => in_port,
         -- control inputs
+        boot_mode => boot_mode_i,
+        decode_ctl => decode_ctl_i,
         execute_ctl => ex_stage_ctl_i,
         memory_ctl => mem_stage_ctl_i,
         write_back_ctl => wb_stage_ctl_i, 
@@ -42,6 +47,8 @@ begin
         op_code => op_code_i,
         -- output
         sys_rst => sys_rst_i,
+        boot_mode => boot_mode_i,
+        decode_ctl => decode_ctl_i,
         execute_ctl => ex_stage_ctl_i,
         memory_ctl => mem_stage_ctl_i,
         write_back_ctl => wb_stage_ctl_i    
