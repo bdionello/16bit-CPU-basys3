@@ -27,27 +27,28 @@ signal reg_file : reg_array;
 
 begin
     --write operation 
-    process(clk)
-        begin
-            if(clk='0' and clk'event) then if(rst='1') then
+    process(clk,rst)
+        begin        
+            if(rst='1') then
                 for i in 0 to 7 loop
                     reg_file(i)<= (others => '0'); 
-                end loop;
-            elsif(wr_enable='1') then
-            case wr_index(2 downto 0) is
-                when "000" => reg_file(0) <= wr_data;
-                when "001" => reg_file(1) <= wr_data;
-                when "010" => reg_file(2) <= wr_data;
-                when "011" => reg_file(3) <= wr_data;
-                when "100" => reg_file(4) <= wr_data;
-                when "101" => reg_file(5) <= wr_data;
-                when "110" => reg_file(6) <= wr_data;
-                when "111" => reg_file(7) <= wr_data;
-                when others => NULL; end case;
+                end loop;        
+            if falling_edge(clk) and (wr_enable='1') then   -- write on falling edge          
+                case wr_index(2 downto 0) is
+                    when "000" => reg_file(0) <= wr_data;
+                    when "001" => reg_file(1) <= wr_data;
+                    when "010" => reg_file(2) <= wr_data;
+                    when "011" => reg_file(3) <= wr_data;
+                    when "100" => reg_file(4) <= wr_data;
+                    when "101" => reg_file(5) <= wr_data;
+                    when "110" => reg_file(6) <= wr_data;
+                    when "111" => reg_file(7) <= wr_data;
+                    when others => NULL; end case;
             end if; 
         end if;
     end process;
-    --read operation
+    
+    --read operation -- read concurrantly
     rd_data1 <=	
     reg_file(0) when(rd_index1="000") else
     reg_file(1) when(rd_index1="001") else
