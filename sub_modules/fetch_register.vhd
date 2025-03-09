@@ -15,14 +15,14 @@ use work.cpu_types.all;
 entity fetch_register is
     Port ( 
            -- inputs 
-           rst : in std_logic;
-           clk: in std_logic;
-           wr_enable: in std_logic;
+           rst : in std_logic := '0';
+           clk: in std_logic := '0';
+           wr_enable: in std_logic := '0';
            wr_instruction : in word_t;
-           wr_pc : in word_t;
+           wr_pc : in word_t := (others=>'0');
            -- outputs
-           rd_instruction : out word_t;
-           rd_pc : out word_t
+           rd_instruction : out word_t := (others=>'0');
+           rd_pc : out word_t := (others=>'0')
            );
 end fetch_register;
 
