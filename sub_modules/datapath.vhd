@@ -33,7 +33,6 @@ architecture data_path_arch of datapath is
     signal instruction_f : word_t := (others => '0');      
     
     -- Decode stage signals -- Denoted by:'_d'
-    signal decode_ctl_d :  decode_type := decode_type_init_c; -- used in decode stage
     signal instruction_d : word_t := (others => '0');
     signal instr_decoded_d : instruction_type := instruction_type_init_c;
     signal pc_next_d : word_t := (others => '0');
@@ -95,21 +94,21 @@ architecture data_path_arch of datapath is
         -- program counter mux
 
         -- pc source mux
-        pc_in_f <= pc_branch_addr_mem when pc_src_mem = '1' else pc_next_f; -- TODO AND with alu flag condition
-        inst_addr_f <= X"0000" when boot_mode = BOOT_EXECUTE else
-                       X"0002" when boot_mode = BOOT_LOAD else
-                       pc_out_f;
+        pc_in_f <= pc_branch_addr_mem when (pc_src_mem = '1') and (boot_mode = RUN) else                   
+                   X"0000" when boot_mode = BOOT_EXECUTE else
+                   X"0002" when boot_mode = BOOT_LOAD else
+                   pc_next_mem;
                        
         ---------- Decode
         -- Write index mux       
-        wr_index_d <= instr_decoded_d.ra when decode_ctl_d.reg_dst = '0' else "111"; -- Write to ra or r7 for LOADIMM and BR.SUB     
+        wr_index_d <= instr_decoded_d.ra when decode_ctl.reg_dst = '0' else "111"; -- Write to ra or r7 for LOADIMM and BR.SUB     
         -- register index mux                    
-        rd_index1_d <= instr_decoded_d.rb when decode_ctl_d.reg_src = '0' else 
+        rd_index1_d <= instr_decoded_d.rb when decode_ctl.reg_src = '0' else 
                        instr_decoded_d.ra;                             
-        rd_index2_d <= instr_decoded_d.rc when decode_ctl_d.reg_src = '0' else "000";
+        rd_index2_d <= instr_decoded_d.rc when decode_ctl.reg_src = '0' else "000";
         
-        imm_temp_d <=   (instr_decoded_d.imm & X"00") when (instr_decoded_d.m_1 = '1') and (decode_ctl_d.imm_op = '1') else
-                        (X"00" & instr_decoded_d.imm) when (instr_decoded_d.m_1 = '0') and (decode_ctl_d.imm_op = '1') else
+        imm_temp_d <=   (instr_decoded_d.imm & X"00") when (instr_decoded_d.m_1 = '1') and (decode_ctl.imm_op = '1') else
+                        (X"00" & instr_decoded_d.imm) when (instr_decoded_d.m_1 = '0') and (decode_ctl.imm_op = '1') else
                          X"0000";
         ---------- Execute
                 
@@ -124,7 +123,7 @@ architecture data_path_arch of datapath is
                      alu_result_wb when write_back_ctl_wb.wb_src = ALU_RES else
                      imm_fwd_wb when write_back_ctl_wb.wb_src = IMM_FWD else
                      pc_next_wb when write_back_ctl_wb.wb_src = RETURN_PC else
-                     X"0000" when write_back_ctl_wb.wb_src = NONE;
+                     X"0000";
                      
         --------------- Fetch/Memory Stage Modules -------------------                                     
         -- Fetch/Memory
@@ -151,11 +150,11 @@ architecture data_path_arch of datapath is
             port map (
                 rst => sys_rst,
                 clk => sys_clk,
-                --read signals
-                rd_instruction => pc_in_f, --: out std_logic_vector(15 downto 0);
+                wr_enable => '1', -- TODO: connect for hazard control
                 --write signals
-                wr_instruction => pc_out_f, --: in std_logic_vector(15 downto 0); 
-                wr_enable => '1' -- TODO: connect for hazard control          
+                wr_instruction => pc_in_f, --: in std_logic_vector(15 downto 0);                
+                --read signals
+                rd_instruction => inst_addr_f --: out std_logic_vector(15 downto 0);          
         );
         -- Fetch
         adder_pc: entity work.adder
@@ -202,7 +201,7 @@ architecture data_path_arch of datapath is
         -- concatonate imm_upper and imm_lower    
         immconcat: entity work.immediate_concatenator 
             port map(
-                clear_low => decode_ctl_d.imm_op, -- clear when not a LOADIMM op  
+                clear_low => decode_ctl.imm_op, -- clear when not a LOADIMM op  
                 imm_in => imm_temp_d,
                 imm_out => imm_fwd_d          
             );
