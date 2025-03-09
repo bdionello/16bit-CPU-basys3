@@ -63,11 +63,8 @@ begin
     -- controller outputs  
     -- RESET STATE        
     sys_rst <= '1' when state = RESET_STATE else'0';
-    op_code_i <= (others=>'1') when state = RESET_STATE else op_code;
-    decode_ctl <= decode_type_init_c when state = RESET_STATE;  
-    execute_ctl <= execute_type_init_c when state = RESET_STATE;
-    memory_ctl <= memory_type_init_c when state = RESET_STATE;  
-    write_back_ctl <= write_back_type_init_c when state = RESET_STATE;
+    op_code_i <= (others=>'1') when state = RESET_STATE else op_code;   
+
     
     -- BOOT STATE
     boot_mode <= BOOT_EXECUTE when (state = BOOT_STATE) and (reset_ex = '1') else
@@ -127,18 +124,18 @@ begin
                           alu_NOP when state = L2_STORE_STATE else
                           alu_NOP;
                           
-   -- do we need this? switch the input to alu IN2 ( based on MIPS )
-    execute_ctl.alu_src <= '0' when state = A1_STATE else
-                           '0' when state = A2_STATE else
-                           '0' when state = A3_STATE else
-                           '0' when state = B1_STATE else                              
-                           '0' when state = B2_STATE else
-                           '0' when state = RETURN_STATE else
-                           '0' when state = L1_LOAD_IMM_STATE else
-                           '0' when state = L2_LOAD_STATE else
-                           '0' when state = L2_STORE_STATE else
-                           '0';
- 
+   -- do we need this? switch the input to alu IN2 ( based on MIPS ) alu_shift
+--    execute_ctl.alu_src <= '0' when state = A1_STATE else
+--                           '0' when state = A2_STATE else
+--                           '0' when state = A3_STATE else
+--                           '0' when state = B1_STATE else                              
+--                           '0' when state = B2_STATE else
+--                           '0' when state = RETURN_STATE else
+--                           '0' when state = L1_LOAD_IMM_STATE else
+--                           '0' when state = L2_LOAD_STATE else
+--                           '0' when state = L2_STORE_STATE else
+--                           '0';       
+                          
     memory_ctl.branch_n <= '0' when state = A1_STATE else
                            '0' when state = A2_STATE else
                            '0' when state = A3_STATE else
@@ -186,7 +183,8 @@ begin
     -- ALU_RES, MEMORY_DATA, RETURN_PC, IMM_FWD
     write_back_ctl.wb_src <= ALU_RES when state = A1_STATE else
                              ALU_RES when state = A2_STATE else
-                             ALU_RES when state = A3_STATE else
+                             ALU_RES when state = A3_STATE and (op_code_i = TEST) else
+                             INPORT_FWD when state = A3_STATE and (op_code_i = IN_OP) else
                              NONE when state = B1_STATE else                              
                              RETURN_PC when state = B2_STATE else
                              NONE when state = RETURN_STATE else
