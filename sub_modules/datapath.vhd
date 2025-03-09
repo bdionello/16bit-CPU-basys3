@@ -27,6 +27,7 @@ architecture data_path_arch of datapath is
     -- Internal signals -- Denoted by: '_i' = Not stage specific 
     -- Fetch Stage signals -- Denoted by: "_f'  
     signal pc_in_f            : word_t := (others => '0');
+    signal pc_delayed_f            : word_t := (others => '0');
     signal pc_out_f           : word_t := (others => '0');
     signal inst_addr_f        : word_t := (others => '0');
     signal pc_next_f          : word_t := (others => '0');    
@@ -85,7 +86,7 @@ architecture data_path_arch of datapath is
     signal inport_fwd_mem      : word_t := (others => '0'); 
     -- Write back stage signals -- Denoted by:'_wb'
     signal write_back_ctl_wb  : write_back_type := write_back_type_init_c; -- used in wb stage
-    signal pc_next_wb     : word_t := (others => '0');
+    signal pc_next_wb         : word_t := (others => '0');
     signal memory_data_wb     : word_t := (others => '0');
     signal wr_data_fwd_wb     : word_t := (others => '0'); -- Data to write to register file
     signal wr_index_wb        : std_logic_vector(2 downto 0)  := (others => '0'); 
@@ -103,7 +104,7 @@ architecture data_path_arch of datapath is
         pc_in_f <= pc_branch_addr_mem when (pc_src_mem = '1') and (boot_mode = RUN) else                   
                    X"0000" when boot_mode = BOOT_EXECUTE else
                    X"0002" when boot_mode = BOOT_LOAD else
-                   pc_next_mem;
+                   pc_next_f;
                        
         ---------- Decode
         -- Write index mux       
@@ -164,9 +165,20 @@ architecture data_path_arch of datapath is
                 clk => sys_clk,
                 wr_enable => '1', -- TODO: connect for hazard control
                 --write signals
-                wr_instruction => pc_in_f, --: in std_logic_vector(15 downto 0);                
+                wr_instr_addr => pc_in_f, --: in std_logic_vector(15 downto 0);                
                 --read signals
-                rd_instruction => inst_addr_f --: out std_logic_vector(15 downto 0);          
+                rd_instr_addr => inst_addr_f --: out std_logic_vector(15 downto 0);          
+        );
+                -- Fetch          
+        pc_delay: entity work.program_counter
+            port map (
+                rst => sys_rst,
+                clk => sys_clk,
+                wr_enable => '1', -- TODO: connect for hazard control
+                --write signals
+                wr_instr_addr => inst_addr_f, --: in std_logic_vector(15 downto 0);                
+                --read signals
+                rd_instr_addr => pc_delayed_f --: out std_logic_vector(15 downto 0);          
         );
         -- Fetch
         adder_pc: entity work.adder
@@ -183,7 +195,7 @@ architecture data_path_arch of datapath is
                 wr_enable => '1', -- TODO: connect for hazard control
                 -- inputs
                 wr_instruction => instruction_f, --: in std_logic_vector(15 downto 0);
-                wr_pc => pc_next_f,               
+                wr_pc => pc_delayed_f,               
                 -- outputs               
                 rd_instruction => instruction_d, --: out std_logic_vector(15 downto 0);
                 rd_pc => pc_next_d          
@@ -279,6 +291,7 @@ architecture data_path_arch of datapath is
             rst => sys_rst,
             clk => sys_clk,
             wr_enable => '1', -- TODO hazard control
+            wr_pc => pc_next_ex,
             wr_branch_address => pc_branch_addr_ex,
             -- alu
             wr_alu_result => alu_result_ex,
@@ -295,6 +308,7 @@ architecture data_path_arch of datapath is
             wr_write_back_ctl => write_back_ctl_ex,
             
             -- outputs
+            rd_pc => pc_next_mem,
             rd_branch_address => pc_branch_addr_mem,
             -- alu
             rd_alu_result => alu_result_mem,
@@ -319,6 +333,7 @@ architecture data_path_arch of datapath is
                 rst => sys_rst,
                 clk => sys_clk,
                 wr_enable => '1', -- TODO hazard control
+                wr_pc => pc_next_mem,
                 -- alu
                 wr_alu_result => alu_result_mem,
                -- register file
@@ -329,6 +344,7 @@ architecture data_path_arch of datapath is
                 -- contorller records
                 wr_write_back_ctl => write_back_ctl_mem,           
                 -- outputs
+                rd_pc => pc_next_wb,
                 -- alu
                 rd_alu_result => alu_result_wb,
                 -- register file       

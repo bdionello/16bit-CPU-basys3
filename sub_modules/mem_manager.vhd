@@ -66,9 +66,9 @@ begin
                                             
     ----------- OUTPUT State LOGIC: data signals
     -- Change instruction output from rom or ram based on address range                  
-    inst_out <= ram_b_data_out_i when ((inst_addr AND X"0400") = X"0400") AND (clock = '1') else
-                rom_data_out_i when (clock = '1') else
-                X"0000" when (reset_i ='1');    
+    inst_out <= X"0000" when (reset_i ='1') else
+                ram_b_data_out_i when ((inst_addr AND X"0400") = X"0400") else                                
+                rom_data_out_i;    
     
     -- Connect memory to physical input port (read from Dip switch)               
     data_out <= in_port when (data_addr = X"FFF0") AND (read_data_enable = '1') AND (clock = '1') else

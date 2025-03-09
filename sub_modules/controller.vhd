@@ -71,7 +71,7 @@ begin
                  BOOT_LOAD when (state = BOOT_STATE) and (reset_ld = '1') else
                  RUN;
                  
-   -- All states: RESET_STATE, BOOT_STATE, NOP_STATE, A1_STATE, A2_STATE, A3_STATE, B1_STATE, B2_STATE, RETURN_STATE, L1_LOAD_IMM_STATE, L2_LOAD_STATE, L2_STORE_STATE
+   -- All states: RESET_STATE, BOOT_STATE, NOP_STATE, A1_STATE, A2_SATE, A3_STATE, B1_STATE, B2_STATE, RETURN_STATE, L1_LOAD_IMM_STATE, L2_LOAD_STATE, L2_STORE_STATE
     -- 0 for (ra <- rb op rc), 1 for (ra <- ra op rb)  
     decode_ctl.reg_src <= '0' when state = A1_STATE else
                           '1' when state = A2_STATE else

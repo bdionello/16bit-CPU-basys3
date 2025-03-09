@@ -19,6 +19,7 @@ entity execute_register is
            clk : in std_logic := '0';
            wr_enable: in std_logic := '0';
            -- inputs
+           wr_pc : in word_t := (others=>'0');
            wr_branch_address : in word_t := (others=>'0');
            -- alu
            wr_alu_result  : in word_t := (others=>'0');
@@ -36,6 +37,7 @@ entity execute_register is
            wr_write_back_ctl : in write_back_type := write_back_type_init_c;
            
            -- outputs
+           rd_pc : out word_t := (others=>'0');
            rd_branch_address : out word_t := (others=>'0');
            -- alu
            rd_alu_result  : out word_t := (others=>'0');
@@ -61,6 +63,7 @@ architecture Behavioral of execute_register is
         begin
             if(rising_edge(clk)) then
                 if(rst='1') then
+                    rd_pc <= (others=>'0');
                     rd_branch_address <= (others=>'0');
                     rd_alu_result  <= (others=>'0');
                     rd_alu_n <= '0';
@@ -73,6 +76,7 @@ architecture Behavioral of execute_register is
                     rd_memory_ctl <= memory_type_init_c;
                     rd_write_back_ctl <= write_back_type_init_c;                    
                 elsif(wr_enable='1') then
+                    rd_pc <= wr_pc;
                     rd_branch_address <= wr_branch_address;
                     rd_alu_result <= wr_alu_result;
                     rd_alu_n <= wr_alu_n;

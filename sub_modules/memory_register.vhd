@@ -19,6 +19,7 @@ entity memory_register is
            clk : in std_logic := '0';
            wr_enable: in std_logic := '0';
            -- inputs
+           wr_pc : in word_t := (others=>'0');
            -- alu
            wr_alu_result  : in word_t := (others=>'0');
           -- register file
@@ -29,6 +30,7 @@ entity memory_register is
            -- contorller records
            wr_write_back_ctl : in write_back_type := write_back_type_init_c;           
            -- outputs
+           rd_pc : out word_t := (others=>'0');
            -- alu
            rd_alu_result  : out word_t := (others=>'0');
            -- register file       
@@ -48,12 +50,14 @@ architecture Behavioral of memory_register is
         begin
             if(rising_edge(clk)) then
                 if(rst='1') then
+                    rd_pc <= (others=>'0');
                     rd_alu_result  <= (others=>'0');
                     rd_reg_write_index  <= (others=>'0');
                     rd_immidate <= (others=>'0');
                     rd_inport_data <= (others=>'0');
                     rd_write_back_ctl <= write_back_type_init_c;                    
                 elsif(wr_enable='1') then
+                    rd_pc <= wr_pc;
                     rd_alu_result <= wr_alu_result;
                     rd_reg_write_index <= wr_reg_write_index;
                     rd_immidate <= wr_immidate;
