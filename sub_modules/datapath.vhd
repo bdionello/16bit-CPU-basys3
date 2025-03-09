@@ -44,8 +44,10 @@ architecture data_path_arch of datapath is
     signal wr_index_d         : std_logic_vector(2 downto 0) := (others => '0');
     signal rd_index1_d        : std_logic_vector(2 downto 0) := (others => '0');
     signal rd_index2_d        : std_logic_vector(2 downto 0) := (others => '0');      
-    signal imm_fwd_d          : word_t := (others => '0');
     signal imm_temp_d         : word_t := (others => '0');
+    signal imm_fwd_d          : word_t := (others => '0');    
+    signal inport_fwd_d      : word_t := (others => '0');
+    signal alu_shift_d       : std_logic_vector(3 downto 0) := (others => '0');
     -- Execute stage signals -- Denoted by:'_ex'
     signal execute_ctl_ex     : execute_type := execute_type_init_c; -- used in execute stage
     signal memory_ctl_ex      : memory_type := memory_type_init_c;    -- pass through
@@ -55,6 +57,8 @@ architecture data_path_arch of datapath is
     signal rd_data2_ex        : word_t := (others => '0'); -- Read data 2 from register file
     signal wr_index_ex        : std_logic_vector(2 downto 0);
     signal imm_fwd_ex         : word_t := (others => '0');
+    signal inport_fwd_ex      : word_t := (others => '0');
+    signal alu_shift_ex       : std_logic_vector(3 downto 0) := (others => '0');
     signal pc_branch_addr_ex  : word_t := (others => '0');
     -- alu
     signal alu_in1_ex         : word_t := (others => '0'); 
@@ -77,7 +81,8 @@ architecture data_path_arch of datapath is
     signal memory_data_mem    : word_t := (others => '0');
     signal wr_data_fwd_mem    : word_t := (others => '0'); -- Data to write to register file
     signal wr_index_mem       : std_logic_vector(2 downto 0) := (others => '0'); 
-    signal imm_fwd_mem        : word_t := (others => '0'); 
+    signal imm_fwd_mem        : word_t := (others => '0');
+    signal inport_fwd_mem      : word_t := (others => '0'); 
     -- Write back stage signals -- Denoted by:'_wb'
     signal write_back_ctl_wb  : write_back_type := write_back_type_init_c; -- used in wb stage
     signal pc_next_wb     : word_t := (others => '0');
@@ -85,6 +90,7 @@ architecture data_path_arch of datapath is
     signal wr_data_fwd_wb     : word_t := (others => '0'); -- Data to write to register file
     signal wr_index_wb        : std_logic_vector(2 downto 0)  := (others => '0'); 
     signal imm_fwd_wb         : word_t := (others => '0');
+    signal inport_fwd_wb      : word_t := (others => '0');
     signal alu_result_wb      : word_t := (others => '0'); -- Data to write to register file
        
     begin
@@ -110,6 +116,11 @@ architecture data_path_arch of datapath is
         imm_temp_d <=   (instr_decoded_d.imm & X"00") when (instr_decoded_d.m_1 = '1') and (decode_ctl.imm_op = '1') else
                         (X"00" & instr_decoded_d.imm) when (instr_decoded_d.m_1 = '0') and (decode_ctl.imm_op = '1') else
                          X"0000";
+        inport_fwd_d <= in_port when instr_decoded_d.opcode = IN_OP else
+                        X"0000";
+        out_port <= rd_data1_d when instr_decoded_d.opcode = OUT_OP; 
+        alu_shift_d <= instr_decoded_d.shift when (instr_decoded_d.opcode = SHL_OP or instr_decoded_d.opcode = SHR_OP) else
+                       "0000";
         ---------- Execute
                 
         ---------- Memory
@@ -123,6 +134,7 @@ architecture data_path_arch of datapath is
                      alu_result_wb when write_back_ctl_wb.wb_src = ALU_RES else
                      imm_fwd_wb when write_back_ctl_wb.wb_src = IMM_FWD else
                      pc_next_wb when write_back_ctl_wb.wb_src = RETURN_PC else
+                     inport_fwd_wb when write_back_ctl_wb.wb_src = INPORT_FWD else
                      X"0000";
                      
         --------------- Fetch/Memory Stage Modules -------------------                                     
@@ -219,7 +231,9 @@ architecture data_path_arch of datapath is
                 wr_reg_data2 => rd_data2_d,
                 wr_reg_write_index => wr_index_d,
                 -- TODO add displacement
-                wr_immidate => imm_fwd_d,          
+                wr_immidate => imm_fwd_d,
+                wr_inport_data => inport_fwd_d,
+                wr_alu_shift => alu_shift_d,          
                 -- contorller records
                 wr_execute_ctl => execute_ctl,
                 wr_memory_ctl => memory_ctl,
@@ -232,6 +246,8 @@ architecture data_path_arch of datapath is
                 rd_reg_write_index => wr_index_ex,
                 -- 
                 rd_immidate => imm_fwd_ex,
+                rd_inport_data => inport_fwd_ex,
+                rd_alu_shift => alu_shift_ex,
                 -- contorller records 
                 rd_execute_ctl => execute_ctl_ex,
                 rd_memory_ctl => memory_ctl_ex,
@@ -246,7 +262,7 @@ architecture data_path_arch of datapath is
                 in2          => alu_in2_ex,      -- ALU input 2 
                 alu_mode     => execute_ctl_ex.alu_op,       -- ALU opcode (from Decoder)
                 alu_out      => alu_result_ex,      -- ALU result
-                shift        => execute_ctl_ex.alu_shift,        -- Shift amount (from Decoder)
+                shift        => alu_shift_ex,        -- Shift amount (from Decoder)
                 negative_flag => alu_n_ex, -- Negative flag
                 zero_flag    => alu_z_ex    -- Zero flag
             );
@@ -272,7 +288,8 @@ architecture data_path_arch of datapath is
             wr_reg_data1 => rd_data1_ex,
             wr_reg_data2 => rd_data2_ex,
             wr_reg_write_index => wr_index_ex,
-            wr_immidate => imm_fwd_ex,           
+            wr_immidate => imm_fwd_ex,
+            wr_inport_data => inport_fwd_ex,           
             -- contorller records
             wr_memory_ctl => memory_ctl_ex,
             wr_write_back_ctl => write_back_ctl_ex,
@@ -289,13 +306,14 @@ architecture data_path_arch of datapath is
             rd_reg_write_index => wr_index_mem,
             -- 
             rd_immidate => imm_fwd_mem,
+            rd_inport_data => inport_fwd_mem,
             -- contorller records 
             rd_memory_ctl => memory_ctl_mem,
             rd_write_back_ctl => write_back_ctl_mem            
             );
             
         --------------- Write Back Stage Modules ----------------                                   
-        write_back_r: entity work.write_back_register
+        mem_r: entity work.memory_register
             port map(
                 -- inputs
                 rst => sys_rst,
@@ -306,7 +324,8 @@ architecture data_path_arch of datapath is
                -- register file
                 wr_reg_write_index => wr_index_mem,
                 -- TODO add displacement
-                wr_immidate => imm_fwd_mem,           
+                wr_immidate => imm_fwd_mem, 
+                wr_inport_data => inport_fwd_mem,          
                 -- contorller records
                 wr_write_back_ctl => write_back_ctl_mem,           
                 -- outputs
@@ -316,6 +335,7 @@ architecture data_path_arch of datapath is
                 rd_reg_write_index => wr_index_wb,
                 -- 
                 rd_immidate => imm_fwd_wb,
+                rd_inport_data => inport_fwd_wb,
                 -- contorller records 
                 rd_write_back_ctl => write_back_ctl_wb            
             );
