@@ -15,8 +15,8 @@ begin
     stm_sys_clk => clk,
     rst_ex => reset_execute, 
     rst_ld => reset_load, 
-    IN_port => input_data,
-    OUT_port => output_data
+    in_port => input_data,
+    out_port => output_data
     );
     -- system test clock
     process begin
