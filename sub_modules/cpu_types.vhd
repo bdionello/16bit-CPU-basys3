@@ -16,11 +16,12 @@ package cpu_types is
     type decode_type is record
         reg_src : std_logic;
         reg_dst : std_logic;
-        imm_mode : std_logic;        
+        imm_op : std_logic;        
     end record decode_type;
         
     type execute_type is record
         alu_op : alu_op_type;
+        alu_shift :  std_logic_vector(3 downto 0);  -- Shift amount
         alu_src : std_logic;        
     end record execute_type;
 
@@ -72,9 +73,10 @@ package cpu_types is
                                                             
     constant decode_type_init_c : decode_type := ( reg_src => '0',
                                                    reg_dst => '0',
-                                                   imm_mode => '0');
+                                                   imm_op => '0');
                                                         
     constant execute_type_init_c : execute_type := ( alu_op => alu_NOP,
+                                                     alu_shift => (others => '0'),                                                      
                                                      alu_src => '0');
                                                      
     constant memory_type_init_c : memory_type := ( branch_n => '0',
