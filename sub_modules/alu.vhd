@@ -14,9 +14,7 @@ entity ALU is
 
         shift    : in std_logic_vector(3 downto 0);   -- Shift amount
         zero_flag     : out std_logic := '0';                -- Zero flag (Z)
-        negative_flag : out std_logic := '0';                -- Negative flag (N)
-        clk : in std_logic;
-        rst : in std_logic
+        negative_flag : out std_logic := '0'                -- Negative flag (N)
     );
 end ALU;
 
