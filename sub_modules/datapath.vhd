@@ -8,84 +8,84 @@ use work.cpu_types.all;
 entity datapath is
     port (
         -- system ports
-        sys_clk : in std_logic;
-        sys_rst : in std_logic;
-        in_port : in word_t;        
+        sys_clk        : in std_logic := '0';
+        sys_rst        : in std_logic := '0';
+        in_port        : in word_t := (others => '0');        
         -- controller signal ports
-        boot_mode : in boot_mode_type := BOOT_LOAD;
-        decode_ctl : in decode_type := decode_type_init_c;
-        execute_ctl : in execute_type := execute_type_init_c; 
-        memory_ctl : in memory_type := memory_type_init_c;   
+        boot_mode      : in boot_mode_type := BOOT_LOAD;
+        decode_ctl     : in decode_type := decode_type_init_c;
+        execute_ctl    : in execute_type := execute_type_init_c; 
+        memory_ctl     : in memory_type := memory_type_init_c;   
         write_back_ctl : in write_back_type := write_back_type_init_c;
         -- outputs
-        out_port : out word_t;
-        op_code_out : out op_code_t
+        out_port       : out word_t := (others => '0');
+        op_code_out    : out op_code_t
         );        
 end datapath;
 
 architecture data_path_arch of datapath is
     -- Internal signals -- Denoted by: '_i' = Not stage specific 
     -- Fetch Stage signals -- Denoted by: "_f'  
-    signal pc_in_f : word_t := (others => '0');
-    signal pc_out_f : word_t := (others => '0');
-    signal inst_addr_f : word_t := (others => '0');
-    signal pc_next_f : word_t := (others => '0');    
-    signal instruction_f : word_t := (others => '0');      
+    signal pc_in_f            : word_t := (others => '0');
+    signal pc_out_f           : word_t := (others => '0');
+    signal inst_addr_f        : word_t := (others => '0');
+    signal pc_next_f          : word_t := (others => '0');    
+    signal instruction_f      : word_t := (others => '0');      
     
     -- Decode stage signals -- Denoted by:'_d'
-    signal instruction_d : word_t := (others => '0');
-    signal instr_decoded_d : instruction_type := instruction_type_init_c;
-    signal pc_next_d : word_t := (others => '0');
+    signal instruction_d      : word_t := (others => '0');
+    signal instr_decoded_d    : instruction_type := instruction_type_init_c;
+    signal pc_next_d          : word_t := (others => '0');
     -- Signals for register_file
-    signal rd_data1_d    : word_t; -- Read data 1 from register file
-    signal rd_data2_d    : word_t; -- Read data 2 from register file
-    signal wr_data_d     : word_t; -- Data to write to register file    
-    signal wr_enable_d   : std_logic;                     -- Write enable for register file
-    signal wr_index_d  : std_logic_vector(2 downto 0);
-    signal rd_index1_d : std_logic_vector(2 downto 0);
-    signal rd_index2_d : std_logic_vector(2 downto 0);      
-    signal imm_fwd_d   : word_t;
-    signal imm_temp_d   : word_t;
+    signal rd_data1_d         : word_t := (others => '0'); -- Read data 1 from register file
+    signal rd_data2_d         : word_t := (others => '0'); -- Read data 2 from register file
+    signal wr_data_d          : word_t := (others => '0'); -- Data to write to register file    
+    signal wr_enable_d        : std_logic;                     -- Write enable for register file
+    signal wr_index_d         : std_logic_vector(2 downto 0) := (others => '0');
+    signal rd_index1_d        : std_logic_vector(2 downto 0) := (others => '0');
+    signal rd_index2_d        : std_logic_vector(2 downto 0) := (others => '0');      
+    signal imm_fwd_d          : word_t := (others => '0');
+    signal imm_temp_d         : word_t := (others => '0');
     -- Execute stage signals -- Denoted by:'_ex'
-    signal execute_ctl_ex :  execute_type := execute_type_init_c; -- used in execute stage
-    signal memory_ctl_ex :  memory_type := memory_type_init_c;    -- pass through
-    signal write_back_ctl_ex :  write_back_type := write_back_type_init_c; -- pass through
-    signal pc_next_ex : word_t := (others => '0');
-    signal rd_data1_ex    : word_t; -- Read data 1 from register file
-    signal rd_data2_ex    : word_t; -- Read data 2 from register file
-    signal wr_index_ex  : std_logic_vector(2 downto 0);
-    signal imm_fwd_ex     : word_t;
-    signal pc_branch_addr_ex : word_t := (others => '0');
+    signal execute_ctl_ex     : execute_type := execute_type_init_c; -- used in execute stage
+    signal memory_ctl_ex      : memory_type := memory_type_init_c;    -- pass through
+    signal write_back_ctl_ex  : write_back_type := write_back_type_init_c; -- pass through
+    signal pc_next_ex         : word_t := (others => '0');
+    signal rd_data1_ex        : word_t := (others => '0'); -- Read data 1 from register file
+    signal rd_data2_ex        : word_t := (others => '0'); -- Read data 2 from register file
+    signal wr_index_ex        : std_logic_vector(2 downto 0);
+    signal imm_fwd_ex         : word_t := (others => '0');
+    signal pc_branch_addr_ex  : word_t := (others => '0');
     -- alu
-    signal alu_in1_ex : word_t := (others => '0'); 
-    signal alu_in2_ex : word_t := (others => '0');
-    signal alu_result_ex : word_t := (others => '0');
-    signal alu_z_ex : std_logic := '0';
-    signal alu_n_ex : std_logic := '0';     
+    signal alu_in1_ex         : word_t := (others => '0'); 
+    signal alu_in2_ex         : word_t := (others => '0');
+    signal alu_result_ex      : word_t:= (others => '0');
+    signal alu_z_ex           : std_logic := '0';
+    signal alu_n_ex           : std_logic := '0';     
     -- Memory stage signals -- Denoted by:'_mem'
-    signal memory_ctl_mem :  memory_type := memory_type_init_c; -- used in memory stage
-    signal write_back_ctl_mem :  write_back_type := write_back_type_init_c; -- pass through
-    signal pc_next_mem : word_t := (others => '0');
+    signal memory_ctl_mem     : memory_type := memory_type_init_c; -- used in memory stage
+    signal write_back_ctl_mem : write_back_type := write_back_type_init_c; -- pass through
+    signal pc_next_mem        : word_t := (others => '0');
     -- alu
-    signal alu_result_mem : word_t := (others => '0');
-    signal alu_z_mem : std_logic := '0';
-    signal alu_n_mem : std_logic := '0';
-    signal pc_src_mem : std_logic := '0'; -- signal to select pc mux        
+    signal alu_result_mem     : word_t := (others => '0');
+    signal alu_z_mem          : std_logic := '0';
+    signal alu_n_mem          : std_logic := '0';
+    signal pc_src_mem         : std_logic := '0'; -- signal to select pc mux        
     signal pc_branch_addr_mem : word_t := (others => '0');    
-    signal data_address_mem : word_t := (others => '0');
-    signal write_data_mem : word_t := (others => '0');
-    signal memory_data_mem : word_t := (others => '0');
-    signal wr_data_fwd_mem     : word_t; -- Data to write to register file
-    signal wr_index_mem  : std_logic_vector(2 downto 0); 
-    signal imm_fwd_mem    : word_t; 
+    signal data_address_mem   : word_t := (others => '0');
+    signal write_data_mem     : word_t := (others => '0');
+    signal memory_data_mem    : word_t := (others => '0');
+    signal wr_data_fwd_mem    : word_t := (others => '0'); -- Data to write to register file
+    signal wr_index_mem       : std_logic_vector(2 downto 0) := (others => '0'); 
+    signal imm_fwd_mem        : word_t := (others => '0'); 
     -- Write back stage signals -- Denoted by:'_wb'
-    signal write_back_ctl_wb   : write_back_type := write_back_type_init_c; -- used in wb stage
+    signal write_back_ctl_wb  : write_back_type := write_back_type_init_c; -- used in wb stage
     signal pc_next_wb     : word_t := (others => '0');
     signal memory_data_wb     : word_t := (others => '0');
-    signal wr_data_fwd_wb     : word_t; -- Data to write to register file
-    signal wr_index_wb        : std_logic_vector(2 downto 0); 
-    signal imm_fwd_wb    : word_t;
-    signal alu_result_wb : word_t; -- Data to write to register file
+    signal wr_data_fwd_wb     : word_t := (others => '0'); -- Data to write to register file
+    signal wr_index_wb        : std_logic_vector(2 downto 0)  := (others => '0'); 
+    signal imm_fwd_wb         : word_t := (others => '0');
+    signal alu_result_wb      : word_t := (others => '0'); -- Data to write to register file
        
     begin
         --------------- Internal signal logic ----------------
