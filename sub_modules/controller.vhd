@@ -68,11 +68,13 @@ begin
     execute_ctl <= execute_type_init_c when state = RESET_STATE;
     memory_ctl <= memory_type_init_c when state = RESET_STATE;  
     write_back_ctl <= write_back_type_init_c when state = RESET_STATE;
+    
     -- BOOT STATE
     boot_mode <= BOOT_EXECUTE when (state = BOOT_STATE) and (reset_ex = '1') else
                  BOOT_LOAD when (state = BOOT_STATE) and (reset_ld = '1') else
                  RUN;
-   -- RESET_STATE, BOOT_STATE, NOP_STATE, A1_STATE, A2_STATE, A3_STATE, B1_STATE, B2_STATE, RETURN_STATE, L1_LOAD_IMM_STATE, L2_LOAD_STATE, L2_STORE_STATE
+                 
+   -- All states: RESET_STATE, BOOT_STATE, NOP_STATE, A1_STATE, A2_STATE, A3_STATE, B1_STATE, B2_STATE, RETURN_STATE, L1_LOAD_IMM_STATE, L2_LOAD_STATE, L2_STORE_STATE
     -- 0 for (ra <- rb op rc), 1 for (ra <- ra op rb)  
     decode_ctl.reg_src <= '0' when state = A1_STATE else
                           '1' when state = A2_STATE else
@@ -84,7 +86,8 @@ begin
                           '1' when state = L2_LOAD_STATE else
                           '1' when state = L2_STORE_STATE else
                           '1';
-    -- 0 for (ra <- result) 1 for ( r7 <- result)                         
+                          
+    -- 0 for (ra <- data) 1 for ( r7 <- data)                         
     decode_ctl.reg_dst <=   '0' when state = A1_STATE else
                             '0' when state = A2_STATE else
                             '0' when state = A3_STATE else
@@ -95,6 +98,18 @@ begin
                             '0' when state = L2_LOAD_STATE else
                             '0' when state = L2_STORE_STATE else
                             '0';
+                            
+    decode_ctl.imm_op  <= '0' when state = A1_STATE else
+                          '0' when state = A2_STATE else
+                          '0' when state = A3_STATE else
+                          '0' when state = B1_STATE else                              
+                          '0' when state = B2_STATE else
+                          '0' when state = RETURN_STATE else
+                          '1' when state = L1_LOAD_IMM_STATE else
+                          '0' when state = L2_LOAD_STATE else
+                          '0' when state = L2_STORE_STATE else
+                          '0';
+                                                      
     -- alu_NOP, alu_ADD, alu_SUB, alu_MUL, alu_NAND, alu_SHL, alu_SHR, alu_TEST
     execute_ctl.alu_op <= alu_NOP when state = NOP_STATE else
                           alu_ADD when state = A1_STATE AND (op_code_i = ADD) else
@@ -111,6 +126,7 @@ begin
                           alu_NOP when state = L2_LOAD_STATE else
                           alu_NOP when state = L2_STORE_STATE else
                           alu_NOP;
+                          
    -- do we need this? switch the input to alu IN2 ( based on MIPS )
     execute_ctl.alu_src <= '0' when state = A1_STATE else
                            '0' when state = A2_STATE else
@@ -133,6 +149,7 @@ begin
                            '0' when state = L2_LOAD_STATE else
                            '0' when state = L2_STORE_STATE else
                            '0';
+                           
     memory_ctl.branch_z <= '0' when state = A1_STATE else
                            '0' when state = A2_STATE else
                            '0' when state = A3_STATE else
@@ -143,6 +160,7 @@ begin
                            '0' when state = L2_LOAD_STATE else
                            '0' when state = L2_STORE_STATE else
                            '0';
+                           
     memory_ctl.memory_read <= '0' when state = A1_STATE else
                               '0' when state = A2_STATE else
                               '0' when state = A3_STATE else
@@ -153,6 +171,7 @@ begin
                               '1' when state = L2_LOAD_STATE else
                               '0' when state = L2_STORE_STATE else
                               '0';
+                              
     memory_ctl.memory_write <= '0' when state = A1_STATE else
                                '0' when state = A2_STATE else
                                '0' when state = A3_STATE else
@@ -163,6 +182,7 @@ begin
                                '0' when state = L2_LOAD_STATE else
                                '1' when state = L2_STORE_STATE else
                                '0';
+                               
     -- ALU_RES, MEMORY_DATA, RETURN_PC, IMM_FWD
     write_back_ctl.wb_src <= ALU_RES when state = A1_STATE else
                              ALU_RES when state = A2_STATE else
@@ -174,14 +194,15 @@ begin
                              MEMORY_DATA when state = L2_LOAD_STATE else
                              NONE when state = L2_STORE_STATE else
                              NONE;
+                             
     write_back_ctl.reg_write <= '1' when state = A1_STATE else
-                                  '1' when state = A2_STATE else
-                                  '1' when state = A3_STATE else
-                                  '0' when state = B1_STATE else                              
-                                  '1' when state = B2_STATE and (op_code_i = BR_SUB) else
-                                  '0' when state = RETURN_STATE else
-                                  '1' when state = L1_LOAD_IMM_STATE else
-                                  '1' when state = L2_LOAD_STATE else
-                                  '0' when state = L2_STORE_STATE else
-                                  '0'; 
+                                '1' when state = A2_STATE else
+                                '1' when state = A3_STATE else
+                                '0' when state = B1_STATE else                              
+                                '1' when state = B2_STATE and (op_code_i = BR_SUB) else
+                                '0' when state = RETURN_STATE else
+                                '1' when state = L1_LOAD_IMM_STATE else
+                                '1' when state = L2_LOAD_STATE else
+                                '0' when state = L2_STORE_STATE else
+                                '0'; 
 end controller_arch ;
