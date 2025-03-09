@@ -1,0 +1,249 @@
+/**********************************************************************/
+/*   ____  ____                                                       */
+/*  /   /\/   /                                                       */
+/* /___/  \  /                                                        */
+/* \   \   \/                                                         */
+/*  \   \        Copyright (c) 2003-2013 Xilinx, Inc.                 */
+/*  /   /        All Right Reserved.                                  */
+/* /---/   /\                                                         */
+/* \   \  /  \                                                        */
+/*  \___\/\___\                                                       */
+/**********************************************************************/
+
+
+#include "iki.h"
+#include <string.h>
+#include <math.h>
+#ifdef __GNUC__
+#include <stdlib.h>
+#else
+#include <malloc.h>
+#define alloca _alloca
+#endif
+/**********************************************************************/
+/*   ____  ____                                                       */
+/*  /   /\/   /                                                       */
+/* /___/  \  /                                                        */
+/* \   \   \/                                                         */
+/*  \   \        Copyright (c) 2003-2013 Xilinx, Inc.                 */
+/*  /   /        All Right Reserved.                                  */
+/* /---/   /\                                                         */
+/* \   \  /  \                                                        */
+/*  \___\/\___\                                                       */
+/**********************************************************************/
+
+
+#include "iki.h"
+#include <string.h>
+#include <math.h>
+#ifdef __GNUC__
+#include <stdlib.h>
+#else
+#include <malloc.h>
+#define alloca _alloca
+#endif
+typedef void (*funcp)(char *, char *);
+extern int main(int, char**);
+extern void execute_140(char*, char *);
+extern void execute_141(char*, char *);
+extern void execute_50(char*, char *);
+extern void execute_51(char*, char *);
+extern void execute_52(char*, char *);
+extern void execute_53(char*, char *);
+extern void execute_54(char*, char *);
+extern void execute_55(char*, char *);
+extern void execute_56(char*, char *);
+extern void execute_57(char*, char *);
+extern void execute_58(char*, char *);
+extern void execute_59(char*, char *);
+extern void execute_60(char*, char *);
+extern void execute_62(char*, char *);
+extern void execute_63(char*, char *);
+extern void execute_64(char*, char *);
+extern void execute_65(char*, char *);
+extern void execute_66(char*, char *);
+extern void execute_67(char*, char *);
+extern void execute_68(char*, char *);
+extern void execute_69(char*, char *);
+extern void execute_70(char*, char *);
+extern void execute_71(char*, char *);
+extern void vlog_const_rhs_process_execute_0_fast_no_reg_no_agg(char*, char*, char*);
+extern void execute_170(char*, char *);
+extern void execute_176(char*, char *);
+extern void execute_177(char*, char *);
+extern void execute_76(char*, char *);
+extern void execute_78(char*, char *);
+extern void execute_80(char*, char *);
+extern void execute_82(char*, char *);
+extern void execute_83(char*, char *);
+extern void vlog_simple_process_execute_0_fast_no_reg_no_agg(char*, char*, char*);
+extern void execute_156(char*, char *);
+extern void execute_159(char*, char *);
+extern void execute_212(char*, char *);
+extern void execute_87(char*, char *);
+extern void execute_89(char*, char *);
+extern void execute_91(char*, char *);
+extern void execute_92(char*, char *);
+extern void execute_94(char*, char *);
+extern void execute_95(char*, char *);
+extern void execute_97(char*, char *);
+extern void execute_98(char*, char *);
+extern void execute_192(char*, char *);
+extern void execute_196(char*, char *);
+extern void execute_100(char*, char *);
+extern void execute_102(char*, char *);
+extern void execute_104(char*, char *);
+extern void execute_106(char*, char *);
+extern void execute_107(char*, char *);
+extern void execute_109(char*, char *);
+extern void execute_110(char*, char *);
+extern void execute_111(char*, char *);
+extern void execute_113(char*, char *);
+extern void execute_115(char*, char *);
+extern void execute_117(char*, char *);
+extern void execute_121(char*, char *);
+extern void execute_123(char*, char *);
+extern void execute_125(char*, char *);
+extern void execute_126(char*, char *);
+extern void execute_127(char*, char *);
+extern void execute_128(char*, char *);
+extern void execute_129(char*, char *);
+extern void execute_130(char*, char *);
+extern void execute_131(char*, char *);
+extern void execute_132(char*, char *);
+extern void execute_133(char*, char *);
+extern void execute_134(char*, char *);
+extern void execute_135(char*, char *);
+extern void execute_136(char*, char *);
+extern void execute_137(char*, char *);
+extern void execute_138(char*, char *);
+extern void execute_139(char*, char *);
+extern void transaction_0(char*, char*, unsigned, unsigned, unsigned);
+extern void vhdl_transfunc_eventcallback(char*, char*, unsigned, unsigned, unsigned, char *);
+extern void transaction_57(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_79(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_80(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_81(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_82(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_83(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_85(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_86(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_88(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_89(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_90(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_91(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_92(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_93(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_94(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_95(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_96(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_97(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_98(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_99(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_100(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_101(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_102(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_103(char*, char*, unsigned, unsigned, unsigned);
+extern void vlog_transfunc_eventcallback(char*, char*, unsigned, unsigned, unsigned, char *);
+extern void transaction_149(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_150(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_151(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_152(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_153(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_154(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_155(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_156(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_157(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_158(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_159(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_160(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_161(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_162(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_163(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_164(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_165(char*, char*, unsigned, unsigned, unsigned);
+funcp funcTab[118] = {(funcp)execute_140, (funcp)execute_141, (funcp)execute_50, (funcp)execute_51, (funcp)execute_52, (funcp)execute_53, (funcp)execute_54, (funcp)execute_55, (funcp)execute_56, (funcp)execute_57, (funcp)execute_58, (funcp)execute_59, (funcp)execute_60, (funcp)execute_62, (funcp)execute_63, (funcp)execute_64, (funcp)execute_65, (funcp)execute_66, (funcp)execute_67, (funcp)execute_68, (funcp)execute_69, (funcp)execute_70, (funcp)execute_71, (funcp)vlog_const_rhs_process_execute_0_fast_no_reg_no_agg, (funcp)execute_170, (funcp)execute_176, (funcp)execute_177, (funcp)execute_76, (funcp)execute_78, (funcp)execute_80, (funcp)execute_82, (funcp)execute_83, (funcp)vlog_simple_process_execute_0_fast_no_reg_no_agg, (funcp)execute_156, (funcp)execute_159, (funcp)execute_212, (funcp)execute_87, (funcp)execute_89, (funcp)execute_91, (funcp)execute_92, (funcp)execute_94, (funcp)execute_95, (funcp)execute_97, (funcp)execute_98, (funcp)execute_192, (funcp)execute_196, (funcp)execute_100, (funcp)execute_102, (funcp)execute_104, (funcp)execute_106, (funcp)execute_107, (funcp)execute_109, (funcp)execute_110, (funcp)execute_111, (funcp)execute_113, (funcp)execute_115, (funcp)execute_117, (funcp)execute_121, (funcp)execute_123, (funcp)execute_125, (funcp)execute_126, (funcp)execute_127, (funcp)execute_128, (funcp)execute_129, (funcp)execute_130, (funcp)execute_131, (funcp)execute_132, (funcp)execute_133, (funcp)execute_134, (funcp)execute_135, (funcp)execute_136, (funcp)execute_137, (funcp)execute_138, (funcp)execute_139, (funcp)transaction_0, (funcp)vhdl_transfunc_eventcallback, (funcp)transaction_57, (funcp)transaction_79, (funcp)transaction_80, (funcp)transaction_81, (funcp)transaction_82, (funcp)transaction_83, (funcp)transaction_85, (funcp)transaction_86, (funcp)transaction_88, (funcp)transaction_89, (funcp)transaction_90, (funcp)transaction_91, (funcp)transaction_92, (funcp)transaction_93, (funcp)transaction_94, (funcp)transaction_95, (funcp)transaction_96, (funcp)transaction_97, (funcp)transaction_98, (funcp)transaction_99, (funcp)transaction_100, (funcp)transaction_101, (funcp)transaction_102, (funcp)transaction_103, (funcp)vlog_transfunc_eventcallback, (funcp)transaction_149, (funcp)transaction_150, (funcp)transaction_151, (funcp)transaction_152, (funcp)transaction_153, (funcp)transaction_154, (funcp)transaction_155, (funcp)transaction_156, (funcp)transaction_157, (funcp)transaction_158, (funcp)transaction_159, (funcp)transaction_160, (funcp)transaction_161, (funcp)transaction_162, (funcp)transaction_163, (funcp)transaction_164, (funcp)transaction_165};
+const int NumRelocateId= 118;
+
+void relocate(char *dp)
+{
+	iki_relocate(dp, "xsim.dir/test_System_behav/xsim.reloc",  (void **)funcTab, 118);
+	iki_vhdl_file_variable_register(dp + 48728);
+	iki_vhdl_file_variable_register(dp + 48784);
+
+
+	/*Populate the transaction function pointer field in the whole net structure */
+}
+
+void sensitize(char *dp)
+{
+	iki_sensitize(dp, "xsim.dir/test_System_behav/xsim.reloc");
+}
+
+void simulate(char *dp)
+{
+	iki_schedule_processes_at_time_zero(dp, "xsim.dir/test_System_behav/xsim.reloc");
+	// Initialize Verilog nets in mixed simulation, for the cases when the value at time 0 should be propagated from the mixed language Vhdl net
+
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 61072, dp + 61336, 0, 0, 0, 0, 1, 1);
+
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 51384, dp + 61392, 0, 0, 0, 0, 1, 1);
+
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 58600, dp + 61448, 0, 0, 0, 0, 1, 1);
+
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 58696, dp + 61504, 0, 0, 0, 0, 1, 1);
+
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 61128, dp + 61560, 0, 0, 0, 0, 1, 1);
+
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 58944, dp + 61616, 0, 8, 7, 15, 9, 1);
+
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 61184, dp + 61672, 0, 0, 0, 0, 1, 1);
+
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 61240, dp + 61728, 0, 0, 0, 0, 1, 1);
+
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 51384, dp + 74296, 0, 0, 0, 0, 1, 1);
+
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 58600, dp + 74352, 0, 0, 0, 0, 1, 1);
+
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 58752, dp + 74408, 0, 0, 0, 0, 1, 1);
+
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 74088, dp + 74464, 0, 0, 0, 0, 1, 1);
+
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 58656, dp + 74520, 0, 0, 0, 0, 1, 1);
+
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 58904, dp + 74576, 0, 8, 7, 15, 9, 1);
+
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 55280, dp + 74632, 0, 15, 0, 15, 16, 1);
+
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 74144, dp + 74744, 0, 0, 0, 0, 1, 1);
+
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 58600, dp + 74800, 0, 0, 0, 0, 1, 1);
+
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 58808, dp + 74856, 0, 0, 0, 0, 1, 1);
+
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 74200, dp + 74912, 0, 0, 0, 0, 1, 1);
+
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 58944, dp + 74968, 0, 8, 7, 15, 9, 1);
+	iki_execute_processes();
+
+	// Schedule resolution functions for the multiply driven Verilog nets that have strength
+	// Schedule transaction functions for the singly driven Verilog nets that have strength
+
+}
+#include "iki_bridge.h"
+void relocate(char *);
+
+void sensitize(char *);
+
+void simulate(char *);
+
+int main(int argc, char **argv)
+{
+    iki_heap_initialize("ms", "isimmm", 0, 2147483648) ;
+    iki_set_sv_type_file_path_name("xsim.dir/test_System_behav/xsim.svtype");
+    iki_set_crvs_dump_file_path_name("xsim.dir/test_System_behav/xsim.crvsdump");
+    void* design_handle = iki_create_design("xsim.dir/test_System_behav/xsim.mem", (void *)relocate, (void *)sensitize, (void *)simulate, 0, isimBridge_getWdbWriter(), 0, argc, argv);
+     iki_set_rc_trial_count(100);
+    (void) design_handle;
+    return iki_simulate_design();
+}

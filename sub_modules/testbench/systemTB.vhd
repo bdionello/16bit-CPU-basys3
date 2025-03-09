@@ -5,6 +5,9 @@ use ieee.std_logic_unsigned.all;
 entity test_System is end test_System;
 
 architecture behavioural of test_System is
+    constant memory_size : integer := 1024;
+    constant clk_hz : integer := 100e6;
+    constant clk_period : time := 1 sec / clk_hz; -- 1/T = 100MHz
     signal clk : std_logic;
     signal reset_execute : std_logic;
     signal reset_load : std_logic;
@@ -19,22 +22,44 @@ begin
     out_port => output_data
     );
     -- system test clock
-    process begin
-        clk <= '0'; wait for 10 us;
-        clk <= '1'; wait for 10 us;
-    end process;
+     CLK_PROC : process
+        begin
+            wait for clk_period / 2;
+            if clk = '1' then
+                clk <= '0';
+            else
+                clk <= '1';
+            end if;
+     end process;
     
     --system test process       
     process begin    
-    -- Start reading ROM
-    reset_execute <= '0';
-    reset_load <= '1';
-    
-    -- Do something?
-    input_data <= X"ffff";
-    wait until (clk='0' and clk'event);
-    wait until (clk='1' and clk'event);
-    input_data <= X"0000";       
-    end process;    
-    
+        reset_execute <= '0';
+        reset_load <= '1';
+        wait until falling_edge(clk);
+        reset_load <= '0';
+        wait until falling_edge(clk);    
+        -- Do something?
+        input_data <= X"0003";
+        wait until falling_edge(clk);
+        wait until falling_edge(clk);
+        wait until falling_edge(clk);
+        wait until falling_edge(clk);
+        wait until falling_edge(clk);
+        input_data <= X"0005";
+        wait until falling_edge(clk);
+        wait until falling_edge(clk);
+        wait until falling_edge(clk);
+        wait until falling_edge(clk);
+        wait until falling_edge(clk);
+        input_data <= X"0000";
+        wait until falling_edge(clk);
+        wait until falling_edge(clk);
+        wait until falling_edge(clk);
+        wait until falling_edge(clk);
+        wait until falling_edge(clk);
+        wait until falling_edge(clk);
+        
+        assert false report "Test: End - Force stop" severity failure;       
+    end process;   
 end behavioural;
