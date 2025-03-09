@@ -6,13 +6,13 @@ use work.cpu_types.all;
 
 entity program_counter is
     port(
-        rst : in std_logic;
-        clk: in std_logic;
+        rst : in std_logic := '0';
+        clk: in std_logic := '0';
         --read signals
-        rd_instruction: out word_t;
+        rd_instruction: out word_t := (others => '0');
         --write signals
-        wr_instruction: in word_t; 
-        wr_enable: in std_logic
+        wr_instruction: in word_t := (others => '0'); 
+        wr_enable: in std_logic := '0'
         );
 end program_counter;
 
