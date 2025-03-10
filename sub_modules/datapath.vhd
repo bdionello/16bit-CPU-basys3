@@ -27,7 +27,6 @@ architecture data_path_arch of datapath is
     -- Internal signals -- Denoted by: '_i' = Not stage specific 
     -- Fetch Stage signals -- Denoted by: "_f'  
     signal pc_in_f            : word_t := (others => '0');
-    signal pc_delayed_f            : word_t := (others => '0');
     signal pc_out_f           : word_t := (others => '0');
     signal inst_addr_f        : word_t := (others => '0');
     signal pc_next_f          : word_t := (others => '0');    
@@ -35,6 +34,7 @@ architecture data_path_arch of datapath is
     
     -- Decode stage signals -- Denoted by:'_d'
     signal instruction_d      : word_t := (others => '0');
+    signal out_port_hold_d    : word_t := (others => '0');
     signal instr_decoded_d    : instruction_type := instruction_type_init_c;
     signal pc_next_d          : word_t := (others => '0');
     -- Signals for register_file
@@ -83,7 +83,8 @@ architecture data_path_arch of datapath is
     signal wr_data_fwd_mem    : word_t := (others => '0'); -- Data to write to register file
     signal wr_index_mem       : std_logic_vector(2 downto 0) := (others => '0'); 
     signal imm_fwd_mem        : word_t := (others => '0');
-    signal inport_fwd_mem      : word_t := (others => '0'); 
+    signal inport_fwd_mem     : word_t := (others => '0');
+    signal out_port_mem       : word_t := (others => '0'); -- TODO add mux for this and outport from reg_data1
     -- Write back stage signals -- Denoted by:'_wb'
     signal write_back_ctl_wb  : write_back_type := write_back_type_init_c; -- used in wb stage
     signal pc_next_wb         : word_t := (others => '0');
@@ -96,7 +97,7 @@ architecture data_path_arch of datapath is
        
     begin
         --------------- Internal signal logic ----------------
-        op_code_out <= instr_decoded_d.opcode;
+        op_code_out <= instruction_f(15 downto 9);
         ---------- Fetch
         -- program counter mux
 
@@ -119,7 +120,10 @@ architecture data_path_arch of datapath is
                          X"0000";
         inport_fwd_d <= in_port when instr_decoded_d.opcode = IN_OP else
                         X"0000";
-        out_port <= rd_data1_d when instr_decoded_d.opcode = OUT_OP; 
+        out_port <= out_port_hold_d when instr_decoded_d.opcode = OUT_OP else
+                    X"0000" when sys_rst = '1';
+        out_port_hold_d <= rd_data1_d;
+         
         alu_shift_d <= instr_decoded_d.shift when (instr_decoded_d.opcode = SHL_OP or instr_decoded_d.opcode = SHR_OP) else
                        "0000";
         ---------- Execute
@@ -156,7 +160,7 @@ architecture data_path_arch of datapath is
                 inst_out => instruction_f, 
                 -- Memory Mapped ports
                 in_port => in_port,
-                out_port => out_port --: out STD_LOGIC_VECTOR (15 downto 0) := X"0000"            
+                out_port => out_port_mem --: out STD_LOGIC_VECTOR (15 downto 0) := X"0000"            
             );         
         -- Fetch          
         pc: entity work.program_counter
@@ -168,18 +172,8 @@ architecture data_path_arch of datapath is
                 wr_instr_addr => pc_in_f, --: in std_logic_vector(15 downto 0);                
                 --read signals
                 rd_instr_addr => inst_addr_f --: out std_logic_vector(15 downto 0);          
-        );
-                -- Fetch          
-        pc_delay: entity work.program_counter
-            port map (
-                rst => sys_rst,
-                clk => sys_clk,
-                wr_enable => '1', -- TODO: connect for hazard control
-                --write signals
-                wr_instr_addr => inst_addr_f, --: in std_logic_vector(15 downto 0);                
-                --read signals
-                rd_instr_addr => pc_delayed_f --: out std_logic_vector(15 downto 0);          
-        );
+        );        
+
         -- Fetch
         adder_pc: entity work.adder
             port map (
@@ -195,7 +189,7 @@ architecture data_path_arch of datapath is
                 wr_enable => '1', -- TODO: connect for hazard control
                 -- inputs
                 wr_instruction => instruction_f, --: in std_logic_vector(15 downto 0);
-                wr_pc => pc_delayed_f,               
+                wr_pc => inst_addr_f,               
                 -- outputs               
                 rd_instruction => instruction_d, --: out std_logic_vector(15 downto 0);
                 rd_pc => pc_next_d          

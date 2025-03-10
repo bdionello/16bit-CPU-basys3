@@ -50,6 +50,7 @@ begin
 
             -- Default case
             when others => temp_result := (others => '0'); -- Default NOP
+            
         end case;
 
         -- Output result

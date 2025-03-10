@@ -1,6 +1,1 @@
 Breakpoint File Version 1.0
-73 true C:/Users/Brett/source/repos/ECE449/sub_modules/decode_register.vhd
-38 true C:/Users/Brett/source/repos/ECE449/sub_modules/RF8_16.vhd
-59 true C:/Users/Brett/source/repos/ECE449/sub_modules/controller.vhd
-28 true C:/Users/Brett/source/repos/ECE449/sub_modules/decoder.vhd
-39 true C:/Users/Brett/source/repos/ECE449/sub_modules/fetch_register.vhd

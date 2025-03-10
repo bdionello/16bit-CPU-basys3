@@ -34,23 +34,18 @@ begin
     
     --system test process       
     process begin    
-        reset_execute <= '1';
-        reset_load <= '0';
-        wait until falling_edge(clk);
-        reset_execute <= '0';      
-        wait until falling_edge(clk);    
+--        reset_execute <= '1';
+--        reset_load <= '0';
+--        wait until falling_edge(clk);
+--        reset_execute <= '0';      
+--        wait until falling_edge(clk);    
         -- Do something?
         input_data <= X"0003";
         wait until falling_edge(clk);
         wait until falling_edge(clk);
         wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
+        wait until falling_edge(clk); 
         input_data <= X"0005";
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
         wait until falling_edge(clk);
         input_data <= X"0000";
         wait until falling_edge(clk);

@@ -2,13 +2,13 @@
 2017.4
 Dec 15 2017
 21:07:18
-C:/Users/Brett/source/repos/ECE449/sub_modules/RF8_16.vhd,1741386486,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd,,,register_file,,,,,,,,
+C:/Users/Brett/source/repos/ECE449/sub_modules/RF8_16.vhd,1741582144,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd,,,register_file,,,,,,,,
 C:/Users/Brett/source/repos/ECE449/sub_modules/adder.vhd,1741316861,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd,,,adder,,,,,,,,
-C:/Users/Brett/source/repos/ECE449/sub_modules/alu.vhd,1741480753,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd,,,alu,,,,,,,,
-C:/Users/Brett/source/repos/ECE449/sub_modules/controller.vhd,1741506050,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_top.vhd,,,controller,,,,,,,,
+C:/Users/Brett/source/repos/ECE449/sub_modules/alu.vhd,1741583818,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd,,,alu,,,,,,,,
+C:/Users/Brett/source/repos/ECE449/sub_modules/controller.vhd,1741583336,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_top.vhd,,,controller,,,,,,,,
 C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_top.vhd,1741505883,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/systemTB.vhd,,,cpu_top,,,,,,,,
 C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_types.vhd,1741505455,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/adder.vhd;C:/Users/Brett/source/repos/ECE449/sub_modules/alu.vhd;C:/Users/Brett/source/repos/ECE449/sub_modules/controller.vhd;C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_top.vhd;C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd;C:/Users/Brett/source/repos/ECE449/sub_modules/decode_register.vhd;C:/Users/Brett/source/repos/ECE449/sub_modules/decoder.vhd;C:/Users/Brett/source/repos/ECE449/sub_modules/execute_register.vhd;C:/Users/Brett/source/repos/ECE449/sub_modules/fetch_register.vhd;C:/Users/Brett/source/repos/ECE449/sub_modules/imm_concat.vhd;C:/Users/Brett/source/repos/ECE449/sub_modules/mem_manager.vhd;C:/Users/Brett/source/repos/ECE449/sub_modules/memory_register.vhd;C:/Users/Brett/source/repos/ECE449/sub_modules/program_counter.vhd,,,cpu_types,,,,,,,,
-C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd,1741553559,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_top.vhd,,,datapath,,,,,,,,
+C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd,1741584362,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_top.vhd,,,datapath,,,,,,,,
 C:/Users/Brett/source/repos/ECE449/sub_modules/decode_register.vhd,1741548219,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd,,,decode_register,,,,,,,,
 C:/Users/Brett/source/repos/ECE449/sub_modules/decoder.vhd,1741329276,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd,,,decoder,,,,,,,,
 C:/Users/Brett/source/repos/ECE449/sub_modules/execute_register.vhd,1741549776,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd,,,execute_register,,,,,,,,
@@ -17,6 +17,6 @@ C:/Users/Brett/source/repos/ECE449/sub_modules/imm_concat.vhd,1741470808,vhdl,C:
 C:/Users/Brett/source/repos/ECE449/sub_modules/mem_manager.vhd,1741552801,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd,,,mem_manager,,,,,,,,
 C:/Users/Brett/source/repos/ECE449/sub_modules/memory_register.vhd,1741549717,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd,,,memory_register,,,,,,,,
 C:/Users/Brett/source/repos/ECE449/sub_modules/program_counter.vhd,1741547890,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd,,,program_counter,,,,,,,,
-C:/Users/Brett/source/repos/ECE449/sub_modules/ram.vhd,1741309952,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/mem_manager.vhd,,,ram,,,,,,,,
-C:/Users/Brett/source/repos/ECE449/sub_modules/rom.vhd,1741553628,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/mem_manager.vhd,,,rom,,,,,,,,
-C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/systemTB.vhd,1741549095,vhdl,,,,test_system,,,,,,,,
+C:/Users/Brett/source/repos/ECE449/sub_modules/ram.vhd,1741575534,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/mem_manager.vhd,,,ram,,,,,,,,
+C:/Users/Brett/source/repos/ECE449/sub_modules/rom.vhd,1741575861,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/mem_manager.vhd,,,rom,,,,,,,,
+C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/systemTB.vhd,1741581435,vhdl,,,,test_system,,,,,,,,

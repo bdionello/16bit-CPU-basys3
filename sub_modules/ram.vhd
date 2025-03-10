@@ -49,7 +49,7 @@ architecture ram_arch of ram is
             READ_DATA_WIDTH_B       => 16,             --positive integer
             ADDR_WIDTH_B            => 9,              --positive integer
             READ_RESET_VALUE_B      => "0",            --string
-            READ_LATENCY_B          => 1              --non-negative integer
+            READ_LATENCY_B          => 0              --non-negative integer
           )
           port map (        
             -- Port A module ports

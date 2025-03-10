@@ -23,11 +23,13 @@ entity controller is
 architecture controller_arch of controller is    
     signal state : ctrl_state_type := RESET_STATE;
     signal nextstate : ctrl_state_type := BOOT_STATE;
-    signal op_code_i : op_code_t := (others=>'1'); -- start at an invalid op code   
+    signal op_code_i : op_code_t := (others=>'1');
+    signal state_code : op_code_t := (others=>'1');   
 begin
+    op_code_i <= op_code; -- connect port to internal
     -- Update state
     nextstate <=    BOOT_STATE when state = RESET_STATE else
-                    NOP_STATE when  op_code_i = NOP else
+                    NOP_STATE when  (op_code_i = NOP) and (state /= RESET_STATE) else
                     A1_STATE when ( op_code_i = ADD or
                                     op_code_i = SUB or
                                     op_code_i = MUL or
@@ -54,18 +56,17 @@ begin
         begin
         -- check reset
         if (reset_ld = '1') or (reset_ex  = '1') then state <= RESET_STATE; -- Asynchronous
+            state_code <= (others=>'1');
         -- update state    
         elsif rising_edge(clk) then    
-            state <= nextstate; -- Synchronous  
+            state <= nextstate; -- Synchronous 
+            state_code <= op_code_i;            
         end if;    
-    end process;
-  
+    end process;  
     -- controller outputs  
     -- RESET STATE        
     sys_rst <= '1' when state = RESET_STATE else'0';
-    op_code_i <= (others=>'1') when state = RESET_STATE else op_code;   
-
-    
+            
     -- BOOT STATE
     boot_mode <= BOOT_EXECUTE when (state = BOOT_STATE) and (reset_ex = '1') else
                  BOOT_LOAD when (state = BOOT_STATE) and (reset_ld = '1') else
@@ -89,7 +90,7 @@ begin
                             '0' when state = A2_STATE else
                             '0' when state = A3_STATE else
                             '0' when state = B1_STATE else                              
-                            '1' when state = B2_STATE and (op_code_i = BR_SUB) else
+                            '1' when state = B2_STATE and (state_code = BR_SUB) else
                             '0' when state = RETURN_STATE else
                             '1' when state = L1_LOAD_IMM_STATE else
                             '0' when state = L2_LOAD_STATE else
@@ -109,13 +110,13 @@ begin
                                                       
     -- alu_NOP, alu_ADD, alu_SUB, alu_MUL, alu_NAND, alu_SHL, alu_SHR, alu_TEST
     execute_ctl.alu_op <= alu_NOP when state = NOP_STATE else
-                          alu_ADD when state = A1_STATE AND (op_code_i = ADD) else
-                          alu_SUB when state = A1_STATE AND (op_code_i = SUB) else
-                          alu_MUL when state = A1_STATE AND (op_code_i = MUL) else
-                          alu_NAND when state = A1_STATE AND (op_code_i = NAND_OP) else
-                          alu_SHL when state = A2_STATE AND (op_code_i = SHL_OP) else
-                          alu_SHR when state = A2_STATE AND (op_code_i = SHR_OP) else
-                          alu_TEST when state = A3_STATE AND (op_code_i = TEST) else
+                          alu_ADD when state = A1_STATE AND (state_code = ADD) else
+                          alu_SUB when state = A1_STATE AND (state_code = SUB) else
+                          alu_MUL when state = A1_STATE AND (state_code = MUL) else
+                          alu_NAND when state = A1_STATE AND (state_code = NAND_OP) else
+                          alu_SHL when state = A2_STATE AND (state_code = SHL_OP) else
+                          alu_SHR when state = A2_STATE AND (state_code = SHR_OP) else
+                          alu_TEST when state = A3_STATE AND (state_code = TEST) else
                           alu_NOP when state = B1_STATE else                              
                           alu_NOP when state = B2_STATE else
                           alu_NOP when state = RETURN_STATE else
@@ -139,7 +140,7 @@ begin
     memory_ctl.branch_n <= '0' when state = A1_STATE else
                            '0' when state = A2_STATE else
                            '0' when state = A3_STATE else
-                           '1' when state = B1_STATE and ((op_code_i = BR_N) or (op_code_i = BRR_N)) else                              
+                           '1' when state = B1_STATE and ((state_code = BR_N) or (state_code = BRR_N)) else                              
                            '0' when state = B2_STATE else
                            '0' when state = RETURN_STATE else
                            '0' when state = L1_LOAD_IMM_STATE else
@@ -150,7 +151,7 @@ begin
     memory_ctl.branch_z <= '0' when state = A1_STATE else
                            '0' when state = A2_STATE else
                            '0' when state = A3_STATE else
-                           '1' when state = B1_STATE and ((op_code_i = BR_Z) or (op_code_i = BRR_Z)) else                              
+                           '1' when state = B1_STATE and ((state_code = BR_Z) or (state_code = BRR_Z)) else                              
                            '0' when state = B2_STATE else
                            '0' when state = RETURN_STATE else
                            '0' when state = L1_LOAD_IMM_STATE else
@@ -183,8 +184,8 @@ begin
     -- ALU_RES, MEMORY_DATA, RETURN_PC, IMM_FWD
     write_back_ctl.wb_src <= ALU_RES when state = A1_STATE else
                              ALU_RES when state = A2_STATE else
-                             ALU_RES when state = A3_STATE and (op_code_i = TEST) else
-                             INPORT_FWD when state = A3_STATE and (op_code_i = IN_OP) else
+                             ALU_RES when state = A3_STATE and (state_code = TEST) else
+                             INPORT_FWD when state = A3_STATE and (state_code = IN_OP) else
                              NONE when state = B1_STATE else                              
                              RETURN_PC when state = B2_STATE else
                              NONE when state = RETURN_STATE else
@@ -195,9 +196,9 @@ begin
                              
     write_back_ctl.reg_write <= '1' when state = A1_STATE else
                                 '1' when state = A2_STATE else
-                                '1' when state = A3_STATE else
+                                '1' when state = A3_STATE and (state_code = IN_OP) else
                                 '0' when state = B1_STATE else                              
-                                '1' when state = B2_STATE and (op_code_i = BR_SUB) else
+                                '1' when state = B2_STATE and (state_code = BR_SUB) else
                                 '0' when state = RETURN_STATE else
                                 '1' when state = L1_LOAD_IMM_STATE else
                                 '1' when state = L2_LOAD_STATE else

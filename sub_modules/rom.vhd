@@ -29,7 +29,7 @@ architecture rom_arch of rom is
             -- Common module generics
             MEMORY_SIZE             => 8192,            --positive integer
             MEMORY_PRIMITIVE        => "auto",          --string; "auto", "distributed", or "block";
-            MEMORY_INIT_FILE        => "TestA.mem",          --string; "none" or "<filename>.mem" 
+            MEMORY_INIT_FILE        => "testA.mem",          --string; "none" or "<filename>.mem" 
             MEMORY_INIT_PARAM       => "",              --string;
             USE_MEM_INIT            => 1,               --integer; 0,1
             WAKEUP_TIME             => "disable_sleep", --string; "disable_sleep" or "use_sleep_pin" 
@@ -42,7 +42,7 @@ architecture rom_arch of rom is
             READ_DATA_WIDTH_A       => 16,              --positive integer
             ADDR_WIDTH_A            => 9,               --positive integer
             READ_RESET_VALUE_A      => "0",             --string
-            READ_LATENCY_A          => 1                --non-negative integer
+            READ_LATENCY_A          => 0                --non-negative integer
         )
         port map (    
             -- Common module ports

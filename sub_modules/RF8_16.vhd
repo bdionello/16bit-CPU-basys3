@@ -33,7 +33,7 @@ begin
                 for i in 0 to 7 loop
                     reg_file(i)<= (others => '0'); 
                 end loop;        
-            if falling_edge(clk) and (wr_enable='1') then   -- write on falling edge          
+            elsif (falling_edge(clk) and (wr_enable='1')) then   -- write on falling edge          
                 case wr_index(2 downto 0) is
                     when "000" => reg_file(0) <= wr_data;
                     when "001" => reg_file(1) <= wr_data;
@@ -43,9 +43,8 @@ begin
                     when "101" => reg_file(5) <= wr_data;
                     when "110" => reg_file(6) <= wr_data;
                     when "111" => reg_file(7) <= wr_data;
-                    when others => NULL; end case;
-            end if; 
-        end if;
+                    when others => NULL; end case;            
+            end if;
     end process;
     
     --read operation -- read concurrantly
