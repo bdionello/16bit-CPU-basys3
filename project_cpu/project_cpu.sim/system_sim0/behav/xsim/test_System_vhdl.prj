@@ -1,20 +1,20 @@
 # compile vhdl design source files
 vhdl xil_defaultlib  \
-"../../../../../sub_modules/RF8_16.vhd" \
+"../../../../../sub_modules/decode/RF8_16.vhd" \
 "../../../../../sub_modules/cpu_types.vhd" \
-"../../../../../sub_modules/adder.vhd" \
-"../../../../../sub_modules/alu.vhd" \
+"../../../../../sub_modules/decode/adder.vhd" \
+"../../../../../sub_modules/execute/alu.vhd" \
 "../../../../../sub_modules/controller.vhd" \
-"../../../../../sub_modules/rom.vhd" \
-"../../../../../sub_modules/ram.vhd" \
-"../../../../../sub_modules/mem_manager.vhd" \
-"../../../../../sub_modules/program_counter.vhd" \
-"../../../../../sub_modules/fetch_register.vhd" \
-"../../../../../sub_modules/decoder.vhd" \
-"../../../../../sub_modules/imm_concat.vhd" \
-"../../../../../sub_modules/decode_register.vhd" \
-"../../../../../sub_modules/execute_register.vhd" \
-"../../../../../sub_modules/memory_register.vhd" \
+"../../../../../sub_modules/memory/rom.vhd" \
+"../../../../../sub_modules/memory/ram.vhd" \
+"../../../../../sub_modules/memory/mem_manager.vhd" \
+"../../../../../sub_modules/fetch/program_counter.vhd" \
+"../../../../../sub_modules/fetch/fetch_register.vhd" \
+"../../../../../sub_modules/decode/decoder.vhd" \
+"../../../../../sub_modules/decode/imm_concat.vhd" \
+"../../../../../sub_modules/decode/decode_register.vhd" \
+"../../../../../sub_modules/execute/execute_register.vhd" \
+"../../../../../sub_modules/memory/memory_register.vhd" \
 "../../../../../sub_modules/datapath.vhd" \
 "../../../../../sub_modules/cpu_top.vhd" \
 "../../../../../sub_modules/testbench/systemTB.vhd" \
