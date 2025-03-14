@@ -1,0 +1,8 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../../sub_modules/cpu_types.vhd" \
+"../../../../../sub_modules/decode/sign_extend.vhd" \
+"../../../../../sub_modules/testbench/displacement_TB.vhd" \
+
+# Do not sort compile order
+nosort

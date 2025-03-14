@@ -12,8 +12,7 @@ entity branch_unit is
         disp_l          : in std_logic_vector(8 downto 0);  -- Long displacement (for BRR)
         disp_s          : in std_logic_vector(5 downto 0);  -- Short displacement (for BR)
         alu_n           : in std_logic;  -- Negative flag from ALU
-        alu_z           : in std_logic;  -- Zero flag from ALU
-        
+        alu_z           : in std_logic;  -- Zero flag from ALU        
         -- Outputs
         branch_taken    : out std_logic;  -- Branch taken signal
         branch_target   : out word_t  -- Calculated branch target address

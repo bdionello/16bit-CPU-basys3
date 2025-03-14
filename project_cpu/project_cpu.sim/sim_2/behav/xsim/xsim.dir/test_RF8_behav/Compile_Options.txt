@@ -1,1 +1,0 @@
--wto "c67d6245d07e4cd8bd45dbed5b49fecd" --incr --debug "typical" --relax --mt "2" -L "xil_defaultlib" -L "secureip" -L "xpm" --snapshot "test_RF8_behav" "xil_defaultlib.test_RF8" -log "elaborate.log" 

@@ -5,9 +5,9 @@ use work.cpu_types.all;
 
 entity sign_extend is
     port (
-        op_code         : in std_logic_vector(6 downto 0);  -- Opcode from Decode Stage
-        disp_l          : in std_logic_vector(8 downto 0);  -- Long displacement (for BRR)
-        disp_s          : in std_logic_vector(5 downto 0);  -- Short displacement (for BR)
+        op_code         : in std_logic_vector(6 downto 0) := (others => '0');  -- Opcode from Decode Stage
+        disp_l          : in std_logic_vector(8 downto 0) := (others => '0');  -- Long displacement (for BRR)
+        disp_s          : in std_logic_vector(5 downto 0) := (others => '0');  -- Short displacement (for BR)
         extended_disp   : out word_t  -- Short displacement (for BR)
     );
 end sign_extend;
