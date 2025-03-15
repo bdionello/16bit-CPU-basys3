@@ -25,8 +25,7 @@ package cpu_types is
     end record execute_type;
 
     type memory_type is record
-        branch_n : std_logic;
-        branch_z : std_logic;    
+        op_code_mem : op_code_t;  
         memory_read : std_logic;
         memory_write : std_logic;  
     end record memory_type;
@@ -77,11 +76,10 @@ package cpu_types is
     constant execute_type_init_c : execute_type := ( alu_op => alu_NOP ) ;                                                     
                                                      --alu_src => '0');
                                                      
-    constant memory_type_init_c : memory_type := ( branch_n => '0',
-                                                   branch_z => '0',   
+    constant memory_type_init_c : memory_type := ( op_code_mem => (others => '0'),  
                                                    memory_read => '0', 
-                                                   memory_write => '0')
-                                                   ;  
+                                                   memory_write => '0');
+                                                     
     constant write_back_type_init_c : write_back_type := ( wb_src  => NONE,    
                                                            reg_write  => '0');  
                                                              

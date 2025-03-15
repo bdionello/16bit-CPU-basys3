@@ -2,3 +2,6 @@ Running: xsim.dir/displacement_TB_behav/xsimk.exe -simmode gui -wdb displacement
 Design successfully loaded
 Design Loading Memory Usage: 8564 KB (Peak: 8564 KB)
 Design Loading CPU Usage: 15 ms
+Simulation completed
+Simulation Memory Usage: 9164 KB (Peak: 9164 KB)
+Simulation CPU Usage: 30 ms

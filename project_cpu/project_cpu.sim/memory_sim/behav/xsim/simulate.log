@@ -1012,4 +1012,44 @@ Error: Unexpected return value. inst_out_i = 0
 Time: 5040 ns  Iteration: 1  Process: /memory_TB/TEST_PROC  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd
 Error: Unexpected return value. inst_out_i = 0
 Time: 5050 ns  Iteration: 1  Process: /memory_TB/TEST_PROC  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd
-Error: Unexpected return v
+Error: Unexpected return value. inst_out_i = 0
+Time: 5060 ns  Iteration: 1  Process: /memory_TB/TEST_PROC  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd
+Error: Unexpected return value. inst_out_i = 0
+Time: 5070 ns  Iteration: 1  Process: /memory_TB/TEST_PROC  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd
+Error: Unexpected return value. inst_out_i = 0
+Time: 5080 ns  Iteration: 1  Process: /memory_TB/TEST_PROC  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd
+Error: Unexpected return value. inst_out_i = 0
+Time: 5090 ns  Iteration: 1  Process: /memory_TB/TEST_PROC  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd
+Error: Unexpected return value. inst_out_i = 0
+Time: 5100 ns  Iteration: 1  Process: /memory_TB/TEST_PROC  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd
+Error: Unexpected return value. inst_out_i = 0
+Time: 5110 ns  Iteration: 1  Process: /memory_TB/TEST_PROC  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd
+Error: Unexpected return value. inst_out_i = 0
+Time: 5120 ns  Iteration: 1  Process: /memory_TB/TEST_PROC  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd
+Error: Unexpected return value. inst_out_i = 0
+Time: 5130 ns  Iteration: 1  Process: /memory_TB/TEST_PROC  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd
+Error: Unexpected return value. inst_out_i = 0
+Time: 5140 ns  Iteration: 1  Process: /memory_TB/TEST_PROC  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd
+Error: Unexpected return value. inst_out_i = 16960
+Time: 15460 ns  Iteration: 1  Process: /memory_TB/TEST_PROC  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd
+Error: Unexpected return value. inst_out_i = 17024
+Time: 15480 ns  Iteration: 1  Process: /memory_TB/TEST_PROC  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd
+Error: Unexpected return value. inst_out_i = 0
+Time: 15500 ns  Iteration: 1  Process: /memory_TB/TEST_PROC  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd
+Error: Unexpected return value. inst_out_i = 0
+Time: 15520 ns  Iteration: 1  Process: /memory_TB/TEST_PROC  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd
+Error: Unexpected return value. inst_out_i = 0
+Time: 15540 ns  Iteration: 1  Process: /memory_TB/TEST_PROC  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd
+Error: Unexpected return value. inst_out_i = 0
+Time: 15560 ns  Iteration: 1  Process: /memory_TB/TEST_PROC  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd
+Error: Unexpected return value. inst_out_i = 721
+Time: 15580 ns  Iteration: 1  Process: /memory_TB/TEST_PROC  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd
+Error: Unexpected return value. inst_out_i = 0
+Time: 15600 ns  Iteration: 1  Process: /memory_TB/TEST_PROC  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd
+Error: Unexpected return value. inst_out_i = 0
+Time: 15620 ns  Iteration: 1  Process: /memory_TB/TEST_PROC  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd
+Error: Unexpected return value. inst_out_i = 0
+Time: 15640 ns  Iteration: 1  Process: /memory_TB/TEST_PROC  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd
+Failure: Test: End - Force stop
+Time: 16050 ns  Iteration: 1  Process: /memory_TB/TEST_PROC  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd
+$finish called at time : 16050 ns : File "C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd" Line 293

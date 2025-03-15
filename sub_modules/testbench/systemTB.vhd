@@ -93,6 +93,10 @@ begin
         wait until falling_edge(clk);
         wait until falling_edge(clk);
         wait until falling_edge(clk);
+        wait until falling_edge(clk);
+        wait until falling_edge(clk);
+        wait until falling_edge(clk);
+        wait until falling_edge(clk);
         
         assert false report "Test: End - Force stop" severity failure;       
     end process;   

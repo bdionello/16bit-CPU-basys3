@@ -1,4 +1,3 @@
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use work.cpu_types.all;
@@ -24,7 +23,7 @@ entity decode_register is
            wr_reg_data1  : in word_t := (others=>'0');
            wr_reg_data2  : in word_t := (others=>'0');
            wr_reg_write_index  : in std_logic_vector(2 downto 0) := (others=>'0');
-           -- TODO add displacement
+           wr_extended_disp    : in word_t := (others => '0');
            wr_immidate : in word_t := (others=>'0'); 
            wr_inport_data : in word_t := (others=>'0');
            wr_alu_shift : in std_logic_vector(3 downto 0) := (others => '0');        
@@ -40,6 +39,7 @@ entity decode_register is
            rd_reg_data2  : out word_t := (others=>'0');
            rd_reg_write_index : out std_logic_vector(2 downto 0) := (others=>'0');
            -- 
+           rd_extended_disp    : out word_t := (others => '0');
            rd_immidate : out word_t := (others=>'0');
            rd_inport_data : out word_t := (others=>'0');
            rd_alu_shift : out  std_logic_vector(3 downto 0) := (others => '0');
@@ -62,18 +62,20 @@ architecture Behavioral of decode_register is
                     rd_reg_data1  <= (others=>'0');
                     rd_reg_data2  <= (others=>'0');
                     rd_reg_write_index  <= (others=>'0');
+                    rd_extended_disp <= (others=>'0');
                     rd_immidate <= (others=>'0');
                     rd_inport_data <= (others=>'0');
                     rd_execute_ctl <= execute_type_init_c;
                     rd_memory_ctl <= memory_type_init_c;
                     rd_write_back_ctl <= write_back_type_init_c;
-                    rd_alu_shift <= (others=>'0');
+                    rd_alu_shift <= (others=>'0');                    
                      
                 elsif(wr_enable='1') then
                     rd_pc <= wr_pc;
                     rd_reg_data1 <= wr_reg_data1;
                     rd_reg_data2 <= wr_reg_data2;
                     rd_reg_write_index <= wr_reg_write_index;
+                    rd_extended_disp <= wr_extended_disp;
                     rd_immidate <= wr_immidate;
                     rd_inport_data <= wr_inport_data;
                     rd_alu_shift <= wr_alu_shift;

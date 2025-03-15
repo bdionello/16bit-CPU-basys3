@@ -34,9 +34,9 @@ architecture data_path_arch of datapath is
     
     -- Decode stage signals -- Denoted by:'_d'
     signal instruction_d      : word_t := (others => '0');
-    signal out_port_hold_d    : word_t := (others => '0');
     signal instr_decoded_d    : instruction_type := instruction_type_init_c;
-    signal pc_next_d          : word_t := (others => '0');
+    signal pc_current_d          : word_t := (others => '0');
+    signal extended_disp_d    : word_t := (others => '0');
     -- Signals for register_file
     signal rd_data1_d         : word_t := (others => '0'); -- Read data 1 from register file
     signal rd_data2_d         : word_t := (others => '0'); -- Read data 2 from register file
@@ -53,7 +53,7 @@ architecture data_path_arch of datapath is
     signal execute_ctl_ex     : execute_type := execute_type_init_c; -- used in execute stage
     signal memory_ctl_ex      : memory_type := memory_type_init_c;    -- pass through
     signal write_back_ctl_ex  : write_back_type := write_back_type_init_c; -- pass through
-    signal pc_next_ex         : word_t := (others => '0');
+    signal pc_current_ex      : word_t := (others => '0');
     signal rd_data1_ex        : word_t := (others => '0'); -- Read data 1 from register file
     signal rd_data2_ex        : word_t := (others => '0'); -- Read data 2 from register file
     signal wr_index_ex        : std_logic_vector(2 downto 0);
@@ -61,23 +61,22 @@ architecture data_path_arch of datapath is
     signal inport_fwd_ex      : word_t := (others => '0');
     signal alu_shift_ex       : std_logic_vector(3 downto 0) := (others => '0');
     signal pc_branch_addr_ex  : word_t := (others => '0');
+    signal extended_disp_ex    : word_t := (others => '0');
     -- alu
-    signal alu_in1_ex         : word_t := (others => '0'); 
-    signal alu_in2_ex         : word_t := (others => '0');
     signal alu_result_ex      : word_t:= (others => '0');
     signal alu_z_ex           : std_logic := '0';
     signal alu_n_ex           : std_logic := '0';     
     -- Memory stage signals -- Denoted by:'_mem'
     signal memory_ctl_mem     : memory_type := memory_type_init_c; -- used in memory stage
     signal write_back_ctl_mem : write_back_type := write_back_type_init_c; -- pass through
-    signal pc_next_mem        : word_t := (others => '0');
+    signal pc_current_mem        : word_t := (others => '0');
     -- alu
     signal alu_result_mem     : word_t := (others => '0');
     signal alu_z_mem          : std_logic := '0';
     signal alu_n_mem          : std_logic := '0';
     signal pc_src_mem         : std_logic := '0'; -- signal to select pc mux        
     signal pc_branch_addr_mem : word_t := (others => '0');    
-    signal data_address_mem   : word_t := (others => '0');
+    signal reg1_data_mem   : word_t := (others => '0');
     signal write_data_mem     : word_t := (others => '0');
     signal memory_data_mem    : word_t := (others => '0');
     signal wr_data_fwd_mem    : word_t := (others => '0'); -- Data to write to register file
@@ -85,6 +84,7 @@ architecture data_path_arch of datapath is
     signal imm_fwd_mem        : word_t := (others => '0');
     signal inport_fwd_mem     : word_t := (others => '0');
     signal out_port_mem       : word_t := (others => '0'); -- TODO add mux for this and outport from reg_data1
+    signal extended_disp_mem    : word_t := (others => '0');
     -- Write back stage signals -- Denoted by:'_wb'
     signal write_back_ctl_wb  : write_back_type := write_back_type_init_c; -- used in wb stage
     signal pc_next_wb         : word_t := (others => '0');
@@ -120,18 +120,14 @@ architecture data_path_arch of datapath is
                          X"0000";
         inport_fwd_d <= in_port when instr_decoded_d.opcode = IN_OP else
                         X"0000";
-        out_port <= out_port_hold_d when instr_decoded_d.opcode = OUT_OP else
+                                       
+        out_port <= reg1_data_mem when memory_ctl_mem.op_code_mem = OUT_OP else -- Ra to outport 
+                    out_port_mem when (memory_ctl_mem.op_code_mem = STORE) and (reg1_data_mem = X"fff2") else -- Memory mapped output
                     X"0000" when sys_rst = '1';
-        out_port_hold_d <= rd_data1_d;
          
         alu_shift_d <= instr_decoded_d.shift when (instr_decoded_d.opcode = SHL_OP or instr_decoded_d.opcode = SHR_OP) else
                        "0000";
-        ---------- Execute
-                
-        ---------- Memory
-        pc_src_mem <= (memory_ctl_mem.branch_n and alu_n_mem) when memory_ctl_mem.branch_n = '1' else
-                  (memory_ctl_mem.branch_z and alu_z_mem) when memory_ctl_mem.branch_z = '1' else
-                   '0';
+        ---------- Execute           
                         
         ---------- Write back 
         -- register file write data mux
@@ -152,7 +148,7 @@ architecture data_path_arch of datapath is
                 -- Data memory - read/write  
                 write_enable => memory_ctl_mem.memory_write,
                 read_data_enable => memory_ctl_mem.memory_read,
-                data_addr => data_address_mem,
+                data_addr => reg1_data_mem,
                 data_in => write_data_mem,
                 data_out => memory_data_mem, 
                 -- Instruction memory - read only
@@ -192,7 +188,7 @@ architecture data_path_arch of datapath is
                 wr_pc => inst_addr_f,               
                 -- outputs               
                 rd_instruction => instruction_d, --: out std_logic_vector(15 downto 0);
-                rd_pc => pc_next_d          
+                rd_pc => pc_current_d          
             );
             
         --------------- Decode Stage Modules -------------------                               
@@ -223,6 +219,16 @@ architecture data_path_arch of datapath is
                 imm_in => imm_temp_d,
                 imm_out => imm_fwd_d          
             );
+            
+        -- Decode
+        -- select, extend, and shift the displacement
+        sign_extender: entity work.sign_extend
+            port map(
+                   op_code         =>  instr_decoded_d.opcode,  -- Opcode from Decode Stage
+                   disp_l          =>  instr_decoded_d.disp_l,  -- Long displacement (for BRR)
+                   disp_s          =>  instr_decoded_d.disp_s,  -- Short displacement (for BR)
+                   extended_disp   =>  extended_disp_d  -- Short displacement (for BR)
+            );
         -- Decode
         decode_r: entity work.decode_register
             port map (
@@ -231,12 +237,12 @@ architecture data_path_arch of datapath is
                 clk => sys_clk,
                 wr_enable => '1', -- TODO hazard control 
                 -- inputs
-                wr_pc => pc_next_d,
+                wr_pc => pc_current_d,
                 -- register file
                 wr_reg_data1 => rd_data1_d,
                 wr_reg_data2 => rd_data2_d,
                 wr_reg_write_index => wr_index_d,
-                -- TODO add displacement
+                wr_extended_disp => extended_disp_d,
                 wr_immidate => imm_fwd_d,
                 wr_inport_data => inport_fwd_d,
                 wr_alu_shift => alu_shift_d,          
@@ -245,12 +251,12 @@ architecture data_path_arch of datapath is
                 wr_memory_ctl => memory_ctl,
                 wr_write_back_ctl => write_back_ctl,                
                 -- outputs
-                rd_pc => pc_next_ex,
+                rd_pc => pc_current_ex,
                 -- register file
-                rd_reg_data1 => alu_in1_ex, -- to alu in1
-                rd_reg_data2 => alu_in2_ex, -- to alu in2
+                rd_reg_data1 => rd_data1_ex, -- to alu in1
+                rd_reg_data2 => rd_data2_ex, -- to alu in2
                 rd_reg_write_index => wr_index_ex,
-                -- 
+                rd_extended_disp => extended_disp_ex,
                 rd_immidate => imm_fwd_ex,
                 rd_inport_data => inport_fwd_ex,
                 rd_alu_shift => alu_shift_ex,
@@ -264,20 +270,13 @@ architecture data_path_arch of datapath is
         -- Instantiate the ALU
         ALU_inst: entity work.ALU
             port map(
-                in1          => alu_in1_ex,      -- ALU input 1 
-                in2          => alu_in2_ex,      -- ALU input 2 
+                in1          => rd_data1_ex,      -- ALU input 1 
+                in2          => rd_data2_ex,      -- ALU input 2 
                 alu_mode     => execute_ctl_ex.alu_op,       -- ALU opcode (from Decoder)
                 alu_out      => alu_result_ex,      -- ALU result
                 shift        => alu_shift_ex,        -- Shift amount (from Decoder)
                 negative_flag => alu_n_ex, -- Negative flag
                 zero_flag    => alu_z_ex    -- Zero flag
-            );
-        -- Execute    
-        adder_pc_branch: entity work.adder
-            port map (
-                A => pc_next_ex,
-                B => X"0000", -- TODO  2* (sign extended displacement )
-                C => pc_branch_addr_ex
             );
         -- Execute   
         execute_r: entity work.execute_register
@@ -285,8 +284,7 @@ architecture data_path_arch of datapath is
             rst => sys_rst,
             clk => sys_clk,
             wr_enable => '1', -- TODO hazard control
-            wr_pc => pc_next_ex,
-            wr_branch_address => pc_branch_addr_ex,
+            wr_pc => pc_current_ex,
             -- alu
             wr_alu_result => alu_result_ex,
             wr_alu_n => alu_n_ex,
@@ -295,6 +293,7 @@ architecture data_path_arch of datapath is
             wr_reg_data1 => rd_data1_ex,
             wr_reg_data2 => rd_data2_ex,
             wr_reg_write_index => wr_index_ex,
+            wr_extended_disp => extended_disp_ex,
             wr_immidate => imm_fwd_ex,
             wr_inport_data => inport_fwd_ex,           
             -- contorller records
@@ -302,17 +301,16 @@ architecture data_path_arch of datapath is
             wr_write_back_ctl => write_back_ctl_ex,
             
             -- outputs
-            rd_pc => pc_next_mem,
-            rd_branch_address => pc_branch_addr_mem,
+            rd_pc => pc_current_mem,
             -- alu
             rd_alu_result => alu_result_mem,
             rd_alu_n => alu_n_mem,
             rd_alu_z => alu_z_mem,
             -- register file
-            rd_reg_data1 => data_address_mem, -- to alu in1
+            rd_reg_data1 => reg1_data_mem, -- to alu in1
             rd_reg_data2 => write_data_mem, -- to alu in2
             rd_reg_write_index => wr_index_mem,
-            -- 
+            rd_extended_disp => extended_disp_mem, 
             rd_immidate => imm_fwd_mem,
             rd_inport_data => inport_fwd_mem,
             -- contorller records 
@@ -320,14 +318,28 @@ architecture data_path_arch of datapath is
             rd_write_back_ctl => write_back_ctl_mem            
             );
             
-        --------------- Write Back Stage Modules ----------------                                   
+        --------------- Memory Stage Modules ----------------
+        branch_unit: entity work.branch_unit
+            port map(
+            -- Inputs
+            op_code         => memory_ctl_mem.op_code_mem,--in std_logic_vector(6 downto 0);  -- Opcode from Decode Stage
+            pc_current      => pc_current_mem,--in word_t;  -- Current PC value
+            reg_data        => reg1_data_mem,--in word_t;  -- Data from register (for BR instructions)
+            displacement    => extended_disp_mem,
+            alu_n           => alu_n_mem,--in std_logic;  -- Negative flag from ALU
+            alu_z           => alu_z_mem,--in std_logic;  -- Zero flag from ALU        
+            -- Outputs
+            branch_taken    => pc_src_mem,--out std_logic;  -- Branch taken signal
+            branch_target   => pc_branch_addr_mem--out word_t  -- Calculated branch target address            
+            );
+                                                       
         mem_r: entity work.memory_register
             port map(
                 -- inputs
                 rst => sys_rst,
                 clk => sys_clk,
                 wr_enable => '1', -- TODO hazard control
-                wr_pc => pc_next_mem,
+                wr_pc => pc_current_mem,
                 -- alu
                 wr_alu_result => alu_result_mem,
                -- register file
@@ -336,7 +348,8 @@ architecture data_path_arch of datapath is
                 wr_immidate => imm_fwd_mem, 
                 wr_inport_data => inport_fwd_mem,          
                 -- contorller records
-                wr_write_back_ctl => write_back_ctl_mem,           
+                wr_write_back_ctl => write_back_ctl_mem, 
+                          
                 -- outputs
                 rd_pc => pc_next_wb,
                 -- alu

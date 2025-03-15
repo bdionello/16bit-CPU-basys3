@@ -136,28 +136,9 @@ begin
 --                           '0' when state = L2_LOAD_STATE else
 --                           '0' when state = L2_STORE_STATE else
 --                           '0';       
-                          
-    memory_ctl.branch_n <= '0' when state = A1_STATE else
-                           '0' when state = A2_STATE else
-                           '0' when state = A3_STATE else
-                           '1' when state = B1_STATE and ((state_code = BR_N) or (state_code = BRR_N)) else                              
-                           '0' when state = B2_STATE else
-                           '0' when state = RETURN_STATE else
-                           '0' when state = L1_LOAD_IMM_STATE else
-                           '0' when state = L2_LOAD_STATE else
-                           '0' when state = L2_STORE_STATE else
-                           '0';
                            
-    memory_ctl.branch_z <= '0' when state = A1_STATE else
-                           '0' when state = A2_STATE else
-                           '0' when state = A3_STATE else
-                           '1' when state = B1_STATE and ((state_code = BR_Z) or (state_code = BRR_Z)) else                              
-                           '0' when state = B2_STATE else
-                           '0' when state = RETURN_STATE else
-                           '0' when state = L1_LOAD_IMM_STATE else
-                           '0' when state = L2_LOAD_STATE else
-                           '0' when state = L2_STORE_STATE else
-                           '0';
+    memory_ctl.op_code_mem <= (others => '0') when state = RESET_STATE else
+                              state_code;                              
                            
     memory_ctl.memory_read <= '0' when state = A1_STATE else
                               '0' when state = A2_STATE else
