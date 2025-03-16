@@ -1,10 +1,10 @@
 
 ;
-; Created on Fri Feb 28 21:22:02 2025 with ECE 449 assembler v1.12 beta 1 (16 bit).
+; Created on Sat Mar 15 17:30:25 2025 with ECE 449 assembler v1.12 beta 1 (16 bit).
 ;
 ;Header Section
 RADIX 10
-DEPTH 1024
+DEPTH 2048
 WIDTH 16
 DEFAULT 0
 ;

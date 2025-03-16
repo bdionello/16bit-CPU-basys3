@@ -1,5 +1,4 @@
 	ORG 0x00
-	.CODE
 		IN R1    ; 5      
 		LOADIMM.LOWER 5
 		LOADIMM.UPPER 0

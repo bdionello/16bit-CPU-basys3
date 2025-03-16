@@ -5,7 +5,7 @@
 #
 # assembler for ECE 449 lab project CPUs
 #
-# Version 1.12 beta 2
+# Version 1.12 beta 1
 #
 # Written by : Caedmon Somers
 # Created    : January 2002
@@ -36,11 +36,6 @@
 # removed code related to segments
 # Added support for byte and word addresses based code ( Default is byte mode )
 #
-# Modified by Brent Sirna : December 20, 2023
-#
-# Fixed issue with BadSymbol exception handler
-#
-##
 ################################################################################
 
 
@@ -60,7 +55,7 @@ class AddressOutOfRangeError(Exception): pass
 class ByteOutOfRangeError(Exception): pass
 class BadAddressError(Exception): pass
 class BadImmediateError(Exception): pass
-class BadSymbol(Exception): pass
+class BadSymbol: pass
 class MissingParameterForEquate(Exception): pass
 class SymbolAlreadyDefined(Exception): pass
 class MissingParameterForOrg(Exception): pass
@@ -442,12 +437,13 @@ DATA """ % (time.ctime(time.time()), Version, self.memory_depth)
 		#
 		# Check for an EQU instruction. If so then process it
 		#
-					if (( len( tokens ) >= 2 ) and ( tokens[1].upper() == 'EQU' )):
+					if ( len( tokens ) >= 2 ) and tokens[1].upper() == 'EQU':
 						try:
 							self.AddSymbol( tokens[0][:-1], self.String2Immediate(tokens[2]) )
 							return
 						except IndexError:
 							raise MissingParameterForEquate
+
 					else:
 						self.AddSymbol( tokens[0][:-1], self.org )
 

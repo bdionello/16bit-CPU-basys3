@@ -1,5 +1,4 @@
 	ORG  0x0210
-	.CODE
 		IN R0;  02  ; This example tests the branching capabilities of the design.No data dependencies.
 		IN R1;  03  ; The values to be loaded into the corresponding register.
 		IN R2;  01

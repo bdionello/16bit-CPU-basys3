@@ -5,7 +5,7 @@ DipSwitches:	equ		0xFFF0
 ;.DATA
 ;.CODE
 		org		0x456
-		.CODE
+		
 start:		loadimm.upper	LedDisplay.hi
 		loadimm.lower	LedDisplay.lo
 		mov		r5, r7

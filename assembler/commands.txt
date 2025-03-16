@@ -1,0 +1,2 @@
+run on windows using the assembler.exe found in lab computer Local Disk (C:)>Dev>assembler
+>assembler.exe -o testFact_overflow ./test_files/testFactOverflow.asm

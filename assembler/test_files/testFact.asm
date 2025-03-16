@@ -6,7 +6,7 @@
 
 
 ORG 0x210
-.CODE
+
 START:
 
 		LOADIMM.upper	0x00

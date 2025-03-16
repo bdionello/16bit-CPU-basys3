@@ -8,8 +8,7 @@
 
 
 ORG 0x500
-.DATA
-.CODE
+
 START:
 
 	LOADIMM.upper	0x00
