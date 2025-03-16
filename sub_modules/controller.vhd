@@ -19,7 +19,7 @@ entity controller is
     write_back_ctl : out write_back_type := write_back_type_init_c 
     );
     end controller ;
--- RESET_STATE, BOOT_STATE, NOP_STATE, A1_STATE, A2_STATE, A3_STATE, B1_STATE, B2_STATE, RETURN_STATE, L1_LOAD_IMM_STATE, L2_LOAD_STATE, L2_STORE_STATE
+-- RESET_STATE, BOOT_STATE, NOP_STATE, A1_STATE, A2_STATE, A3_STATE, B1_STATE, B2_STATE, RETURN_STATE, L1_LOAD_IMM_STATE, L2_LOAD_STATE, L2_STORE_STATE, L2_MOV_STATE
 architecture controller_arch of controller is    
     signal state : ctrl_state_type := RESET_STATE;
     signal nextstate : ctrl_state_type := BOOT_STATE;
@@ -49,7 +49,8 @@ begin
                     RETURN_STATE when op_code_i = RETURN_OP else                    
                     L1_LOAD_IMM_STATE when op_code_i = LOADIMM else
                     L2_LOAD_STATE when op_code_i = LOAD else
-                    L2_STORE_STATE when op_code_i = STORE else
+                    L2_STORE_STATE when op_code_i = STORE else 
+                    L2_MOV_STATE when op_code_i = MOV else
                     RESET_STATE; -- Clear all outputs
     -- state register    
     process (clk, reset_ex, reset_ld)
@@ -83,6 +84,7 @@ begin
                           '1' when state = L1_LOAD_IMM_STATE else
                           '1' when state = L2_LOAD_STATE else
                           '1' when state = L2_STORE_STATE else
+                          '1' when state = L2_MOV_STATE else
                           '1';
                           
     -- 0 for (ra <- data) 1 for ( r7 <- data)                         
@@ -95,6 +97,7 @@ begin
                             '1' when state = L1_LOAD_IMM_STATE else
                             '0' when state = L2_LOAD_STATE else
                             '0' when state = L2_STORE_STATE else
+                            '0' when state = L2_MOV_STATE else
                             '0';
                             
     decode_ctl.imm_op  <= '0' when state = A1_STATE else
@@ -106,6 +109,7 @@ begin
                           '1' when state = L1_LOAD_IMM_STATE else
                           '0' when state = L2_LOAD_STATE else
                           '0' when state = L2_STORE_STATE else
+                          '0' when state = L2_MOV_STATE else
                           '0';
                                                       
     -- alu_NOP, alu_ADD, alu_SUB, alu_MUL, alu_NAND, alu_SHL, alu_SHR, alu_TEST
@@ -123,6 +127,7 @@ begin
                           alu_NOP when state = L1_LOAD_IMM_STATE else
                           alu_NOP when state = L2_LOAD_STATE else
                           alu_NOP when state = L2_STORE_STATE else
+                          alu_NOP when state = L2_MOV_STATE else
                           alu_NOP;
                           
    -- do we need this? switch the input to alu IN2 ( based on MIPS ) alu_shift
@@ -149,6 +154,7 @@ begin
                               '0' when state = L1_LOAD_IMM_STATE else
                               '1' when state = L2_LOAD_STATE else
                               '0' when state = L2_STORE_STATE else
+                              '0' when state = L2_MOV_STATE else
                               '0';
                               
     memory_ctl.memory_write <= '0' when state = A1_STATE else
@@ -160,6 +166,7 @@ begin
                                '0' when state = L1_LOAD_IMM_STATE else
                                '0' when state = L2_LOAD_STATE else
                                '1' when state = L2_STORE_STATE else
+                               '0' when state = L2_MOV_STATE else
                                '0';
                                
     -- ALU_RES, MEMORY_DATA, RETURN_PC, IMM_FWD
@@ -173,6 +180,7 @@ begin
                              IMM_FWD when state = L1_LOAD_IMM_STATE else
                              MEMORY_DATA when state = L2_LOAD_STATE else
                              NONE when state = L2_STORE_STATE else
+                             NONE when state = L2_MOV_STATE else -- TODO Add r.src data (rb data?)  
                              NONE;
                              
     write_back_ctl.reg_write <= '1' when state = A1_STATE else
@@ -184,5 +192,6 @@ begin
                                 '1' when state = L1_LOAD_IMM_STATE else
                                 '1' when state = L2_LOAD_STATE else
                                 '0' when state = L2_STORE_STATE else
+                                '1' when state = L2_MOV_STATE else
                                 '0'; 
 end controller_arch ;
