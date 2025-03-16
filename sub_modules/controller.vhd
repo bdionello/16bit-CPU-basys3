@@ -168,7 +168,7 @@ begin
                              ALU_RES when state = A3_STATE and (state_code = TEST) else
                              INPORT_FWD when state = A3_STATE and (state_code = IN_OP) else
                              NONE when state = B1_STATE else                              
-                             RETURN_PC when state = B2_STATE else
+                             RETURN_PC when state = B2_STATE and (state_code = BR_SUB) else
                              NONE when state = RETURN_STATE else
                              IMM_FWD when state = L1_LOAD_IMM_STATE else
                              MEMORY_DATA when state = L2_LOAD_STATE else

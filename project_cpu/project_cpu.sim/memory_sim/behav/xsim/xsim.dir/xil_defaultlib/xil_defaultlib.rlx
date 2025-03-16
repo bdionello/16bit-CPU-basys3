@@ -1,9 +1,0 @@
-0.6
-2017.4
-Dec 15 2017
-21:07:18
-C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_types.vhd,1741505455,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/memory/mem_manager.vhd,,,cpu_types,,,,,,,,
-C:/Users/Brett/source/repos/ECE449/sub_modules/memory/mem_manager.vhd,1741552801,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd,,,mem_manager,,,,,,,,
-C:/Users/Brett/source/repos/ECE449/sub_modules/memory/ram.vhd,1741575534,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/memory/mem_manager.vhd,,,ram,,,,,,,,
-C:/Users/Brett/source/repos/ECE449/sub_modules/memory/rom.vhd,1741575861,vhdl,C:/Users/Brett/source/repos/ECE449/sub_modules/memory/mem_manager.vhd,,,rom,,,,,,,,
-C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/memory_TB.vhd,1741321063,vhdl,,,,memory_tb,,,,,,,,

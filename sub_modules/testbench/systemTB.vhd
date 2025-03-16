@@ -40,79 +40,52 @@ begin
 --        reset_execute <= '0';      
 --        wait until falling_edge(clk);    
         -- Do something?
+        wait until falling_edge(clk);       
         wait until falling_edge(clk);
         wait until falling_edge(clk);
         input_data <= X"0002";
         wait until falling_edge(clk);
-        wait until falling_edge(clk);
         input_data <= X"0003";
         wait until falling_edge(clk);
-        wait until falling_edge(clk);
         input_data <= X"0001";
-        wait until falling_edge(clk);
         wait until falling_edge(clk);
         input_data <= X"0005";
         wait until falling_edge(clk);
-        wait until falling_edge(clk);
         input_data <= X"0000";
-        wait until falling_edge(clk);
         wait until falling_edge(clk);
         input_data <= X"0001";
         wait until falling_edge(clk);
-        wait until falling_edge(clk);
         input_data <= X"0005";
         wait until falling_edge(clk);
-        wait until falling_edge(clk);
         input_data <= X"0000";
+        ---       
+        wait on output_data;
+        wait on output_data;
+        wait on output_data;
+                ---       
+        wait on output_data;
+        wait on output_data;
+        wait on output_data;
+                ---       
+        wait on output_data;
+        wait on output_data;
+        wait on output_data;
+                ---       
+        wait on output_data;
+        wait on output_data;
+        wait on output_data;
+                ---       
+        wait on output_data;
+        wait on output_data;
+        wait on output_data;
+                ---       
         wait until falling_edge(clk);
         wait until falling_edge(clk);
         wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
-        wait until falling_edge(clk);
+
+        
+
+
         
         assert false report "Test: End - Force stop" severity failure;       
     end process;   

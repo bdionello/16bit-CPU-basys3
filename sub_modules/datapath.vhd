@@ -87,7 +87,7 @@ architecture data_path_arch of datapath is
     signal extended_disp_mem    : word_t := (others => '0');
     -- Write back stage signals -- Denoted by:'_wb'
     signal write_back_ctl_wb  : write_back_type := write_back_type_init_c; -- used in wb stage
-    signal pc_next_wb         : word_t := (others => '0');
+    signal pc_current_wb         : word_t := (others => '0');
     signal memory_data_wb     : word_t := (others => '0');
     signal wr_data_fwd_wb     : word_t := (others => '0'); -- Data to write to register file
     signal wr_index_wb        : std_logic_vector(2 downto 0)  := (others => '0'); 
@@ -111,7 +111,8 @@ architecture data_path_arch of datapath is
         -- Write index mux       
         wr_index_d <= instr_decoded_d.ra when decode_ctl.reg_dst = '0' else "111"; -- Write to ra or r7 for LOADIMM and BR.SUB     
         -- register index mux                    
-        rd_index1_d <= instr_decoded_d.rb when decode_ctl.reg_src = '0' else 
+        rd_index1_d <= instr_decoded_d.rb when decode_ctl.reg_src = '0' else
+                       "111" when (decode_ctl.reg_src = '1') and (instr_decoded_d.opcode = RETURN_OP) else
                        instr_decoded_d.ra;                             
         rd_index2_d <= instr_decoded_d.rc when decode_ctl.reg_src = '0' else "000";
         
@@ -134,7 +135,7 @@ architecture data_path_arch of datapath is
         wr_data_d <= memory_data_wb when write_back_ctl_wb.wb_src = MEMORY_DATA else
                      alu_result_wb when write_back_ctl_wb.wb_src = ALU_RES else
                      imm_fwd_wb when write_back_ctl_wb.wb_src = IMM_FWD else
-                     pc_next_wb when write_back_ctl_wb.wb_src = RETURN_PC else
+                     std_logic_vector(unsigned(pc_current_wb) + 2) when write_back_ctl_wb.wb_src = RETURN_PC else
                      inport_fwd_wb when write_back_ctl_wb.wb_src = INPORT_FWD else
                      X"0000";
                      
@@ -201,15 +202,17 @@ architecture data_path_arch of datapath is
         -- Instantiate the register_file
         Register_File_inst: entity work.register_file
             port map(
+                -- inputs 
                 rst       => sys_rst,         -- Reset signal
                 clk       => sys_clk,         -- Clock signal
                 rd_index1 => rd_index1_d,          -- Read index 1 (rb from Decoder)
                 rd_index2 => rd_index2_d,          -- Read index 2 (rc from Decoder)
-                rd_data1  => rd_data1_d,    -- Read data 1 (rb value)
-                rd_data2  => rd_data2_d,    -- Read data 2 (rc value)
                 wr_index  => wr_index_wb,          -- Write index (ra from Decoder)
                 wr_data   => wr_data_d,     -- Write data (ALU result or INPUT)
-                wr_enable => write_back_ctl_wb.reg_write    -- Write enable (controlled by op_code_f)
+                wr_enable => write_back_ctl_wb.reg_write,    -- Write enable (controlled by op_code_f)
+                -- outputs
+                rd_data1  => rd_data1_d,    -- Read data 1 (rb value)
+                rd_data2  => rd_data2_d    -- Read data 2 (rc value)
             ); 
         -- Decode
         -- concatonate imm_upper and imm_lower    
@@ -270,11 +273,13 @@ architecture data_path_arch of datapath is
         -- Instantiate the ALU
         ALU_inst: entity work.ALU
             port map(
+                -- inputs
                 in1          => rd_data1_ex,      -- ALU input 1 
                 in2          => rd_data2_ex,      -- ALU input 2 
-                alu_mode     => execute_ctl_ex.alu_op,       -- ALU opcode (from Decoder)
-                alu_out      => alu_result_ex,      -- ALU result
                 shift        => alu_shift_ex,        -- Shift amount (from Decoder)
+                alu_mode     => execute_ctl_ex.alu_op,       -- ALU opcode (from Decoder)
+                -- outputs
+                alu_out      => alu_result_ex,      -- ALU result                               
                 negative_flag => alu_n_ex, -- Negative flag
                 zero_flag    => alu_z_ex    -- Zero flag
             );
@@ -351,7 +356,7 @@ architecture data_path_arch of datapath is
                 wr_write_back_ctl => write_back_ctl_mem, 
                           
                 -- outputs
-                rd_pc => pc_next_wb,
+                rd_pc => pc_current_wb,
                 -- alu
                 rd_alu_result => alu_result_wb,
                 -- register file       

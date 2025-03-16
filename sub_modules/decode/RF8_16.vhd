@@ -9,13 +9,14 @@ entity register_file is
         clk: in std_logic;
         --read signals
         rd_index1: in std_logic_vector(2 downto 0); 
-        rd_index2: in std_logic_vector(2 downto 0); 
-        rd_data1: out std_logic_vector(15 downto 0); 
-        rd_data2: out std_logic_vector(15 downto 0);
+        rd_index2: in std_logic_vector(2 downto 0);
         --write signals
         wr_index: in std_logic_vector(2 downto 0); 
         wr_data: in std_logic_vector(15 downto 0); 
-        wr_enable: in std_logic
+        wr_enable: in std_logic;
+        -- out puts
+        rd_data1: out std_logic_vector(15 downto 0); 
+        rd_data2: out std_logic_vector(15 downto 0)
         );
 end register_file;
 

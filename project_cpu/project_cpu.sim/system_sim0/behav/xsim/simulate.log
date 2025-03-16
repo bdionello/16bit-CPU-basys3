@@ -6,17 +6,6 @@ Info: [XPM_MEMORY 20-2] MEMORY_INIT_FILE (none), MEMORY_INIT_PARAM together spec
 Time: 1 ps  Iteration: 0  Process: /test_System/cpu0/dp_0/mem/ram_0/xpm_memory_dpdistram_inst/xpm_memory_base_inst/Initial270_5  File: /wrk/2017.4/nightly/2017_12_15_2086221/prep/rdi/vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv
 Warning: [XPM_MEMORY 30-15] MEMORY_TYPE (2) and MEMORY_PRIMITIVE (1) together specify a true dual port distributed RAM, which will be mapped to a dual port RAM structure using port A and B read interfaces but a single port A write interface, leaving the port B write interface unused. test_System.cpu0.dp_0.mem.ram_0.xpm_memory_dpdistram_inst.xpm_memory_base_inst.config_drc
 Time: 1 ps  Iteration: 0  Process: /test_System/cpu0/dp_0/mem/ram_0/xpm_memory_dpdistram_inst/xpm_memory_base_inst/Initial270_5  File: /wrk/2017.4/nightly/2017_12_15_2086221/prep/rdi/vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv
-Stopped at time : 25 ns : File "C:/Users/bdionello/ECE449/sub_modules/fetch/program_counter.vhd" Line 28
-Stopped at time : 35 ns : File "C:/Users/bdionello/ECE449/sub_modules/fetch/program_counter.vhd" Line 28
-Stopped at time : 45 ns : File "C:/Users/bdionello/ECE449/sub_modules/fetch/program_counter.vhd" Line 28
-Stopped at time : 55 ns : File "C:/Users/bdionello/ECE449/sub_modules/fetch/program_counter.vhd" Line 28
-Stopped at time : 65 ns : File "C:/Users/bdionello/ECE449/sub_modules/fetch/program_counter.vhd" Line 28
-Stopped at time : 75 ns : File "C:/Users/bdionello/ECE449/sub_modules/fetch/program_counter.vhd" Line 28
-Stopped at time : 85 ns : File "C:/Users/bdionello/ECE449/sub_modules/fetch/program_counter.vhd" Line 28
-Stopped at time : 95 ns : File "C:/Users/bdionello/ECE449/sub_modules/fetch/program_counter.vhd" Line 28
-Stopped at time : 105 ns : File "C:/Users/bdionello/ECE449/sub_modules/fetch/program_counter.vhd" Line 28
-Stopped at time : 115 ns : File "C:/Users/bdionello/ECE449/sub_modules/fetch/program_counter.vhd" Line 28
-Stopped at time : 125 ns : File "C:/Users/bdionello/ECE449/sub_modules/fetch/program_counter.vhd" Line 28
-Stopped at time : 135 ns : File "C:/Users/bdionello/ECE449/sub_modules/fetch/program_counter.vhd" Line 28
-Stopped at time : 145 ns : File "C:/Users/bdionello/ECE449/sub_modules/fetch/program_counter.vhd" Line 28
-Stopped at time : 155 ns : File "C:/Users/bdionello/ECE449/sub_modules/fetch/program_counter.vhd" Line 28
+Failure: Test: End - Force stop
+Time: 540 ns  Iteration: 1  Process: /test_System/line__36  File: C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/systemTB_TestA.vhd
+$finish called at time : 540 ns : File "C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/systemTB_TestA.vhd" Line 101
