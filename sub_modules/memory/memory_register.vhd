@@ -23,6 +23,7 @@ entity memory_register is
            -- alu
            wr_alu_result  : in word_t := (others=>'0');
           -- register file
+           wr_reg_data1  : in word_t := (others=>'0');
            wr_reg_write_index  : in std_logic_vector(2 downto 0) := (others=>'0');
            -- TODO add displacement
            wr_immidate : in word_t := (others=>'0');
@@ -33,7 +34,8 @@ entity memory_register is
            rd_pc : out word_t := (others=>'0');
            -- alu
            rd_alu_result  : out word_t := (others=>'0');
-           -- register file       
+           -- register file
+           rd_reg_data1  : out word_t := (others=>'0');       
            rd_reg_write_index  : out std_logic_vector(2 downto 0) := (others=>'0');
            -- 
            rd_immidate : out word_t := (others=>'0');
@@ -52,6 +54,7 @@ architecture Behavioral of memory_register is
                 if(rst='1') then
                     rd_pc <= (others=>'0');
                     rd_alu_result  <= (others=>'0');
+                    rd_reg_data1  <= (others=>'0');
                     rd_reg_write_index  <= (others=>'0');
                     rd_immidate <= (others=>'0');
                     rd_inport_data <= (others=>'0');
@@ -59,6 +62,7 @@ architecture Behavioral of memory_register is
                 elsif(wr_enable='1') then
                     rd_pc <= wr_pc;
                     rd_alu_result <= wr_alu_result;
+                    rd_reg_data1 <= wr_reg_data1;
                     rd_reg_write_index <= wr_reg_write_index;
                     rd_immidate <= wr_immidate;
                     rd_inport_data <= wr_inport_data;

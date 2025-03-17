@@ -180,7 +180,7 @@ begin
                              IMM_FWD when state = L1_LOAD_IMM_STATE else
                              MEMORY_DATA when state = L2_LOAD_STATE else
                              NONE when state = L2_STORE_STATE else
-                             NONE when state = L2_MOV_STATE else -- TODO Add r.src data (rb data?)  
+                             MOV_REG when state = L2_MOV_STATE else 
                              NONE;
                              
     write_back_ctl.reg_write <= '1' when state = A1_STATE else
