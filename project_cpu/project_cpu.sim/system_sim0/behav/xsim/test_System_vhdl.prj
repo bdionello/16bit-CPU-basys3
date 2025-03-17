@@ -19,7 +19,7 @@ vhdl xil_defaultlib  \
 "../../../../../sub_modules/memory/memory_register.vhd" \
 "../../../../../sub_modules/datapath.vhd" \
 "../../../../../sub_modules/cpu_top.vhd" \
-"../../../../../sub_modules/testbench/systemTB_TestA.vhd" \
+"../../../../../sub_modules/testbench/systemTB_TestL.vhd" \
 
 # Do not sort compile order
 nosort

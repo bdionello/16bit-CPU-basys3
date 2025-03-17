@@ -47,8 +47,8 @@ architecture data_path_arch of datapath is
     signal rd_index2_d        : std_logic_vector(2 downto 0) := (others => '0');      
     signal imm_temp_d         : word_t := (others => '0');
     signal imm_fwd_d          : word_t := (others => '0');    
-    signal inport_fwd_d      : word_t := (others => '0');
-    signal alu_shift_d       : std_logic_vector(3 downto 0) := (others => '0');
+    signal inport_fwd_d       : word_t := (others => '0');
+    signal alu_shift_d        : std_logic_vector(3 downto 0) := (others => '0');
     -- Execute stage signals -- Denoted by:'_ex'
     signal execute_ctl_ex     : execute_type := execute_type_init_c; -- used in execute stage
     signal memory_ctl_ex      : memory_type := memory_type_init_c;    -- pass through
@@ -76,23 +76,23 @@ architecture data_path_arch of datapath is
     signal alu_n_mem          : std_logic := '0';
     signal pc_src_mem         : std_logic := '0'; -- signal to select pc mux        
     signal pc_branch_addr_mem : word_t := (others => '0');    
-    signal reg1_data_mem   : word_t := (others => '0');
-    signal write_data_mem     : word_t := (others => '0');
-    signal memory_data_mem    : word_t := (others => '0');
+    signal rd_data1_mem       : word_t := (others => '0');
+    signal rd_data2_mem     : word_t := (others => '0');    
     signal wr_data_fwd_mem    : word_t := (others => '0'); -- Data to write to register file
     signal wr_index_mem       : std_logic_vector(2 downto 0) := (others => '0'); 
     signal imm_fwd_mem        : word_t := (others => '0');
-    signal inport_fwd_mem     : word_t := (others => '0');
-    signal out_port_mem       : word_t := (others => '0'); -- TODO add mux for this and outport from reg_data1
-    signal extended_disp_mem    : word_t := (others => '0');
+    signal inport_fwd_mem     : word_t := (others => '0');    
+    signal extended_disp_mem  : word_t := (others => '0');
     -- Write back stage signals -- Denoted by:'_wb'
     signal write_back_ctl_wb  : write_back_type := write_back_type_init_c; -- used in wb stage
-    signal pc_current_wb         : word_t := (others => '0');
-    signal memory_data_wb     : word_t := (others => '0');
+    signal pc_current_wb      : word_t := (others => '0');
+    signal rd_data1_wb      : word_t := (others => '0');
+    signal memory_data_wb    : word_t := (others => '0');
     signal wr_data_fwd_wb     : word_t := (others => '0'); -- Data to write to register file
     signal wr_index_wb        : std_logic_vector(2 downto 0)  := (others => '0'); 
     signal imm_fwd_wb         : word_t := (others => '0');
     signal inport_fwd_wb      : word_t := (others => '0');
+    signal out_port_wb      : word_t := (others => '0');
     signal alu_result_wb      : word_t := (others => '0'); -- Data to write to register file
        
     begin
@@ -109,21 +109,29 @@ architecture data_path_arch of datapath is
                        
         ---------- Decode
         -- Write index mux       
-        wr_index_d <= instr_decoded_d.ra when decode_ctl.reg_dst = '0' else "111"; -- Write to ra or r7 for LOADIMM and BR.SUB     
+        wr_index_d <=   instr_decoded_d.r_dest when (instr_decoded_d.opcode = LOAD or instr_decoded_d.opcode = MOV) else
+                        instr_decoded_d.ra when decode_ctl.reg_dst = '0' else
+                        "111" when decode_ctl.reg_dst = '1';
+      
         -- register index mux                    
-        rd_index1_d <= instr_decoded_d.rb when decode_ctl.reg_src = '0' else
+        rd_index1_d <= instr_decoded_d.r_src when (instr_decoded_d.opcode = LOAD or instr_decoded_d.opcode = MOV) else
+                       instr_decoded_d.r_dest when (instr_decoded_d.opcode = STORE) else
+                       instr_decoded_d.rb when decode_ctl.reg_src = '0' else
                        "111" when (decode_ctl.reg_src = '1') and (instr_decoded_d.opcode = RETURN_OP) else
-                       instr_decoded_d.ra;                             
-        rd_index2_d <= instr_decoded_d.rc when decode_ctl.reg_src = '0' else "000";
+                       instr_decoded_d.ra;
+                                                    
+        rd_index2_d <=  instr_decoded_d.r_src when (instr_decoded_d.opcode = STORE) else
+                        instr_decoded_d.rc when decode_ctl.reg_src = '0' else "000";
         
         imm_temp_d <=   (instr_decoded_d.imm & X"00") when (instr_decoded_d.m_1 = '1') and (decode_ctl.imm_op = '1') else
                         (X"00" & instr_decoded_d.imm) when (instr_decoded_d.m_1 = '0') and (decode_ctl.imm_op = '1') else
                          X"0000";
+                         
         inport_fwd_d <= in_port when instr_decoded_d.opcode = IN_OP else
                         X"0000";
                                        
-        out_port <= reg1_data_mem when memory_ctl_mem.op_code_mem = OUT_OP else -- Ra to outport 
-                    out_port_mem when (memory_ctl_mem.op_code_mem = STORE) and (reg1_data_mem = X"fff2") else -- Memory mapped output
+        out_port <= rd_data1_mem when memory_ctl_mem.op_code_mem = OUT_OP else -- Ra to outport 
+                    out_port_wb when (memory_ctl_mem.op_code_mem = STORE) and (rd_data1_mem = X"fff2") else -- Memory mapped output
                     X"0000" when sys_rst = '1';
          
         alu_shift_d <= instr_decoded_d.shift when (instr_decoded_d.opcode = SHL_OP or instr_decoded_d.opcode = SHR_OP) else
@@ -137,6 +145,7 @@ architecture data_path_arch of datapath is
                      imm_fwd_wb when write_back_ctl_wb.wb_src = IMM_FWD else
                      std_logic_vector(unsigned(pc_current_wb) + 2) when write_back_ctl_wb.wb_src = RETURN_PC else
                      inport_fwd_wb when write_back_ctl_wb.wb_src = INPORT_FWD else
+                     rd_data1_wb when write_back_ctl_wb.wb_src = MOV_REG else
                      X"0000";
                      
         --------------- Fetch/Memory Stage Modules -------------------                                     
@@ -149,15 +158,15 @@ architecture data_path_arch of datapath is
                 -- Data memory - read/write  
                 write_enable => memory_ctl_mem.memory_write,
                 read_data_enable => memory_ctl_mem.memory_read,
-                data_addr => reg1_data_mem,
-                data_in => write_data_mem,
-                data_out => memory_data_mem, 
+                data_addr => rd_data1_mem,
+                data_in => rd_data2_mem,
+                data_out => memory_data_wb, 
                 -- Instruction memory - read only
                 inst_addr => inst_addr_f,
                 inst_out => instruction_f, 
                 -- Memory Mapped ports
                 in_port => in_port,
-                out_port => out_port_mem --: out STD_LOGIC_VECTOR (15 downto 0) := X"0000"            
+                out_port => out_port_wb--: out STD_LOGIC_VECTOR (15 downto 0) := X"0000"            
             );         
         -- Fetch          
         pc: entity work.program_counter
@@ -312,8 +321,8 @@ architecture data_path_arch of datapath is
             rd_alu_n => alu_n_mem,
             rd_alu_z => alu_z_mem,
             -- register file
-            rd_reg_data1 => reg1_data_mem, -- to alu in1
-            rd_reg_data2 => write_data_mem, -- to alu in2
+            rd_reg_data1 => rd_data1_mem, -- to alu in1
+            rd_reg_data2 => rd_data2_mem, -- to alu in2
             rd_reg_write_index => wr_index_mem,
             rd_extended_disp => extended_disp_mem, 
             rd_immidate => imm_fwd_mem,
@@ -329,7 +338,7 @@ architecture data_path_arch of datapath is
             -- Inputs
             op_code         => memory_ctl_mem.op_code_mem,--in std_logic_vector(6 downto 0);  -- Opcode from Decode Stage
             pc_current      => pc_current_mem,--in word_t;  -- Current PC value
-            reg_data        => reg1_data_mem,--in word_t;  -- Data from register (for BR instructions)
+            reg_data        => rd_data1_mem,--in word_t;  -- Data from register (for BR instructions)
             displacement    => extended_disp_mem,
             alu_n           => alu_n_mem,--in std_logic;  -- Negative flag from ALU
             alu_z           => alu_z_mem,--in std_logic;  -- Zero flag from ALU        
@@ -347,7 +356,8 @@ architecture data_path_arch of datapath is
                 wr_pc => pc_current_mem,
                 -- alu
                 wr_alu_result => alu_result_mem,
-               -- register file
+                -- register file
+                wr_reg_data1 => rd_data1_mem,
                 wr_reg_write_index => wr_index_mem,
                 -- TODO add displacement
                 wr_immidate => imm_fwd_mem, 
@@ -359,7 +369,8 @@ architecture data_path_arch of datapath is
                 rd_pc => pc_current_wb,
                 -- alu
                 rd_alu_result => alu_result_wb,
-                -- register file       
+                -- register file
+                rd_reg_data1 => rd_data1_wb,       
                 rd_reg_write_index => wr_index_wb,
                 -- 
                 rd_immidate => imm_fwd_wb,

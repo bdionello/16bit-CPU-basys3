@@ -5,7 +5,7 @@ use ieee.numeric_std.all;
 
 package cpu_types is
     type alu_op_type is (alu_NOP, alu_ADD, alu_SUB, alu_MUL, alu_NAND, alu_SHL, alu_SHR, alu_TEST); 
-    type wb_src_type is (ALU_RES, MEMORY_DATA, RETURN_PC, IMM_FWD, INPORT_FWD, NONE);
+    type wb_src_type is (ALU_RES, MEMORY_DATA, RETURN_PC, IMM_FWD, INPORT_FWD, MOV_REG, NONE);
     type boot_mode_type is (BOOT_LOAD, BOOT_EXECUTE, RUN);
     type ctrl_state_type is (RESET_STATE, BOOT_STATE, NOP_STATE, A1_STATE, A2_STATE, A3_STATE, B1_STATE, B2_STATE, RETURN_STATE, L1_LOAD_IMM_STATE, L2_LOAD_STATE, L2_STORE_STATE, L2_MOV_STATE);
     subtype word_t is std_logic_vector(15 downto 0); -- 2 bytes word = 16 bits
