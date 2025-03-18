@@ -24,14 +24,18 @@ entity datapath is
 end datapath;
 
 architecture data_path_arch of datapath is
-    -- Internal signals -- Denoted by: '_i' = Not stage specific 
+    -- Internal signals -- Denoted by: '_i' = Not stage specific
+    signal flush_f_reg_i      :  std_logic := '0';
+    signal flush_d_reg_i      :  std_logic := '0';
+    signal flush_ex_reg_i     :  std_logic := '0';
+    signal stall_pipeline_i   :  std_logic := '0';
     -- Fetch Stage signals -- Denoted by: "_f'  
     signal pc_in_f            : word_t := (others => '0');
     signal pc_out_f           : word_t := (others => '0');
     signal inst_addr_f        : word_t := (others => '0');
     signal pc_next_f          : word_t := (others => '0');    
-    signal instruction_f      : word_t := (others => '0');      
-    
+    signal instruction_f      : word_t := (others => '0');
+    signal rst_fetch_reg_f    : std_logic := '0';   
     -- Decode stage signals -- Denoted by:'_d'
     signal instruction_d      : word_t := (others => '0');
     signal instr_decoded_d    : instruction_type := instruction_type_init_c;
@@ -41,7 +45,7 @@ architecture data_path_arch of datapath is
     signal rd_data1_d         : word_t := (others => '0'); -- Read data 1 from register file
     signal rd_data2_d         : word_t := (others => '0'); -- Read data 2 from register file
     signal wr_data_d          : word_t := (others => '0'); -- Data to write to register file    
-    signal wr_enable_d        : std_logic;                     -- Write enable for register file
+    signal wr_enable_d        : std_logic := '0';                     -- Write enable for register file
     signal wr_index_d         : std_logic_vector(2 downto 0) := (others => '0');
     signal rd_index1_d        : std_logic_vector(2 downto 0) := (others => '0');
     signal rd_index2_d        : std_logic_vector(2 downto 0) := (others => '0');      
@@ -49,6 +53,7 @@ architecture data_path_arch of datapath is
     signal imm_fwd_d          : word_t := (others => '0');    
     signal inport_fwd_d       : word_t := (others => '0');
     signal alu_shift_d        : std_logic_vector(3 downto 0) := (others => '0');
+    signal rst_decode_reg_d    : std_logic := '0';
     -- Execute stage signals -- Denoted by:'_ex'
     signal execute_ctl_ex     : execute_type := execute_type_init_c; -- used in execute stage
     signal memory_ctl_ex      : memory_type := memory_type_init_c;    -- pass through
@@ -97,7 +102,8 @@ architecture data_path_arch of datapath is
        
     begin
         --------------- Internal signal logic ----------------
-        op_code_out <= instruction_f(15 downto 9);
+        op_code_out <= NOP when (stall_pipeline_i = '0') else
+                       instruction_f(15 downto 9);
         ---------- Fetch
         -- program counter mux
 
@@ -173,7 +179,7 @@ architecture data_path_arch of datapath is
             port map (
                 rst => sys_rst,
                 clk => sys_clk,
-                wr_enable => '1', -- TODO: connect for hazard control
+                wr_enable => stall_pipeline_i, -- TODO: connect for hazard control
                 --write signals
                 wr_instr_addr => pc_in_f, --: in std_logic_vector(15 downto 0);                
                 --read signals
@@ -187,12 +193,14 @@ architecture data_path_arch of datapath is
                 B => step_size_c,
                 C => pc_next_f
             );
+        
+        rst_fetch_reg_f <= '1' when sys_rst = '1' or flush_f_reg_i ='1' else '0';
         -- Fetch    
         fetch_r: entity work.fetch_register
             port map ( 
-                rst => sys_rst,
+                rst => rst_fetch_reg_f,
                 clk => sys_clk,
-                wr_enable => '1', -- TODO: connect for hazard control
+                wr_enable => stall_pipeline_i, -- TODO: connect for hazard control
                 -- inputs
                 wr_instruction => instruction_f, --: in std_logic_vector(15 downto 0);
                 wr_pc => inst_addr_f,               
@@ -201,7 +209,24 @@ architecture data_path_arch of datapath is
                 rd_pc => pc_current_d          
             );
             
-        --------------- Decode Stage Modules -------------------                               
+        --------------- Decode Stage Modules ------------------- 
+        hazard_detect: entity work.hazard_detect_unit 
+            port map (
+                -- inputs 
+                clk => sys_clk, 
+                mem_write => memory_ctl_ex.memory_write, 
+                reg_write => write_back_ctl_ex.reg_write,
+                dest_reg => wr_index_ex, 
+                source_reg1 => rd_index1_d, 
+                source_reg2 => rd_index2_d,
+                op_code => memory_ctl_ex.op_code_mem, --  : in op_code_t; -- from execute stage
+                -- outputs
+                flush_f_reg => flush_f_reg_i, --  : out std_logic := '0';
+                flush_d_reg => flush_d_reg_i, --  : out std_logic := '0';
+                flush_ex_reg => flush_ex_reg_i, --  : out std_logic := '0';
+                stall_pipeline => stall_pipeline_i --  : out std_logic := '0'           
+            );
+                                      
         decoder: entity work.decoder
             port map (
                 instr => instruction_d,   -- Input instruction
@@ -241,11 +266,12 @@ architecture data_path_arch of datapath is
                    disp_s          =>  instr_decoded_d.disp_s,  -- Short displacement (for BR)
                    extended_disp   =>  extended_disp_d  -- Short displacement (for BR)
             );
+            rst_decode_reg_d <= '1' when sys_rst = '1' or flush_d_reg_i ='1' else '0';
         -- Decode
         decode_r: entity work.decode_register
             port map (
                 -- register control inputs 
-                rst => sys_rst,
+                rst => rst_decode_reg_d,
                 clk => sys_clk,
                 wr_enable => '1', -- TODO hazard control 
                 -- inputs

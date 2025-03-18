@@ -58,7 +58,7 @@ begin
         input_data <= X"0005";
         wait until falling_edge(clk);
         input_data <= X"0000";
-        ---       
+ 
         wait on output_data;
         wait on output_data;
         wait on output_data;
@@ -78,7 +78,17 @@ begin
         wait on output_data;
         wait on output_data;
         wait on output_data;
-                ---       
+                ---    
+        wait on output_data;
+        wait on output_data;
+        wait on output_data;
+                   
+        wait until falling_edge(clk);
+        wait until falling_edge(clk);
+        wait until falling_edge(clk);
+        wait until falling_edge(clk);
+        wait until falling_edge(clk);
+        wait until falling_edge(clk);
         wait until falling_edge(clk);
         wait until falling_edge(clk);
         wait until falling_edge(clk);

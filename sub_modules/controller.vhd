@@ -6,12 +6,12 @@ use work.cpu_types.all;
 entity controller is
     port (
     -- inputs    
-    clk : in std_logic;
-    reset_ex: in std_logic;
-    reset_ld: in std_logic;
-    op_code : in op_code_t;
+    clk : in std_logic := '0';
+    reset_ex: in std_logic := '0';
+    reset_ld: in std_logic := '0';
+    op_code : in op_code_t := (others => '0');
     -- outputs
-    sys_rst : out std_logic;
+    sys_rst : out std_logic := '0';
     boot_mode : out boot_mode_type := BOOT_LOAD;
     decode_ctl : out decode_type := decode_type_init_c;
     execute_ctl : out execute_type := execute_type_init_c; 
