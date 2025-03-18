@@ -27,14 +27,14 @@ architecture Behavioral of hazard_detect_unit is
      
 begin
     process (clk, op_code)
-        variable count : natural range 0 to 2 := 0;
+        variable count : natural range 0 to 4 := 0;
     begin
                                
         case op_code is
             when BRR | BR | BR_SUB => 
-               count := 2;            
+               count := 2;  -- delay 3 clock cycles          
             when BRR_N | BRR_Z | BR_N | BR_Z =>
-               count := 2;            
+               count := 3;            
             when others =>
                 flush_f_reg <= '0';
                 flush_d_reg <= '0';
