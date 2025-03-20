@@ -109,8 +109,8 @@ architecture data_path_arch of datapath is
         --------------- Internal signal logic ----------------
         -- send NOP to controller when pipeline stalled
         ctl_wr_enable <= stall_pipeline_low_i;
-        
-        op_code_out <=  NOP when (flush_f_reg_i = '1') else
+        -- flush controller when branch taken      
+        op_code_out <=  NOP when flush_f_reg_i = '1' else 
                         instruction_f(15 downto 9);                        
         ---------- Fetch
         -- program counter mux
