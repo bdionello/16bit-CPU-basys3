@@ -45,7 +45,7 @@ begin
         wait until falling_edge(clk);
         wait until falling_edge(clk);
         wait until falling_edge(clk); 
-        input_data <= X"0005";
+       input_data <= X"0005";
         wait until falling_edge(clk);
         input_data <= X"0000";
         wait until falling_edge(clk);

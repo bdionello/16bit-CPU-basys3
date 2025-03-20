@@ -1,0 +1,6 @@
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity datapath
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_top.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity cpu_top
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/systemTB_TestB2.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity test_System

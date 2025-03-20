@@ -15,7 +15,7 @@ end entity cpu_top ;
 
 architecture rtl of cpu_top is
     signal sys_rst_i : std_logic;
-    signal reg_src_i : std_logic;
+    signal ctl_wr_enable_i : std_logic;
     signal decode_ctl_i : decode_type;   
     signal ex_stage_ctl_i : execute_type;
     signal mem_stage_ctl_i : memory_type;   
@@ -36,6 +36,7 @@ begin
         memory_ctl => mem_stage_ctl_i,
         write_back_ctl => wb_stage_ctl_i, 
         -- outputs
+        ctl_wr_enable => ctl_wr_enable_i,
         out_port => out_port,
         op_code_out => op_code_i
         );    
@@ -44,6 +45,7 @@ begin
         clk => stm_sys_clk,
         reset_ex => rst_ex,
         reset_ld => rst_ld,
+        wr_enable => ctl_wr_enable_i,
         op_code => op_code_i,
         -- output
         sys_rst => sys_rst_i,

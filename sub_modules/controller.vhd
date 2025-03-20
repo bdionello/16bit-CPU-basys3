@@ -9,6 +9,7 @@ entity controller is
     clk : in std_logic := '0';
     reset_ex: in std_logic := '0';
     reset_ld: in std_logic := '0';
+    wr_enable: in std_logic := '0';
     op_code : in op_code_t := (others => '0');
     -- outputs
     sys_rst : out std_logic := '0';
@@ -59,9 +60,11 @@ begin
         if (reset_ld = '1') or (reset_ex  = '1') then state <= RESET_STATE; -- Asynchronous
             state_code <= (others=>'1');
         -- update state    
-        elsif rising_edge(clk) then    
-            state <= nextstate; -- Synchronous 
-            state_code <= op_code_i;            
+        elsif rising_edge(clk) then
+            if(wr_enable='1') then    
+                state <= nextstate; -- Synchronous 
+                state_code <= op_code_i;
+            end if;            
         end if;    
     end process;  
     -- controller outputs  

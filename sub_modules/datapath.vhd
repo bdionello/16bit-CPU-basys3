@@ -18,6 +18,7 @@ entity datapath is
         memory_ctl     : in memory_type := memory_type_init_c;   
         write_back_ctl : in write_back_type := write_back_type_init_c;
         -- outputs
+        ctl_wr_enable  : out std_logic := '0';
         out_port       : out word_t := (others => '0');
         op_code_out    : out op_code_t
         );        
@@ -85,7 +86,8 @@ architecture data_path_arch of datapath is
     signal alu_z_mem          : std_logic := '0';
     signal alu_n_mem          : std_logic := '0';    
     signal rd_data1_mem       : word_t := (others => '0');
-    signal rd_data2_mem       : word_t := (others => '0');    
+    signal rd_data2_mem       : word_t := (others => '0');
+    signal memory_data_mem     : word_t := (others => '0');    
     signal wr_data_fwd_mem    : word_t := (others => '0'); -- Data to write to register file
     signal wr_index_mem       : std_logic_vector(2 downto 0) := (others => '0'); 
     signal imm_fwd_mem        : word_t := (others => '0');
@@ -106,8 +108,10 @@ architecture data_path_arch of datapath is
     begin
         --------------- Internal signal logic ----------------
         -- send NOP to controller when pipeline stalled
-        op_code_out <=  NOP when (stall_pipeline_low_i = '0') or (flush_f_reg_i = '1') else
-                        instruction_f(15 downto 9);
+        ctl_wr_enable <= stall_pipeline_low_i;
+        
+        op_code_out <=  NOP when (flush_f_reg_i = '1') else
+                        instruction_f(15 downto 9);                        
         ---------- Fetch
         -- program counter mux
 
@@ -148,10 +152,10 @@ architecture data_path_arch of datapath is
                        "0000";
                        
         -- Inject NOP control signals to decode register
-        decode_ctl_d <= decode_ctl when flush_d_reg_i = '0' else decode_type_init_c;        
-        execute_ctl_d <= execute_ctl when flush_d_reg_i = '0' else execute_type_init_c;        
-        memory_ctl_d <= memory_ctl when flush_d_reg_i = '0' else memory_type_init_c;        
-        write_back_ctl_d <= write_back_ctl when flush_d_reg_i = '0' else write_back_type_init_c;        
+        decode_ctl_d <= decode_type_init_c when (flush_d_reg_i = '1') or (stall_pipeline_low_i = '0') else decode_ctl;        
+        execute_ctl_d <= execute_type_init_c when (flush_d_reg_i = '1') or (stall_pipeline_low_i = '0') else execute_ctl;        
+        memory_ctl_d <= memory_type_init_c when (flush_d_reg_i = '1') or (stall_pipeline_low_i = '0') else memory_ctl;        
+        write_back_ctl_d <= write_back_type_init_c when (flush_d_reg_i = '1') or (stall_pipeline_low_i = '0') else write_back_ctl;        
         
         ---------- Execute           
                         
@@ -177,7 +181,7 @@ architecture data_path_arch of datapath is
                 read_data_enable => memory_ctl_mem.memory_read,
                 data_addr => rd_data1_mem,
                 data_in => rd_data2_mem,
-                data_out => memory_data_wb, 
+                data_out => memory_data_mem, 
                 -- Instruction memory - read only
                 inst_addr => inst_addr_f,
                 inst_out => instruction_f, 
@@ -232,7 +236,7 @@ architecture data_path_arch of datapath is
                 op_code => instr_decoded_d.opcode,
                 -- Execute stage signals
                 branch_decision => pc_src_ex, -- active if taken
-                mem_write => memory_ctl_ex.memory_write, 
+                mem_read => memory_ctl_ex.memory_read, 
                 reg_write => write_back_ctl_ex.reg_write,
                 dest_reg => wr_index_ex,                
                 -- outputs
@@ -282,7 +286,6 @@ architecture data_path_arch of datapath is
                    extended_disp   =>  extended_disp_d  -- Short displacement (for BR)
             );
             rst_decode_reg_d <= '1' when sys_rst = '1' or flush_d_reg_i ='1' else '0';
-            -- NOP when (stall_pipeline_low_i = '0') else
         -- Decode
         decode_r: entity work.decode_register
             port map (
@@ -394,6 +397,7 @@ architecture data_path_arch of datapath is
                 wr_alu_result => alu_result_mem,
                 -- register file
                 wr_reg_data1 => rd_data1_mem,
+                wr_mem_data => memory_data_mem,
                 wr_reg_write_index => wr_index_mem,
                 -- TODO add displacement
                 wr_immidate => imm_fwd_mem, 
@@ -406,7 +410,8 @@ architecture data_path_arch of datapath is
                 -- alu
                 rd_alu_result => alu_result_wb,
                 -- register file
-                rd_reg_data1 => rd_data1_wb,       
+                rd_reg_data1 => rd_data1_wb,
+                rd_mem_data => memory_data_wb,       
                 rd_reg_write_index => wr_index_wb,
                 -- 
                 rd_immidate => imm_fwd_wb,

@@ -7,5 +7,4 @@
 		MOV R2, R7
 		STORE R2, R1
 		LOAD R3, R2
-	
 	END
