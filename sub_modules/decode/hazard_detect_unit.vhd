@@ -29,7 +29,7 @@ architecture Behavioral of hazard_detect_unit is
    
 begin 
   
-    hazard_control: process (clk, branch_decision)
+    hazard_control: process (clk, branch_decision, op_code)
         variable count : natural range 0 to 10 := 0;           
     begin
     
@@ -46,15 +46,13 @@ begin
                 stall_pipeline_low <= '1';
                 flush_f_reg <= '0';
                 flush_d_reg <= '0';
-            end if;       
-                                                        
+            end if; 
+            
+            if (count > 0) then
+                count := count - 1;         
+            end if;                        
+        else        
             case op_code is
-                -- Unconditional branch: Predict always taken and stall
-                when BRR | BR | BR_SUB => NULL;
-                   --stall_pipeline_low <= '0';
-                  -- count := 1; -- resume 
-                   --flush_f_reg <= '1';                   
-                   
                 -- Operations that read a register and are suseptable to read after load hazard, require stalls 
                 when ADD | SUB | MUL | NAND_OP | SHL_OP | SHR_OP | OUT_OP | STORE | MOV =>
                     if (mem_read = '1') and ( dest_reg = source_reg1 or dest_reg = source_reg2 )then
@@ -63,13 +61,9 @@ begin
                     end if;
                 -- Operations that may read a register but do not ever depend on a memory load, can be handled by forward unit, no stalls
                 when NOP | TEST | IN_OP | BRR_N | BRR_Z | BR_N | BR_Z | RETURN_OP | LOADIMM | LOAD => NULL;
-                            
+                                            
                 when others => NULL;                     
-            end case;
-       
-            if (count > 0) then
-                count := count - 1;         
-            end if;
+            end case;        
         end if;               
     end process;
 end Behavioral;

@@ -4,4 +4,40 @@ Running: C:/Xilinx/Vivado/2017.4/bin/unwrapped/win64.o/xelab.exe -wto c67d6245d0
 Using 2 slave threads.
 Starting static elaboration
 Completed static elaboration
-INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package std.standard
+Compiling package std.textio
+Compiling package ieee.std_logic_1164
+Compiling package ieee.std_logic_arith
+Compiling package ieee.std_logic_unsigned
+Compiling package ieee.numeric_std
+Compiling package xil_defaultlib.cpu_types
+Compiling package xpm.vcomponents
+Compiling package vl.vl_types
+Compiling module xpm.xpm_memory_base(MEMORY_TYPE=3,ME...
+Compiling module xpm.xpm_memory_sprom(MEMORY_SIZE=819...
+Compiling architecture rom_arch of entity xil_defaultlib.rom [rom_default]
+Compiling module xpm.xpm_memory_base(MEMORY_SIZE=8192...
+Compiling module xpm.xpm_memory_dpdistram(MEMORY_SIZE...
+Compiling architecture ram_arch of entity xil_defaultlib.ram [ram_default]
+Compiling architecture mem_manager_arch of entity xil_defaultlib.mem_manager [mem_manager_default]
+Compiling architecture pc_arch of entity xil_defaultlib.program_counter [program_counter_default]
+Compiling architecture adder_arch of entity xil_defaultlib.adder [adder_default]
+Compiling architecture behavioral of entity xil_defaultlib.fetch_register [fetch_register_default]
+Compiling architecture behavioral of entity xil_defaultlib.hazard_detect_unit [hazard_detect_unit_default]
+Compiling architecture behavioural of entity xil_defaultlib.decoder [decoder_default]
+Compiling architecture behavioural of entity xil_defaultlib.register_file [register_file_default]
+Compiling architecture imm_concat_arch of entity xil_defaultlib.immediate_concatenator [immediate_concatenator_default]
+Compiling architecture behavioral of entity xil_defaultlib.sign_extend [sign_extend_default]
+Compiling architecture behavioral of entity xil_defaultlib.decode_register [decode_register_default]
+Compiling architecture behavioral of entity xil_defaultlib.ALU [alu_default]
+Compiling architecture behavioral of entity xil_defaultlib.branch_unit [branch_unit_default]
+Compiling architecture behavioral of entity xil_defaultlib.execute_register [execute_register_default]
+Compiling architecture behavioral of entity xil_defaultlib.memory_register [memory_register_default]
+Compiling architecture data_path_arch of entity xil_defaultlib.datapath [datapath_default]
+Compiling architecture controller_arch of entity xil_defaultlib.controller [controller_default]
+Compiling architecture rtl of entity xil_defaultlib.cpu_top [cpu_top_default]
+Compiling architecture behavioural of entity xil_defaultlib.test_system
+Built simulation snapshot test_System_behav
