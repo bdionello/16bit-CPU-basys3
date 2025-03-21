@@ -14,20 +14,20 @@ use IEEE.NUMERIC_STD.ALL;
 entity mem_manager is
     Port (
         -- Shared ports
-        clock : in STD_LOGIC := '0';
-        reset : in STD_LOGIC := '0';        
-        write_enable : in STD_LOGIC := '0';
+        clock            : in STD_LOGIC := '0';
+        reset            : in STD_LOGIC := '0';        
+        write_enable     : in STD_LOGIC := '0';
         read_data_enable : in STD_LOGIC := '0';
-        data_addr : in STD_LOGIC_VECTOR (15 downto 0) := (others => '0');
-        data_in : in STD_LOGIC_VECTOR (15 downto 0):= (others => '0'); -- All write data
-        data_out : out STD_LOGIC_VECTOR (15 downto 0):= (others => '0');
+        data_addr        : in STD_LOGIC_VECTOR (15 downto 0) := (others => '0');
+        data_in          : in STD_LOGIC_VECTOR (15 downto 0):= (others => '0'); -- All write data
+        data_out         : out STD_LOGIC_VECTOR (15 downto 0):= (others => '0');
         -- Instruction memory - read only
-        inst_addr : in STD_LOGIC_VECTOR (15 downto 0):= (others => '0');
-        inst_out : out STD_LOGIC_VECTOR (15 downto 0):= (others => '0');
+        inst_addr        : in STD_LOGIC_VECTOR (15 downto 0):= (others => '0');
+        inst_out         : out STD_LOGIC_VECTOR (15 downto 0):= (others => '0');
         -- read_inst_enable : in STD_LOGIC := '0'; -- used for debugging may not be needed for read only memory
         -- Memory Mapped ports
-        in_port : in STD_LOGIC_VECTOR (15 downto 0):= (others => '0');
-        out_port : out STD_LOGIC_VECTOR (15 downto 0) := (others => '0')
+        in_port          : in STD_LOGIC_VECTOR (15 downto 0):= (others => '0');
+        led_7seg_out     : out STD_LOGIC_VECTOR (15 downto 0) := (others => '0')
         );
 end mem_manager;
 
@@ -76,8 +76,8 @@ begin
                 X"0000" when (reset_i ='1');                              
     
     -- Connected to physical output port (Write to Display)                                  
-    out_port <= data_in when (data_addr = X"FFF2") AND (write_enable = '1') AND (clock = '1') else
-                X"0000" when (reset_i ='1');
+    led_7seg_out <= data_in when (data_addr = X"FFF2") AND (write_enable = '1') AND (clock = '1') else
+                    X"0000" when (reset_i ='1');
         
     rom_0 : entity work.rom
         port map(

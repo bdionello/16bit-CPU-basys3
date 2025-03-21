@@ -20,7 +20,8 @@ entity datapath is
         -- outputs
         ctl_wr_enable  : out std_logic := '0';
         out_port       : out word_t := (others => '0');
-        op_code_out    : out op_code_t
+        op_code_out    : out std_logic_vector(0 downto 0) := (others => '0');
+        led_7seg_data  : out word_t := (others => '0')
         );        
 end datapath;
 
@@ -187,7 +188,7 @@ architecture data_path_arch of datapath is
                 inst_out => instruction_f, 
                 -- Memory Mapped ports
                 in_port => in_port,
-                out_port => out_port_wb--: out STD_LOGIC_VECTOR (15 downto 0) := X"0000"            
+                led_7seg_out => led_7seg_data --: out STD_LOGIC_VECTOR (15 downto 0) := X"0000"            
             ); 
                     
         -- Fetch          
