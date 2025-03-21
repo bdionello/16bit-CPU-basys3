@@ -43,7 +43,7 @@ architecture ram_arch of ram is
             BYTE_WRITE_WIDTH_A      => 16,             --integer; 8, 9, or WRITE_DATA_WIDTH_A value
             ADDR_WIDTH_A            => 9,              --positive integer
             READ_RESET_VALUE_A      => "0",            --string
-            READ_LATENCY_A          =>  1,              --non-negative integer
+            READ_LATENCY_A          =>  0,              --non-negative integer
         
             -- Port B module generics
             READ_DATA_WIDTH_B       => 16,             --positive integer

@@ -11,6 +11,7 @@ vhdl xil_defaultlib  \
 "../../../../../sub_modules/memory/mem_manager.vhd" \
 "../../../../../sub_modules/fetch/program_counter.vhd" \
 "../../../../../sub_modules/fetch/fetch_register.vhd" \
+"../../../../../sub_modules/decode/hazard_detect_unit.vhd" \
 "../../../../../sub_modules/decode/decoder.vhd" \
 "../../../../../sub_modules/decode/imm_concat.vhd" \
 "../../../../../sub_modules/decode/sign_extend.vhd" \
@@ -19,7 +20,7 @@ vhdl xil_defaultlib  \
 "../../../../../sub_modules/memory/memory_register.vhd" \
 "../../../../../sub_modules/datapath.vhd" \
 "../../../../../sub_modules/cpu_top.vhd" \
-"../../../../../sub_modules/testbench/systemTB_TestL.vhd" \
+"../../../../../sub_modules/testbench/systemTB_TestB2.vhd" \
 
 # Do not sort compile order
 nosort

@@ -18,30 +18,39 @@ entity datapath is
         memory_ctl     : in memory_type := memory_type_init_c;   
         write_back_ctl : in write_back_type := write_back_type_init_c;
         -- outputs
+        ctl_wr_enable  : out std_logic := '0';
         out_port       : out word_t := (others => '0');
         op_code_out    : out op_code_t
         );        
 end datapath;
 
 architecture data_path_arch of datapath is
-    -- Internal signals -- Denoted by: '_i' = Not stage specific 
+    -- Internal signals -- Denoted by: '_i' = Not stage specific
+    signal flush_f_reg_i      :  std_logic := '0';
+    signal flush_d_reg_i      :  std_logic := '0';
+    signal flush_ex_reg_i     :  std_logic := '0';
+    signal stall_pipeline_low_i   :  std_logic := '0';
     -- Fetch Stage signals -- Denoted by: "_f'  
     signal pc_in_f            : word_t := (others => '0');
     signal pc_out_f           : word_t := (others => '0');
     signal inst_addr_f        : word_t := (others => '0');
     signal pc_next_f          : word_t := (others => '0');    
-    signal instruction_f      : word_t := (others => '0');      
-    
+    signal instruction_f      : word_t := (others => '0');
+    signal rst_fetch_reg_f    : std_logic := '0';   
     -- Decode stage signals -- Denoted by:'_d'
     signal instruction_d      : word_t := (others => '0');
     signal instr_decoded_d    : instruction_type := instruction_type_init_c;
     signal pc_current_d          : word_t := (others => '0');
-    signal extended_disp_d    : word_t := (others => '0');
+    signal extended_disp_d    : word_t := (others => '0');    
+    signal decode_ctl_d       : decode_type := decode_type_init_c; -- pass through
+    signal execute_ctl_d      : execute_type := execute_type_init_c; -- used in execute stage
+    signal memory_ctl_d       : memory_type := memory_type_init_c;    -- pass through
+    signal write_back_ctl_d   : write_back_type := write_back_type_init_c; -- pass through   
     -- Signals for register_file
     signal rd_data1_d         : word_t := (others => '0'); -- Read data 1 from register file
     signal rd_data2_d         : word_t := (others => '0'); -- Read data 2 from register file
     signal wr_data_d          : word_t := (others => '0'); -- Data to write to register file    
-    signal wr_enable_d        : std_logic;                     -- Write enable for register file
+    signal wr_enable_d        : std_logic := '0';                     -- Write enable for register file
     signal wr_index_d         : std_logic_vector(2 downto 0) := (others => '0');
     signal rd_index1_d        : std_logic_vector(2 downto 0) := (others => '0');
     signal rd_index2_d        : std_logic_vector(2 downto 0) := (others => '0');      
@@ -49,6 +58,7 @@ architecture data_path_arch of datapath is
     signal imm_fwd_d          : word_t := (others => '0');    
     signal inport_fwd_d       : word_t := (others => '0');
     signal alu_shift_d        : std_logic_vector(3 downto 0) := (others => '0');
+    signal rst_decode_reg_d   : std_logic := '0';
     -- Execute stage signals -- Denoted by:'_ex'
     signal execute_ctl_ex     : execute_type := execute_type_init_c; -- used in execute stage
     signal memory_ctl_ex      : memory_type := memory_type_init_c;    -- pass through
@@ -61,23 +71,23 @@ architecture data_path_arch of datapath is
     signal inport_fwd_ex      : word_t := (others => '0');
     signal alu_shift_ex       : std_logic_vector(3 downto 0) := (others => '0');
     signal pc_branch_addr_ex  : word_t := (others => '0');
-    signal extended_disp_ex    : word_t := (others => '0');
+    signal extended_disp_ex   : word_t := (others => '0');
     -- alu
     signal alu_result_ex      : word_t:= (others => '0');
     signal alu_z_ex           : std_logic := '0';
-    signal alu_n_ex           : std_logic := '0';     
+    signal alu_n_ex           : std_logic := '0';
+    signal pc_src_ex         : std_logic := '0'; -- signal to select pc mux      
     -- Memory stage signals -- Denoted by:'_mem'
     signal memory_ctl_mem     : memory_type := memory_type_init_c; -- used in memory stage
     signal write_back_ctl_mem : write_back_type := write_back_type_init_c; -- pass through
-    signal pc_current_mem        : word_t := (others => '0');
+    signal pc_current_mem        : word_t := (others => '0'); -- UNUSED
     -- alu
     signal alu_result_mem     : word_t := (others => '0');
     signal alu_z_mem          : std_logic := '0';
-    signal alu_n_mem          : std_logic := '0';
-    signal pc_src_mem         : std_logic := '0'; -- signal to select pc mux        
-    signal pc_branch_addr_mem : word_t := (others => '0');    
+    signal alu_n_mem          : std_logic := '0';    
     signal rd_data1_mem       : word_t := (others => '0');
-    signal rd_data2_mem     : word_t := (others => '0');    
+    signal rd_data2_mem       : word_t := (others => '0');
+    signal memory_data_mem     : word_t := (others => '0');    
     signal wr_data_fwd_mem    : word_t := (others => '0'); -- Data to write to register file
     signal wr_index_mem       : std_logic_vector(2 downto 0) := (others => '0'); 
     signal imm_fwd_mem        : word_t := (others => '0');
@@ -86,23 +96,27 @@ architecture data_path_arch of datapath is
     -- Write back stage signals -- Denoted by:'_wb'
     signal write_back_ctl_wb  : write_back_type := write_back_type_init_c; -- used in wb stage
     signal pc_current_wb      : word_t := (others => '0');
-    signal rd_data1_wb      : word_t := (others => '0');
-    signal memory_data_wb    : word_t := (others => '0');
+    signal rd_data1_wb        : word_t := (others => '0');
+    signal memory_data_wb     : word_t := (others => '0');
     signal wr_data_fwd_wb     : word_t := (others => '0'); -- Data to write to register file
     signal wr_index_wb        : std_logic_vector(2 downto 0)  := (others => '0'); 
     signal imm_fwd_wb         : word_t := (others => '0');
     signal inport_fwd_wb      : word_t := (others => '0');
-    signal out_port_wb      : word_t := (others => '0');
+    signal out_port_wb        : word_t := (others => '0');
     signal alu_result_wb      : word_t := (others => '0'); -- Data to write to register file
        
     begin
         --------------- Internal signal logic ----------------
-        op_code_out <= instruction_f(15 downto 9);
+        -- send NOP to controller when pipeline stalled
+        ctl_wr_enable <= stall_pipeline_low_i;
+        -- flush controller when branch taken      
+        op_code_out <=  NOP when flush_f_reg_i = '1' else 
+                        instruction_f(15 downto 9);                        
         ---------- Fetch
         -- program counter mux
 
         -- pc source mux
-        pc_in_f <= pc_branch_addr_mem when (pc_src_mem = '1') and (boot_mode = RUN) else                   
+        pc_in_f <= pc_branch_addr_ex when (pc_src_ex = '1') and (boot_mode = RUN) else                   
                    X"0000" when boot_mode = BOOT_EXECUTE else
                    X"0002" when boot_mode = BOOT_LOAD else
                    pc_next_f;
@@ -110,21 +124,21 @@ architecture data_path_arch of datapath is
         ---------- Decode
         -- Write index mux       
         wr_index_d <=   instr_decoded_d.r_dest when (instr_decoded_d.opcode = LOAD or instr_decoded_d.opcode = MOV) else
-                        instr_decoded_d.ra when decode_ctl.reg_dst = '0' else
-                        "111" when decode_ctl.reg_dst = '1';
+                        instr_decoded_d.ra when decode_ctl_d.reg_dst = '0' else
+                        "111" when decode_ctl_d.reg_dst = '1';
       
         -- register index mux                    
         rd_index1_d <= instr_decoded_d.r_src when (instr_decoded_d.opcode = LOAD or instr_decoded_d.opcode = MOV) else
                        instr_decoded_d.r_dest when (instr_decoded_d.opcode = STORE) else
-                       instr_decoded_d.rb when decode_ctl.reg_src = '0' else
-                       "111" when (decode_ctl.reg_src = '1') and (instr_decoded_d.opcode = RETURN_OP) else
+                       instr_decoded_d.rb when decode_ctl_d.reg_src = '0' else
+                       "111" when (decode_ctl_d.reg_src = '1') and (instr_decoded_d.opcode = RETURN_OP) else
                        instr_decoded_d.ra;
                                                     
         rd_index2_d <=  instr_decoded_d.r_src when (instr_decoded_d.opcode = STORE) else
-                        instr_decoded_d.rc when decode_ctl.reg_src = '0' else "000";
+                        instr_decoded_d.rc when decode_ctl_d.reg_src = '0' else "000";
         
-        imm_temp_d <=   (instr_decoded_d.imm & X"00") when (instr_decoded_d.m_1 = '1') and (decode_ctl.imm_op = '1') else
-                        (X"00" & instr_decoded_d.imm) when (instr_decoded_d.m_1 = '0') and (decode_ctl.imm_op = '1') else
+        imm_temp_d <=   (instr_decoded_d.imm & X"00") when (instr_decoded_d.m_1 = '1') and (decode_ctl_d.imm_op = '1') else
+                        (X"00" & instr_decoded_d.imm) when (instr_decoded_d.m_1 = '0') and (decode_ctl_d.imm_op = '1') else
                          X"0000";
                          
         inport_fwd_d <= in_port when instr_decoded_d.opcode = IN_OP else
@@ -136,6 +150,13 @@ architecture data_path_arch of datapath is
          
         alu_shift_d <= instr_decoded_d.shift when (instr_decoded_d.opcode = SHL_OP or instr_decoded_d.opcode = SHR_OP) else
                        "0000";
+                       
+        -- Inject NOP control signals to decode register
+        decode_ctl_d <= decode_type_init_c when (flush_d_reg_i = '1') or (stall_pipeline_low_i = '0') else decode_ctl;        
+        execute_ctl_d <= execute_type_init_c when (flush_d_reg_i = '1') or (stall_pipeline_low_i = '0') else execute_ctl;        
+        memory_ctl_d <= memory_type_init_c when (flush_d_reg_i = '1') or (stall_pipeline_low_i = '0') else memory_ctl;        
+        write_back_ctl_d <= write_back_type_init_c when (flush_d_reg_i = '1') or (stall_pipeline_low_i = '0') else write_back_ctl;        
+        
         ---------- Execute           
                         
         ---------- Write back 
@@ -160,20 +181,21 @@ architecture data_path_arch of datapath is
                 read_data_enable => memory_ctl_mem.memory_read,
                 data_addr => rd_data1_mem,
                 data_in => rd_data2_mem,
-                data_out => memory_data_wb, 
+                data_out => memory_data_mem, 
                 -- Instruction memory - read only
                 inst_addr => inst_addr_f,
                 inst_out => instruction_f, 
                 -- Memory Mapped ports
                 in_port => in_port,
                 out_port => out_port_wb--: out STD_LOGIC_VECTOR (15 downto 0) := X"0000"            
-            );         
+            ); 
+                    
         -- Fetch          
         pc: entity work.program_counter
             port map (
                 rst => sys_rst,
                 clk => sys_clk,
-                wr_enable => '1', -- TODO: connect for hazard control
+                wr_enable => stall_pipeline_low_i, 
                 --write signals
                 wr_instr_addr => pc_in_f, --: in std_logic_vector(15 downto 0);                
                 --read signals
@@ -187,12 +209,14 @@ architecture data_path_arch of datapath is
                 B => step_size_c,
                 C => pc_next_f
             );
+        
+        rst_fetch_reg_f <= '1' when (sys_rst = '1') or (flush_f_reg_i = '1') else '0';
         -- Fetch    
         fetch_r: entity work.fetch_register
             port map ( 
-                rst => sys_rst,
+                rst => rst_fetch_reg_f,
                 clk => sys_clk,
-                wr_enable => '1', -- TODO: connect for hazard control
+                wr_enable => stall_pipeline_low_i,
                 -- inputs
                 wr_instruction => instruction_f, --: in std_logic_vector(15 downto 0);
                 wr_pc => inst_addr_f,               
@@ -201,7 +225,27 @@ architecture data_path_arch of datapath is
                 rd_pc => pc_current_d          
             );
             
-        --------------- Decode Stage Modules -------------------                               
+        --------------- Decode Stage Modules ------------------- 
+        hazard_detect: entity work.hazard_detect_unit 
+            port map (
+                -- inputs 
+                clk => sys_clk, 
+                -- Decode stage signals
+                source_reg1 => rd_index1_d, 
+                source_reg2 => rd_index2_d,
+                op_code => instr_decoded_d.opcode,
+                -- Execute stage signals
+                branch_decision => pc_src_ex, -- active if taken
+                mem_read => memory_ctl_ex.memory_read, 
+                reg_write => write_back_ctl_ex.reg_write,
+                dest_reg => wr_index_ex,                
+                -- outputs
+                flush_f_reg => flush_f_reg_i, --  : out std_logic := '0';
+                flush_d_reg => flush_d_reg_i, --  : out std_logic := '0';
+                flush_ex_reg => flush_ex_reg_i, --  : out std_logic := '0';
+                stall_pipeline_low => stall_pipeline_low_i --  : out std_logic := '0'           
+            );
+                                      
         decoder: entity work.decoder
             port map (
                 instr => instruction_d,   -- Input instruction
@@ -227,7 +271,7 @@ architecture data_path_arch of datapath is
         -- concatonate imm_upper and imm_lower    
         immconcat: entity work.immediate_concatenator 
             port map(
-                clear_low => decode_ctl.imm_op, -- clear when not a LOADIMM op  
+                clear_low => decode_ctl_d.imm_op, -- clear when not a LOADIMM op  
                 imm_in => imm_temp_d,
                 imm_out => imm_fwd_d          
             );
@@ -241,11 +285,12 @@ architecture data_path_arch of datapath is
                    disp_s          =>  instr_decoded_d.disp_s,  -- Short displacement (for BR)
                    extended_disp   =>  extended_disp_d  -- Short displacement (for BR)
             );
+            rst_decode_reg_d <= '1' when sys_rst = '1' or flush_d_reg_i ='1' else '0';
         -- Decode
         decode_r: entity work.decode_register
             port map (
                 -- register control inputs 
-                rst => sys_rst,
+                rst => rst_decode_reg_d,
                 clk => sys_clk,
                 wr_enable => '1', -- TODO hazard control 
                 -- inputs
@@ -259,9 +304,9 @@ architecture data_path_arch of datapath is
                 wr_inport_data => inport_fwd_d,
                 wr_alu_shift => alu_shift_d,          
                 -- contorller records
-                wr_execute_ctl => execute_ctl,
-                wr_memory_ctl => memory_ctl,
-                wr_write_back_ctl => write_back_ctl,                
+                wr_execute_ctl => execute_ctl_d,
+                wr_memory_ctl => memory_ctl_d,
+                wr_write_back_ctl => write_back_ctl_d,                
                 -- outputs
                 rd_pc => pc_current_ex,
                 -- register file
@@ -292,6 +337,20 @@ architecture data_path_arch of datapath is
                 negative_flag => alu_n_ex, -- Negative flag
                 zero_flag    => alu_z_ex    -- Zero flag
             );
+        -- Execute     
+        branch_unit: entity work.branch_unit
+                port map(
+                -- Inputs
+                op_code         => memory_ctl_ex.op_code_mem,--in std_logic_vector(6 downto 0);  -- Opcode from Decode Stage
+                pc_current      => pc_current_ex,--in word_t;  -- Current PC value
+                reg_data        => rd_data1_ex,--in word_t;  -- Data from register (for BR instructions)
+                displacement    => extended_disp_ex,
+                alu_n           => alu_n_ex,--in std_logic;  -- Negative flag from ALU
+                alu_z           => alu_z_ex,--in std_logic;  -- Zero flag from ALU        
+                -- Outputs
+                branch_taken    => pc_src_ex,--out std_logic;  -- Branch taken signal
+                branch_target   => pc_branch_addr_ex--out word_t  -- Calculated branch target address            
+                );
         -- Execute   
         execute_r: entity work.execute_register
             port map(
@@ -301,13 +360,10 @@ architecture data_path_arch of datapath is
             wr_pc => pc_current_ex,
             -- alu
             wr_alu_result => alu_result_ex,
-            wr_alu_n => alu_n_ex,
-            wr_alu_z => alu_z_ex,
             -- register file
             wr_reg_data1 => rd_data1_ex,
             wr_reg_data2 => rd_data2_ex,
             wr_reg_write_index => wr_index_ex,
-            wr_extended_disp => extended_disp_ex,
             wr_immidate => imm_fwd_ex,
             wr_inport_data => inport_fwd_ex,           
             -- contorller records
@@ -318,13 +374,10 @@ architecture data_path_arch of datapath is
             rd_pc => pc_current_mem,
             -- alu
             rd_alu_result => alu_result_mem,
-            rd_alu_n => alu_n_mem,
-            rd_alu_z => alu_z_mem,
             -- register file
             rd_reg_data1 => rd_data1_mem, -- to alu in1
             rd_reg_data2 => rd_data2_mem, -- to alu in2
             rd_reg_write_index => wr_index_mem,
-            rd_extended_disp => extended_disp_mem, 
             rd_immidate => imm_fwd_mem,
             rd_inport_data => inport_fwd_mem,
             -- contorller records 
@@ -332,21 +385,7 @@ architecture data_path_arch of datapath is
             rd_write_back_ctl => write_back_ctl_mem            
             );
             
-        --------------- Memory Stage Modules ----------------
-        branch_unit: entity work.branch_unit
-            port map(
-            -- Inputs
-            op_code         => memory_ctl_mem.op_code_mem,--in std_logic_vector(6 downto 0);  -- Opcode from Decode Stage
-            pc_current      => pc_current_mem,--in word_t;  -- Current PC value
-            reg_data        => rd_data1_mem,--in word_t;  -- Data from register (for BR instructions)
-            displacement    => extended_disp_mem,
-            alu_n           => alu_n_mem,--in std_logic;  -- Negative flag from ALU
-            alu_z           => alu_z_mem,--in std_logic;  -- Zero flag from ALU        
-            -- Outputs
-            branch_taken    => pc_src_mem,--out std_logic;  -- Branch taken signal
-            branch_target   => pc_branch_addr_mem--out word_t  -- Calculated branch target address            
-            );
-                                                       
+        --------------- Memory Stage Modules ----------------                                                       
         mem_r: entity work.memory_register
             port map(
                 -- inputs
@@ -358,6 +397,7 @@ architecture data_path_arch of datapath is
                 wr_alu_result => alu_result_mem,
                 -- register file
                 wr_reg_data1 => rd_data1_mem,
+                wr_mem_data => memory_data_mem,
                 wr_reg_write_index => wr_index_mem,
                 -- TODO add displacement
                 wr_immidate => imm_fwd_mem, 
@@ -370,7 +410,8 @@ architecture data_path_arch of datapath is
                 -- alu
                 rd_alu_result => alu_result_wb,
                 -- register file
-                rd_reg_data1 => rd_data1_wb,       
+                rd_reg_data1 => rd_data1_wb,
+                rd_mem_data => memory_data_wb,       
                 rd_reg_write_index => wr_index_wb,
                 -- 
                 rd_immidate => imm_fwd_wb,

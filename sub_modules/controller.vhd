@@ -6,12 +6,13 @@ use work.cpu_types.all;
 entity controller is
     port (
     -- inputs    
-    clk : in std_logic;
-    reset_ex: in std_logic;
-    reset_ld: in std_logic;
-    op_code : in op_code_t;
+    clk : in std_logic := '0';
+    reset_ex: in std_logic := '0';
+    reset_ld: in std_logic := '0';
+    wr_enable: in std_logic := '0';
+    op_code : in op_code_t := (others => '0');
     -- outputs
-    sys_rst : out std_logic;
+    sys_rst : out std_logic := '0';
     boot_mode : out boot_mode_type := BOOT_LOAD;
     decode_ctl : out decode_type := decode_type_init_c;
     execute_ctl : out execute_type := execute_type_init_c; 
@@ -59,9 +60,11 @@ begin
         if (reset_ld = '1') or (reset_ex  = '1') then state <= RESET_STATE; -- Asynchronous
             state_code <= (others=>'1');
         -- update state    
-        elsif rising_edge(clk) then    
-            state <= nextstate; -- Synchronous 
-            state_code <= op_code_i;            
+        elsif rising_edge(clk) then
+            if(wr_enable='1') then    
+                state <= nextstate; -- Synchronous 
+                state_code <= op_code_i;
+            end if;            
         end if;    
     end process;  
     -- controller outputs  
