@@ -11,13 +11,15 @@ entity cpu_top is port (
     in_port       : in word_t; -- only 15 to 5 is used
     out_port      : out word_t := (others => '0');    
     
+    -- Debug display console ports to constraints
+    debug_console : in STD_LOGIC;
+    board_clock   : in std_logic;
+    
     -- Debug display 7-segment LED ports to constraints
     led_segments  : out STD_LOGIC_VECTOR( 6 downto 0 );
     led_digits    : out STD_LOGIC_VECTOR( 3 downto 0 );
     
-    -- Debug display console ports to constraints
-    debug_console : in STD_LOGIC;
-    board_clock   : in std_logic;
+
 
     vga_red       : out std_logic_vector( 3 downto 0 );
     vga_green     : out std_logic_vector( 3 downto 0 );
@@ -37,7 +39,7 @@ architecture rtl of cpu_top is
     signal wb_stage_ctl_i  : write_back_type;    
     signal op_code_i       : op_code_t; -- instruction
     signal boot_mode_i     : boot_mode_type := BOOT_LOAD;
-    signal led_7seg_data   : word_t; 
+    signal led_7seg_data_i   : word_t; 
         
 begin
     -------------- CPU System --------------------------
@@ -56,7 +58,8 @@ begin
             -- outputs
             ctl_wr_enable => ctl_wr_enable_i,
             out_port => out_port,
-            op_code_out => op_code_i
+            op_code_out => op_code_i,
+            led_7seg_data => led_7seg_data_i
         );    
     ctrl_0: entity work.controller 
         port map (
@@ -80,7 +83,7 @@ begin
        
                addr_write => x"FFF2",
                clk => stm_sys_clk,
-               data_in => led_7seg_data,
+               data_in => led_7seg_data_i,
                en_write => '1',
        
                board_clock => board_clock,

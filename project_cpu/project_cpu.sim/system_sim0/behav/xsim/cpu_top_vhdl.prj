@@ -4,7 +4,9 @@ vhdl xil_defaultlib  \
 "../../../../../sub_modules/cpu_types.vhd" \
 "../../../../../sub_modules/decode/adder.vhd" \
 "../../../../../sub_modules/execute/alu.vhd" \
+"../../../../../sub_modules/debug_display/bit_to_ascii.vhd" \
 "../../../../../sub_modules/memory/branch_unit.vhd" \
+"../../../../../sub_modules/debug_display/console.vhd" \
 "../../../../../sub_modules/controller.vhd" \
 "../../../../../sub_modules/memory/rom.vhd" \
 "../../../../../sub_modules/memory/ram.vhd" \
@@ -19,6 +21,10 @@ vhdl xil_defaultlib  \
 "../../../../../sub_modules/execute/execute_register.vhd" \
 "../../../../../sub_modules/memory/memory_register.vhd" \
 "../../../../../sub_modules/datapath.vhd" \
+"../../../../../sub_modules/debug_display/led_display.vhd" \
+"../../../../../sub_modules/debug_display/nibble_to_ascii.vhd" \
+"../../../../../sub_modules/debug_display/video_timing.vhd" \
+"../../../../../sub_modules/debug_display/word_to_ascii.vhd" \
 "../../../../../sub_modules/cpu_top.vhd" \
 
 # Do not sort compile order

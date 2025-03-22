@@ -5,6 +5,7 @@ use ieee.std_logic_unsigned.all;
 entity test_System is end test_System;
 
 architecture behavioural of test_System is
+    constant debug_console_c : std_logic := '1';
     constant memory_size : integer := 1024;
     constant clk_hz : integer := 100e6;
     constant clk_period : time := 1 sec / clk_hz; -- 1/T = 100MHz
@@ -19,7 +20,9 @@ begin
     rst_ex => reset_execute, 
     rst_ld => reset_load, 
     in_port => input_data,
-    out_port => output_data
+    out_port => output_data,
+    debug_console => debug_console_c,
+    board_clock   => clk
     );
     -- system test clock
      CLK_PROC : process

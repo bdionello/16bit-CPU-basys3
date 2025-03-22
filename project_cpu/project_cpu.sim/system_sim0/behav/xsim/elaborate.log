@@ -38,6 +38,12 @@ Compiling architecture behavioral of entity xil_defaultlib.execute_register [exe
 Compiling architecture behavioral of entity xil_defaultlib.memory_register [memory_register_default]
 Compiling architecture data_path_arch of entity xil_defaultlib.datapath [datapath_default]
 Compiling architecture controller_arch of entity xil_defaultlib.controller [controller_default]
+Compiling architecture behavioral of entity xil_defaultlib.led_display [led_display_default]
+Compiling architecture behavioral of entity xil_defaultlib.video_timing [\video_timing(hsync_front_porch=...]
+Compiling architecture behavioral of entity xil_defaultlib.word_to_ascii [word_to_ascii_default]
+Compiling architecture behavioral of entity xil_defaultlib.nibble_to_ascii [nibble_to_ascii_default]
+Compiling architecture behavioral of entity xil_defaultlib.bit_to_ascii [bit_to_ascii_default]
+Compiling architecture behavioral of entity xil_defaultlib.console [console_default]
 Compiling architecture rtl of entity xil_defaultlib.cpu_top [cpu_top_default]
 Compiling architecture behavioural of entity xil_defaultlib.test_system
 Built simulation snapshot test_System_behav

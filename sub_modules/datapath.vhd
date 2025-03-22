@@ -20,7 +20,7 @@ entity datapath is
         -- outputs
         ctl_wr_enable  : out std_logic := '0';
         out_port       : out word_t := (others => '0');
-        op_code_out    : out std_logic_vector(0 downto 0) := (others => '0');
+        op_code_out    : out op_code_t := (others => '0');
         led_7seg_data  : out word_t := (others => '0')
         );        
 end datapath;
