@@ -6,12 +6,12 @@ use work.cpu_types.all;
 
 entity ALU is
     port(
-        in1      : in std_logic_vector(15 downto 0);  -- First operand
-        in2      : in std_logic_vector(15 downto 0);  -- Second operand
-        shift    : in std_logic_vector(3 downto 0);   -- Shift amount
-        alu_mode : in alu_op_type := alu_NOP;    -- ALU opcode (7-bit)
+        in1           : in std_logic_vector(15 downto 0);  -- First operand
+        in2           : in std_logic_vector(15 downto 0);  -- Second operand
+        shift         : in std_logic_vector(3 downto 0);   -- Shift amount
+        alu_mode      : in alu_op_type := alu_NOP;    -- ALU opcode (7-bit)
         
-        alu_out   : out std_logic_vector(15 downto 0); -- ALU result        
+        alu_out       : out std_logic_vector(15 downto 0); -- ALU result        
         zero_flag     : out std_logic := '0';                -- Zero flag (Z)
         negative_flag : out std_logic := '0'                -- Negative flag (N)
     );
@@ -23,7 +23,10 @@ begin
     variable temp_result : std_logic_vector(15 downto 0);
     variable temp_result_mul : std_logic_vector(31 downto 0);
     begin
-    -- alu_NOP, alu_ADD, alu_SUB, alu_MUL, alu_NAND, alu_SHL, alu_SHR, alu_TEST
+        -- Removes implicit latch                           
+        zero_flag <= '0';
+        negative_flag <= '0';
+        -- alu_NOP, alu_ADD, alu_SUB, alu_MUL, alu_NAND, alu_SHL, alu_SHR, alu_TEST
         case alu_mode is
             -- A-Format Instructions
             when alu_NOP => temp_result := (others => '0');                                                           -- NOP (A0 Format)
@@ -46,14 +49,10 @@ begin
                 else
                     negative_flag <= '0';
                 end if;
-
             -- Default case
-            when others => temp_result := (others => '0'); -- Default NOP
-            
+            when others => temp_result := (others => '0'); -- Default NOP            
         end case;
-
         -- Output result
-        alu_out <= temp_result;       
-
+        alu_out <= temp_result;
     end process;
 end behavioral;

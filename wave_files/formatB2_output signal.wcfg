@@ -12,15 +12,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="1339292423fs"></ZoomStartTime>
-      <ZoomEndTime time="1496141516fs"></ZoomEndTime>
+      <ZoomStartTime time="677493600fs"></ZoomStartTime>
+      <ZoomEndTime time="755019287fs"></ZoomEndTime>
       <Cursor1Time time="1470000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="151"></NameColumnWidth>
-      <ValueColumnWidth column_width="126"></ValueColumnWidth>
+      <ValueColumnWidth column_width="118"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="21" />
+   <WVObjectSize size="23" />
    <wvobject fp_name="/test_System/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -147,5 +147,13 @@
          <obj_property name="ElementShortName">[7][15:0]</obj_property>
          <obj_property name="ObjectShortName">[7][15:0]</obj_property>
       </wvobject>
+   </wvobject>
+   <wvobject fp_name="/test_System/cpu0/dp_0/ALU_inst/zero_flag" type="logic">
+      <obj_property name="ElementShortName">zero_flag</obj_property>
+      <obj_property name="ObjectShortName">zero_flag</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_System/cpu0/dp_0/ALU_inst/negative_flag" type="logic">
+      <obj_property name="ElementShortName">negative_flag</obj_property>
+      <obj_property name="ObjectShortName">negative_flag</obj_property>
    </wvobject>
 </wave_config>

@@ -126,7 +126,7 @@ architecture data_path_arch of datapath is
         -- Write index mux       
         wr_index_d <=   instr_decoded_d.r_dest when (instr_decoded_d.opcode = LOAD or instr_decoded_d.opcode = MOV) else
                         instr_decoded_d.ra when decode_ctl_d.reg_dst = '0' else
-                        "111" when decode_ctl_d.reg_dst = '1';
+                        "111";
       
         -- register index mux                    
         rd_index1_d <= instr_decoded_d.r_src when (instr_decoded_d.opcode = LOAD or instr_decoded_d.opcode = MOV) else
@@ -147,7 +147,7 @@ architecture data_path_arch of datapath is
                                        
         out_port <= rd_data1_mem when memory_ctl_mem.op_code_mem = OUT_OP else -- Ra to outport 
                     out_port_wb when (memory_ctl_mem.op_code_mem = STORE) and (rd_data1_mem = X"fff2") else -- Memory mapped output
-                    X"0000" when sys_rst = '1';
+                    X"0000";
          
         alu_shift_d <= instr_decoded_d.shift when (instr_decoded_d.opcode = SHL_OP or instr_decoded_d.opcode = SHR_OP) else
                        "0000";
@@ -346,8 +346,8 @@ architecture data_path_arch of datapath is
                 pc_current      => pc_current_ex,--in word_t;  -- Current PC value
                 reg_data        => rd_data1_ex,--in word_t;  -- Data from register (for BR instructions)
                 displacement    => extended_disp_ex,
-                alu_n           => alu_n_ex,--in std_logic;  -- Negative flag from ALU
-                alu_z           => alu_z_ex,--in std_logic;  -- Zero flag from ALU        
+                alu_n           => alu_n_mem,--in std_logic;  -- Negative flag from ALU
+                alu_z           => alu_z_mem,--in std_logic;  -- Zero flag from ALU        
                 -- Outputs
                 branch_taken    => pc_src_ex,--out std_logic;  -- Branch taken signal
                 branch_target   => pc_branch_addr_ex--out word_t  -- Calculated branch target address            
@@ -361,6 +361,8 @@ architecture data_path_arch of datapath is
             wr_pc => pc_current_ex,
             -- alu
             wr_alu_result => alu_result_ex,
+            wr_alu_z => alu_z_ex,
+            wr_alu_n => alu_n_ex,
             -- register file
             wr_reg_data1 => rd_data1_ex,
             wr_reg_data2 => rd_data2_ex,
@@ -375,6 +377,8 @@ architecture data_path_arch of datapath is
             rd_pc => pc_current_mem,
             -- alu
             rd_alu_result => alu_result_mem,
+            rd_alu_z => alu_z_mem,
+            rd_alu_n => alu_n_mem,
             -- register file
             rd_reg_data1 => rd_data1_mem, -- to alu in1
             rd_reg_data2 => rd_data2_mem, -- to alu in2
