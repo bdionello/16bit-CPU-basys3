@@ -1,7 +1,0 @@
-Vivado Simulator 2017.4
-Copyright 1986-1999, 2001-2016 Xilinx, Inc. All Rights Reserved.
-Running: C:/Xilinx/Vivado/2017.4/bin/unwrapped/win64.o/xelab.exe -wto c67d6245d07e4cd8bd45dbed5b49fecd --incr --debug typical --relax --mt 2 -L xil_defaultlib -L secureip -L xpm --snapshot test_System_behav xil_defaultlib.test_System -log elaborate.log 
-Using 2 slave threads.
-Starting static elaboration
-ERROR: [VRFC 10-664] expression has 16 elements ; expected 10 [C:/Users/Brett/source/repos/ECE449/sub_modules/testbench/systemTB_TestB2.vhd:49]
-ERROR: [XSIM 43-3321] Static elaboration of top level VHDL design unit test_system in library work failed.

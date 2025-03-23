@@ -12,7 +12,8 @@ architecture behavioural of test_System is
     signal clk : std_logic;
     signal reset_execute : std_logic;
     signal reset_load : std_logic;
-    signal input_data : std_logic_vector (15 downto 0);
+    signal input_data : std_logic_vector (15 downto 6);
+    signal dip_switches : std_logic_vector (15 downto 0);
     signal output_data : std_logic_vector (15 downto 0);
 begin 
     cpu0 : ENTITY work.cpu_top PORT MAP(
@@ -20,8 +21,8 @@ begin
     rst_ex => reset_execute, 
     rst_ld => reset_load, 
     in_port => input_data,
+    dip_switches => input_data,
     out_port => output_data,
-    debug_console => debug_console_c,
     board_clock   => clk
     );
     -- system test clock
@@ -72,8 +73,7 @@ begin
         wait until falling_edge(clk); 
         wait until falling_edge(clk); 
         wait until falling_edge(clk); 
-        wait until falling_edge(clk);
-         
+        wait until falling_edge(clk);         
         wait on output_data;
         wait until falling_edge(clk);        
         assert false report "Test: End - Force stop" severity failure;       

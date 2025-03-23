@@ -2,8 +2,8 @@
 # Vivado v2017.4 (64-bit)
 # SW Build 2086221 on Fri Dec 15 20:55:39 MST 2017
 # IP Build 2085800 on Fri Dec 15 22:25:07 MST 2017
-# Start of session at: Sat Mar 22 18:32:05 2025
-# Process ID: 31308
+# Start of session at: Sun Mar 23 14:33:29 2025
+# Process ID: 19388
 # Current directory: C:/Users/Brett/source/repos/ECE449/project_cpu/project_cpu.runs/synth_1
 # Command line: vivado.exe -log cpu_top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source cpu_top.tcl
 # Log file: C:/Users/Brett/source/repos/ECE449/project_cpu/project_cpu.runs/synth_1/cpu_top.vds
@@ -15,12 +15,12 @@ Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 34288 
+INFO: Helper process launched with PID 27772 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 391.184 ; gain = 99.883
+Starting RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 391.363 ; gain = 100.133
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-638] synthesizing module 'cpu_top' [C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_top.vhd:34]
-INFO: [Synth 8-638] synthesizing module 'datapath' [C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd:30]
+INFO: [Synth 8-638] synthesizing module 'cpu_top' [C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_top.vhd:35]
+INFO: [Synth 8-638] synthesizing module 'datapath' [C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd:31]
 INFO: [Synth 8-638] synthesizing module 'mem_manager' [C:/Users/Brett/source/repos/ECE449/sub_modules/memory/mem_manager.vhd:34]
 INFO: [Synth 8-638] synthesizing module 'rom' [C:/Users/Brett/source/repos/ECE449/sub_modules/memory/rom.vhd:22]
 	Parameter MEMORY_SIZE bound to: 8192 - type: integer 
@@ -127,7 +127,7 @@ INFO: [Synth 8-638] synthesizing module 'ram' [C:/Users/Brett/source/repos/ECE44
 	Parameter MEMORY_SIZE bound to: 8192 - type: integer 
 	Parameter CLOCKING_MODE bound to: common_clock - type: string 
 	Parameter MEMORY_INIT_FILE bound to: none - type: string 
-	Parameter MEMORY_INIT_PARAM bound to: 0 - type: string 
+	Parameter MEMORY_INIT_PARAM bound to: (null) - type: string 
 	Parameter USE_MEM_INIT bound to: 0 - type: integer 
 	Parameter MESSAGE_CONTROL bound to: 0 - type: integer 
 	Parameter USE_EMBEDDED_CONSTRAINT bound to: 0 - type: integer 
@@ -147,7 +147,7 @@ INFO: [Synth 8-638] synthesizing module 'xpm_memory_dpdistram' [C:/Xilinx/Vivado
 	Parameter MEMORY_SIZE bound to: 8192 - type: integer 
 	Parameter CLOCKING_MODE bound to: common_clock - type: string 
 	Parameter MEMORY_INIT_FILE bound to: none - type: string 
-	Parameter MEMORY_INIT_PARAM bound to: 0 - type: string 
+	Parameter MEMORY_INIT_PARAM bound to: (null) - type: string 
 	Parameter USE_MEM_INIT bound to: 0 - type: integer 
 	Parameter MESSAGE_CONTROL bound to: 0 - type: integer 
 	Parameter USE_EMBEDDED_CONSTRAINT bound to: 0 - type: integer 
@@ -171,7 +171,7 @@ INFO: [Synth 8-638] synthesizing module 'xpm_memory_base__parameterized0' [C:/Xi
 	Parameter CLOCKING_MODE bound to: 0 - type: integer 
 	Parameter ECC_MODE bound to: 0 - type: integer 
 	Parameter MEMORY_INIT_FILE bound to: none - type: string 
-	Parameter MEMORY_INIT_PARAM bound to: 0 - type: string 
+	Parameter MEMORY_INIT_PARAM bound to: (null) - type: string 
 	Parameter USE_MEM_INIT bound to: 0 - type: integer 
 	Parameter MEMORY_OPTIMIZATION bound to: true - type: string 
 	Parameter WAKEUP_TIME bound to: 0 - type: integer 
@@ -263,13 +263,11 @@ INFO: [Synth 8-256] done synthesizing module 'execute_register' (18#1) [C:/Users
 INFO: [Synth 8-638] synthesizing module 'memory_register' [C:/Users/Brett/source/repos/ECE449/sub_modules/memory/memory_register.vhd:49]
 INFO: [Synth 8-256] done synthesizing module 'memory_register' (19#1) [C:/Users/Brett/source/repos/ECE449/sub_modules/memory/memory_register.vhd:49]
 INFO: [Synth 8-5772] Detected attribute (* rw_addr_collision = "yes" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
-INFO: [Synth 8-256] done synthesizing module 'datapath' (20#1) [C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd:30]
+INFO: [Synth 8-256] done synthesizing module 'datapath' (20#1) [C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd:31]
 INFO: [Synth 8-638] synthesizing module 'controller' [C:/Users/Brett/source/repos/ECE449/sub_modules/controller.vhd:24]
 INFO: [Synth 8-256] done synthesizing module 'controller' (21#1) [C:/Users/Brett/source/repos/ECE449/sub_modules/controller.vhd:24]
-INFO: [Synth 8-3491] module 'led_display' declared at 'C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/led_display.vhd:5' bound to instance 'led_display_memory' of component 'led_display' [C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_top.vhd:206]
 INFO: [Synth 8-638] synthesizing module 'led_display' [C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/led_display.vhd:19]
 INFO: [Synth 8-256] done synthesizing module 'led_display' (22#1) [C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/led_display.vhd:19]
-INFO: [Synth 8-3491] module 'console' declared at 'C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/console.vhd:5' bound to instance 'console_display' of component 'console' [C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_top.vhd:217]
 INFO: [Synth 8-638] synthesizing module 'console' [C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/console.vhd:131]
 	Parameter HSYNC_POLARITY bound to: 1'b0 
 	Parameter VSYNC_POLARITY bound to: 1'b0 
@@ -423,7 +421,7 @@ WARNING: [Synth 8-3936] Found unconnected internal register 'Hdot_delayed_reg' a
 WARNING: [Synth 8-3936] Found unconnected internal register 'Vline_delayed_reg' and it is trimmed from '10' to '7' bits. [C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/console.vhd:1417]
 INFO: [Synth 8-256] done synthesizing module 'console' (27#1) [C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/console.vhd:131]
 INFO: [Synth 8-5772] Detected attribute (* rw_addr_collision = "yes" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
-INFO: [Synth 8-256] done synthesizing module 'cpu_top' (28#1) [C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_top.vhd:34]
+INFO: [Synth 8-256] done synthesizing module 'cpu_top' (28#1) [C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_top.vhd:35]
 WARNING: [Synth 8-3331] design xpm_memory_base__parameterized0 has unconnected port sleep
 WARNING: [Synth 8-3331] design xpm_memory_base__parameterized0 has unconnected port rsta
 WARNING: [Synth 8-3331] design xpm_memory_base__parameterized0 has unconnected port regcea
@@ -509,7 +507,7 @@ WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[0]
 WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port injectsbiterrb
 WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port injectdbiterrb
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 457.383 ; gain = 166.082
+Finished RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 457.195 ; gain = 165.965
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -519,7 +517,7 @@ Report Check Netlist:
 |1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
 +------+------------------+-------+---------+-------+------------------+
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 457.383 ; gain = 166.082
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 457.195 ; gain = 165.965
 ---------------------------------------------------------------------------------
 INFO: [Device 21-403] Loading part xc7a35tcpg236-1
 INFO: [Project 1-570] Preparing netlist for logic optimization
@@ -540,23 +538,23 @@ Completed Processing XDC Constraints
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 803.500 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 802.871 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 803.594 ; gain = 512.293
+Finished Constraint Validation : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 802.945 ; gain = 511.715
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35tcpg236-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 803.594 ; gain = 512.293
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 802.945 ; gain = 511.715
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 Applied set_property DONT_TOUCH = true for dp_0/mem/ram_0/xpm_memory_dpdistram_inst. (constraint file  auto generated constraint, line ).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 803.594 ; gain = 512.293
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 802.945 ; gain = 511.715
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-5546] ROM "ram_b_enable_i" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "rom_enable_i" won't be mapped to RAM because it is too sparse
@@ -608,7 +606,7 @@ WARNING: [Synth 8-6014] Unused sequential element display_address_reg_rep was re
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'controller'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 803.594 ; gain = 512.293
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 802.945 ; gain = 511.715
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -942,7 +940,7 @@ WARNING: [Synth 8-3332] Sequential element (dp_0/execute_r/rd_inport_data_reg[5]
 WARNING: [Synth 8-3332] Sequential element (dp_0/mem_r/rd_inport_data_reg[5]) is unused and will be removed from module cpu_top.
 WARNING: [Synth 8-3332] Sequential element (dp_0/decode_r/rd_extended_disp_reg[0]) is unused and will be removed from module cpu_top.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:30 ; elapsed = 00:00:32 . Memory (MB): peak = 803.594 ; gain = 512.293
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:31 ; elapsed = 00:00:32 . Memory (MB): peak = 802.945 ; gain = 511.715
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -953,6 +951,7 @@ ROM:
 |Module Name     | RTL Object         | Depth x Width | Implemented As | 
 +----------------+--------------------+---------------+----------------+
 |xpm_memory_base | p_0_out            | 64x16         | LUT            | 
+|console         | instruction_set[0] | 256x6         | LUT            | 
 |console         | instruction_set[0] | 256x6         | LUT            | 
 |console         | instruction_set[0] | 256x6         | LUT            | 
 |console         | instruction_set[0] | 256x6         | LUT            | 
@@ -1000,13 +999,13 @@ Report RTL Partitions:
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:43 ; elapsed = 00:00:44 . Memory (MB): peak = 869.855 ; gain = 578.555
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:44 ; elapsed = 00:00:45 . Memory (MB): peak = 886.273 ; gain = 595.043
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:46 ; elapsed = 00:00:47 . Memory (MB): peak = 950.562 ; gain = 659.262
+Finished Timing Optimization : Time (s): cpu = 00:00:44 ; elapsed = 00:00:45 . Memory (MB): peak = 907.113 ; gain = 615.883
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -1032,7 +1031,7 @@ Report RTL Partitions:
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:46 ; elapsed = 00:00:48 . Memory (MB): peak = 961.141 ; gain = 669.840
+Finished Technology Mapping : Time (s): cpu = 00:00:45 ; elapsed = 00:00:46 . Memory (MB): peak = 939.301 ; gain = 648.070
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1056,7 +1055,7 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:47 ; elapsed = 00:00:49 . Memory (MB): peak = 961.141 ; gain = 669.840
+Finished IO Insertion : Time (s): cpu = 00:00:46 ; elapsed = 00:00:47 . Memory (MB): peak = 939.301 ; gain = 648.070
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -1069,7 +1068,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:47 ; elapsed = 00:00:49 . Memory (MB): peak = 961.141 ; gain = 669.840
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:46 ; elapsed = 00:00:47 . Memory (MB): peak = 939.301 ; gain = 648.070
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1081,25 +1080,25 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:48 ; elapsed = 00:00:49 . Memory (MB): peak = 961.141 ; gain = 669.840
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:46 ; elapsed = 00:00:48 . Memory (MB): peak = 939.301 ; gain = 648.070
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:48 ; elapsed = 00:00:49 . Memory (MB): peak = 961.141 ; gain = 669.840
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:46 ; elapsed = 00:00:48 . Memory (MB): peak = 939.301 ; gain = 648.070
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:48 ; elapsed = 00:00:49 . Memory (MB): peak = 961.141 ; gain = 669.840
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:46 ; elapsed = 00:00:48 . Memory (MB): peak = 939.301 ; gain = 648.070
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:48 ; elapsed = 00:00:49 . Memory (MB): peak = 961.141 ; gain = 669.840
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:46 ; elapsed = 00:00:48 . Memory (MB): peak = 939.301 ; gain = 648.070
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -1119,19 +1118,19 @@ Report Cell Usage:
 |2     |CARRY4    |    42|
 |3     |DSP48E1   |     1|
 |4     |LUT1      |     8|
-|5     |LUT2      |   110|
-|6     |LUT3      |   100|
-|7     |LUT4      |   165|
-|8     |LUT5      |   239|
-|9     |LUT6      |   510|
-|10    |MUXF7     |    71|
+|5     |LUT2      |   101|
+|6     |LUT3      |   108|
+|7     |LUT4      |   151|
+|8     |LUT5      |   251|
+|9     |LUT6      |   528|
+|10    |MUXF7     |    72|
 |11    |MUXF8     |     4|
 |12    |RAM128X1D |    64|
 |13    |FDCE      |   140|
 |14    |FDPE      |     8|
 |15    |FDRE      |   469|
 |16    |FDSE      |     6|
-|17    |IBUF      |    15|
+|17    |IBUF      |    30|
 |18    |OBUF      |    42|
 +------+----------+------+
 
@@ -1139,38 +1138,38 @@ Report Instance Areas:
 +------+----------------------------------+--------------------------------+------+
 |      |Instance                          |Module                          |Cells |
 +------+----------------------------------+--------------------------------+------+
-|1     |top                               |                                |  1997|
+|1     |top                               |                                |  2028|
 |2     |  console_display                 |console                         |   557|
 |3     |    timing                        |video_timing                    |   183|
-|4     |  ctrl_0                          |controller                      |    58|
-|5     |  dp_0                            |datapath                        |  1256|
-|6     |    ALU_inst                      |ALU                             |     6|
+|4     |  ctrl_0                          |controller                      |    57|
+|5     |  dp_0                            |datapath                        |  1273|
+|6     |    ALU_inst                      |ALU                             |     5|
 |7     |    Register_File_inst            |register_file                   |   224|
 |8     |    adder_pc                      |adder                           |     4|
-|9     |    branch_unit                   |branch_unit                     |    19|
-|10    |    decode_r                      |decode_register                 |   324|
-|11    |    execute_r                     |execute_register                |   152|
-|12    |    fetch_r                       |fetch_register                  |   116|
-|13    |    hazard_detect                 |hazard_detect_unit              |    11|
+|9     |    branch_unit                   |branch_unit                     |    17|
+|10    |    decode_r                      |decode_register                 |   332|
+|11    |    execute_r                     |execute_register                |   151|
+|12    |    fetch_r                       |fetch_register                  |   128|
+|13    |    hazard_detect                 |hazard_detect_unit              |    12|
 |14    |    mem                           |mem_manager                     |   207|
-|15    |      ram_0                       |ram__5                          |   140|
+|15    |      ram_0                       |ram__5                          |   137|
 |16    |        xpm_memory_dpdistram_inst |xpm_memory_dpdistram            |   100|
 |17    |          xpm_memory_base_inst    |xpm_memory_base__parameterized0 |   100|
-|18    |      rom_0                       |rom                             |    67|
-|19    |        xpm_memory_sprom_inst     |xpm_memory_sprom                |    67|
+|18    |      rom_0                       |rom                             |    70|
+|19    |        xpm_memory_sprom_inst     |xpm_memory_sprom                |    70|
 |20    |          xpm_memory_base_inst    |xpm_memory_base                 |    13|
 |21    |    mem_r                         |memory_register                 |   138|
 |22    |    pc                            |program_counter                 |    51|
 |23    |  led_display_memory              |led_display                     |    66|
 +------+----------------------------------+--------------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:48 ; elapsed = 00:00:49 . Memory (MB): peak = 961.141 ; gain = 669.840
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:46 ; elapsed = 00:00:48 . Memory (MB): peak = 939.301 ; gain = 648.070
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 100 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:35 ; elapsed = 00:00:43 . Memory (MB): peak = 961.141 ; gain = 323.629
-Synthesis Optimization Complete : Time (s): cpu = 00:00:48 ; elapsed = 00:00:50 . Memory (MB): peak = 961.141 ; gain = 669.840
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:33 ; elapsed = 00:00:41 . Memory (MB): peak = 939.301 ; gain = 302.320
+Synthesis Optimization Complete : Time (s): cpu = 00:00:46 ; elapsed = 00:00:48 . Memory (MB): peak = 939.301 ; gain = 648.070
 INFO: [Project 1-571] Translating synthesized netlist
-INFO: [Netlist 29-17] Analyzing 197 Unisim elements for replacement
+INFO: [Netlist 29-17] Analyzing 213 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
@@ -1179,10 +1178,10 @@ INFO: [Project 1-111] Unisim Transformation Summary:
   RAM128X1D => RAM128X1D (RAMD64E, RAMD64E, MUXF7, MUXF7, RAMD64E, RAMD64E): 64 instances
 
 INFO: [Common 17-83] Releasing license: Synthesis
-209 Infos, 125 Warnings, 0 Critical Warnings and 0 Errors encountered.
+207 Infos, 125 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:51 ; elapsed = 00:00:54 . Memory (MB): peak = 961.141 ; gain = 682.848
+synth_design: Time (s): cpu = 00:00:49 ; elapsed = 00:00:52 . Memory (MB): peak = 939.301 ; gain = 660.711
 INFO: [Common 17-1381] The checkpoint 'C:/Users/Brett/source/repos/ECE449/project_cpu/project_cpu.runs/synth_1/cpu_top.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file cpu_top_utilization_synth.rpt -pb cpu_top_utilization_synth.pb
-report_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.029 . Memory (MB): peak = 961.141 ; gain = 0.000
-INFO: [Common 17-206] Exiting Vivado at Sat Mar 22 18:33:05 2025...
+report_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.031 . Memory (MB): peak = 939.301 ; gain = 0.000
+INFO: [Common 17-206] Exiting Vivado at Sun Mar 23 14:34:27 2025...

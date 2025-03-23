@@ -9,11 +9,12 @@ entity cpu_top is port (
     rst_ex        : in std_logic; -- btnr button on baysys3 "right for run"
     rst_ld        : in std_logic; -- btnl button on baysys3 "left for load"
     in_port       : in STD_LOGIC_VECTOR(15 DOWNTO 6); -- only 15 to 6 is used
-    out_port      : out word_t;
-    stm_ack       : out std_logic;    
+    dip_switches  : in word_t; 
+    out_port      : out word_t;    
+    stm_ack       : out std_logic;  
+     
     
     -- Debug display console ports to constraints
-    debug_console : in STD_LOGIC;
     board_clock   : in std_logic;
     
     -- Debug display 7-segment LED ports to constraints
@@ -34,6 +35,7 @@ end entity cpu_top ;
 architecture rtl of cpu_top is
     signal sys_rst_i       : std_logic;
     signal ctl_wr_enable_i : std_logic;
+    signal debug_console_i : std_logic;
     signal decode_ctl_i    : decode_type;   
     signal ex_stage_ctl_i  : execute_type;
     signal mem_stage_ctl_i : memory_type;   
@@ -43,125 +45,14 @@ architecture rtl of cpu_top is
     signal led_7seg_data_i : word_t;
     signal out_port_i      : word_t;
     signal in_port_i       : word_t;
-    
+    signal dip_switches_i  : word_t;    
     -- Console Display signals
     signal display_fetch_i  :  display_fetch_type;    
-    
-    component led_display is
-        Port (    
-            addr_write : in  STD_LOGIC_VECTOR (15 downto 0);
-            clk : in  STD_LOGIC;
-            data_in : in  STD_LOGIC_VECTOR (15 downto 0);
-            en_write : in  STD_LOGIC;    
-            board_clock : in STD_LOGIC;
-            led_segments : out STD_LOGIC_VECTOR( 6 downto 0 );
-            led_digits : out STD_LOGIC_VECTOR( 3 downto 0 )
-        );
-    end component;
-    component console is
-          port (      
-      --
-      -- Stage 1 Fetch
-      --
-              s1_pc : in STD_LOGIC_VECTOR ( 15 downto 0 );
-              s1_inst : in STD_LOGIC_VECTOR ( 15 downto 0 );     
-      --
-      -- Stage 2 Decode
-      --
-              s2_pc : in STD_LOGIC_VECTOR ( 15 downto 0 );
-              s2_inst : in STD_LOGIC_VECTOR ( 15 downto 0 );      
-              s2_reg_a : in STD_LOGIC_VECTOR( 2 downto 0 );
-              s2_reg_b : in STD_LOGIC_VECTOR( 2 downto 0 );
-              s2_reg_c : in STD_LOGIC_VECTOR( 2 downto 0 );      
-              s2_reg_a_data : in STD_LOGIC_VECTOR( 15 downto 0 );
-              s2_reg_b_data : in STD_LOGIC_VECTOR( 15 downto 0 );
-              s2_reg_c_data : in STD_LOGIC_VECTOR( 15 downto 0 );      
-              s2_immediate : in STD_LOGIC_VECTOR( 15 downto 0 );
-      --
-      -- Stage 3 Execute
-      --
-              s3_pc : in STD_LOGIC_VECTOR ( 15 downto 0 );
-              s3_inst : in STD_LOGIC_VECTOR ( 15 downto 0 );      
-              s3_reg_a : in STD_LOGIC_VECTOR( 2 downto 0 );
-              s3_reg_b : in STD_LOGIC_VECTOR( 2 downto 0 );
-              s3_reg_c : in STD_LOGIC_VECTOR( 2 downto 0 );      
-              s3_reg_a_data : in STD_LOGIC_VECTOR( 15 downto 0 );
-              s3_reg_b_data : in STD_LOGIC_VECTOR( 15 downto 0 );
-              s3_reg_c_data : in STD_LOGIC_VECTOR( 15 downto 0 );      
-              s3_immediate : in STD_LOGIC_VECTOR( 15 downto 0 );   
-      --
-      -- Branch and memory operation
-      --
-              s3_r_wb : in STD_LOGIC;
-              s3_r_wb_data : in STD_LOGIC_VECTOR( 15 downto 0 );      
-              s3_br_wb : in STD_LOGIC;
-              s3_br_wb_address : in STD_LOGIC_VECTOR( 15 downto 0 );      
-              s3_mr_wr : in STD_LOGIC;
-              s3_mr_wr_address : in STD_LOGIC_VECTOR( 15 downto 0 );
-              s3_mr_wr_data : in STD_LOGIC_VECTOR( 15 downto 0 );      
-              s3_mr_rd : in STD_LOGIC;
-              s3_mr_rd_address : in STD_LOGIC_VECTOR( 15 downto 0 );     
-      --
-      -- Stage 4 Memory
-      --
-              s4_pc : in STD_LOGIC_VECTOR( 15 downto 0 );
-              s4_inst : in STD_LOGIC_VECTOR( 15 downto 0 );      
-              s4_reg_a : in STD_LOGIC_VECTOR( 2 downto 0 );      
-              s4_r_wb : in STD_LOGIC;
-              s4_r_wb_data : in STD_LOGIC_VECTOR( 15 downto 0 );      
-      --
-      -- CPU registers
-      --      
-              register_0 : in STD_LOGIC_VECTOR ( 15 downto 0 );
-              register_1 : in STD_LOGIC_VECTOR ( 15 downto 0 );
-              register_2 : in STD_LOGIC_VECTOR ( 15 downto 0 );
-              register_3 : in STD_LOGIC_VECTOR ( 15 downto 0 );
-              register_4 : in STD_LOGIC_VECTOR ( 15 downto 0 );
-              register_5 : in STD_LOGIC_VECTOR ( 15 downto 0 );
-              register_6 : in STD_LOGIC_VECTOR ( 15 downto 0 );
-              register_7 : in STD_LOGIC_VECTOR ( 15 downto 0 );      
-      --
-      -- CPU registers overflow flags
-      --
-              register_0_of : in STD_LOGIC;
-              register_1_of : in STD_LOGIC;
-              register_2_of : in STD_LOGIC;
-              register_3_of : in STD_LOGIC;
-              register_4_of : in STD_LOGIC;
-              register_5_of : in STD_LOGIC;
-              register_6_of : in STD_LOGIC;
-              register_7_of : in STD_LOGIC;      
-      --
-      -- CPU Flags
-      --
-              zero_flag : in STD_LOGIC;
-              negative_flag : in STD_LOGIC;
-              overflow_flag : in STD_LOGIC;      
-      --
-      -- Debug screen enable
-      --
-              debug : in STD_LOGIC;      
-      --
-      -- Text console display memory access signals ( clk is the processor clock )
-      --
-              addr_write : in  STD_LOGIC_VECTOR (15 downto 0);
-              clk : in  STD_LOGIC;
-              data_in : in  STD_LOGIC_VECTOR (15 downto 0);
-              en_write : in  STD_LOGIC;     
-      --
-      -- Video related signals
-      --
-              board_clock : in STD_LOGIC;
-              v_sync_signal : out STD_LOGIC;
-              h_sync_signal : out STD_LOGIC;
-              vga_red : out STD_LOGIC_VECTOR( 3 downto 0 );
-              vga_green : out STD_LOGIC_VECTOR( 3 downto 0 );
-              vga_blue : out STD_LOGIC_VECTOR( 3 downto 0 )      
-          );
-      end component; 
-        
+          
 begin
+    debug_console_i <= dip_switches_i(15);
     stm_ack <= out_port_i(0);
+    dip_switches_i <= dip_switches;
     out_port <= out_port_i;
     in_port_i <= in_port(15 downto 6) & "000000";
     -------------- CPU System --------------------------
@@ -171,6 +62,7 @@ begin
             sys_clk => stm_sys_clk,
             sys_rst => sys_rst_i,
             in_port => in_port_i,
+            dip_switches => dip_switches_i,
             -- control inputs
             boot_mode => boot_mode_i,
             decode_ctl => decode_ctl_i,
@@ -203,7 +95,7 @@ begin
         );
         
    ------------ Debug and display --------------    
-   led_display_memory : led_display
+   led_display_memory : entity work.led_display
        port map (       
                addr_write => x"FFF2",
                clk => stm_sys_clk,
@@ -214,7 +106,7 @@ begin
                led_digits => led_digits
            );   
        
-   console_display : console
+   console_display : entity work.console
         port map (
         --
         -- Stage 1 Fetch
@@ -290,11 +182,11 @@ begin
         --
         -- Debug screen enable
         --
-            debug => debug_console,        
+            debug => debug_console_i,        
         --
         -- Text console display memory access signals ( clk is the processor clock )
         --        
-            clk => '0',
+            clk => stm_sys_clk,
             addr_write => x"0000",
             data_in => x"0000",
             en_write => '0',        

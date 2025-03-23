@@ -26,7 +26,7 @@ entity mem_manager is
         inst_out         : out STD_LOGIC_VECTOR (15 downto 0);
         -- read_inst_enable : in STD_LOGIC := '0'; -- used for debugging may not be needed for read only memory
         -- Memory Mapped ports
-        in_port          : in STD_LOGIC_VECTOR (15 downto 0);
+        dip_switches     : in STD_LOGIC_VECTOR (15 downto 0);
         led_7seg_out     : out STD_LOGIC_VECTOR (15 downto 0)
         );
 end mem_manager;
@@ -34,11 +34,11 @@ end mem_manager;
 architecture mem_manager_arch of mem_manager is
     signal last_ram_data_read_i: std_logic_vector(15 downto 0);
     ----------- Control Signals
-    signal reset_i : STD_LOGIC;
-    signal write_enable_i : STD_LOGIC_VECTOR (0 downto 0);
-    signal rom_enable_i : STD_LOGIC;    
-    signal ram_a_enable_i : STD_LOGIC;      
-    signal ram_b_enable_i : STD_LOGIC;       
+    signal reset_i : STD_LOGIC := '0';
+    signal write_enable_i : STD_LOGIC_VECTOR (0 downto 0) := "0";
+    signal rom_enable_i : STD_LOGIC := '0';    
+    signal ram_a_enable_i : STD_LOGIC := '0';      
+    signal ram_b_enable_i : STD_LOGIC := '0';       
     ----------- Data Signals 
     signal data_addr_i : STD_LOGIC_VECTOR (15 downto 0);
     signal inst_addr_i : STD_LOGIC_VECTOR (15 downto 0);
@@ -70,7 +70,7 @@ begin
                 rom_data_out_i;    
     
     -- Connect memory to physical input port (read from Dip switch)               
-    data_out <= in_port when (data_addr = X"FFF0") AND (read_data_enable = '1') AND (clock = '1') else
+    data_out <= dip_switches when (data_addr = X"FFF0") AND (read_data_enable = '1') AND (clock = '1') else
                 ram_a_data_out_i when (read_data_enable = '1') AND (clock = '1') else
                 X"0000";                             
     

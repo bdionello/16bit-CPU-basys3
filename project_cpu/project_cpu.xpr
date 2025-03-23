@@ -351,8 +351,15 @@
     </FileSet>
     <FileSet Name="system_sim0" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/system_sim0">
       <Filter Type="Srcs"/>
+      <File Path="$PPRDIR/../sub_modules/testbench/systemTB_Boot.vhd">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
       <File Path="$PPRDIR/../sub_modules/testbench/systemTB_TestB2.vhd">
         <FileInfo>
+          <Attr Name="UserDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
@@ -365,13 +372,6 @@
         </FileInfo>
       </File>
       <File Path="$PPRDIR/../sub_modules/testbench/systemTB_TestA.vhd">
-        <FileInfo>
-          <Attr Name="UserDisabled" Val="1"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PPRDIR/../sub_modules/testbench/systemTB_Boot.vhd">
         <FileInfo>
           <Attr Name="UserDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>

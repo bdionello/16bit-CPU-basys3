@@ -10,7 +10,8 @@ entity datapath is
         -- system ports
         sys_clk        : in std_logic;
         sys_rst        : in std_logic;
-        in_port        : in word_t;        
+        in_port        : in word_t; 
+        dip_switches   : in word_t;        
         -- controller signal ports
         boot_mode      : in boot_mode_type;
         decode_ctl     : in decode_type;
@@ -191,7 +192,7 @@ architecture data_path_arch of datapath is
                 inst_addr => inst_addr_f,
                 inst_out => instruction_f, 
                 -- Memory Mapped ports
-                in_port => in_port,
+                dip_switches => dip_switches,
                 led_7seg_out => led_7seg_data --: out STD_LOGIC_VECTOR (15 downto 0) := X"0000"            
             ); 
                     
