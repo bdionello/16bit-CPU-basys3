@@ -21,8 +21,8 @@ vhdl xil_defaultlib  \
 "../../../../../sub_modules/execute/execute_register.vhd" \
 "../../../../../sub_modules/memory/memory_register.vhd" \
 "../../../../../sub_modules/datapath.vhd" \
-"../../../../../sub_modules/debug_display/led_display.vhd" \
 "../../../../../sub_modules/cpu_top.vhd" \
+"../../../../../sub_modules/debug_display/led_display.vhd" \
 "../../../../../sub_modules/debug_display/nibble_to_ascii.vhd" \
 "../../../../../sub_modules/debug_display/video_timing.vhd" \
 "../../../../../sub_modules/debug_display/word_to_ascii.vhd" \

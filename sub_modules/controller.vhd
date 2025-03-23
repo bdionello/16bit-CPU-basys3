@@ -6,26 +6,26 @@ use work.cpu_types.all;
 entity controller is
     port (
     -- inputs    
-    clk : in std_logic := '0';
-    reset_ex: in std_logic := '0';
-    reset_ld: in std_logic := '0';
-    wr_enable: in std_logic := '0';
-    op_code : in op_code_t := (others => '0');
+    clk : in std_logic;
+    reset_ex: in std_logic;
+    reset_ld: in std_logic;
+    wr_enable: in std_logic;
+    op_code : in op_code_t;
     -- outputs
-    sys_rst : out std_logic := '0';
-    boot_mode : out boot_mode_type := BOOT_LOAD;
-    decode_ctl : out decode_type := decode_type_init_c;
-    execute_ctl : out execute_type := execute_type_init_c; 
-    memory_ctl : out memory_type := memory_type_init_c;   
-    write_back_ctl : out write_back_type := write_back_type_init_c 
+    sys_rst : out std_logic;
+    boot_mode : out boot_mode_type;
+    decode_ctl : out decode_type;
+    execute_ctl : out execute_type; 
+    memory_ctl : out memory_type;   
+    write_back_ctl : out write_back_type 
     );
     end controller ;
 -- RESET_STATE, BOOT_STATE, NOP_STATE, A1_STATE, A2_STATE, A3_STATE, B1_STATE, B2_STATE, RETURN_STATE, L1_LOAD_IMM_STATE, L2_LOAD_STATE, L2_STORE_STATE, L2_MOV_STATE
 architecture controller_arch of controller is    
     signal state : ctrl_state_type := RESET_STATE;
     signal nextstate : ctrl_state_type := BOOT_STATE;
-    signal op_code_i : op_code_t := (others=>'1');
-    signal state_code : op_code_t := (others=>'1');   
+    signal op_code_i : op_code_t;
+    signal state_code : op_code_t;   
 begin
     op_code_i <= op_code; -- connect port to internal
     -- Update state

@@ -12,7 +12,7 @@ architecture behavioural of test_System is
     signal clk : std_logic;
     signal reset_execute : std_logic;
     signal reset_load : std_logic;
-    signal input_data : std_logic_vector (15 downto 0);
+    signal input_data : std_logic_vector (15 downto 6);
     signal output_data : std_logic_vector (15 downto 0);
 begin 
     cpu0 : ENTITY work.cpu_top PORT MAP(

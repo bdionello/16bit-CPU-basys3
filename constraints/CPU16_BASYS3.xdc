@@ -42,12 +42,12 @@ set_property PACKAGE_PIN W5 [get_ports board_clock]
 #set_property PACKAGE_PIN T1 [get_ports {sw[14]}]					
 	#set_property IOSTANDARD LVCMOS33 [get_ports {sw[14]}]
 set_property PACKAGE_PIN R2 [get_ports debug_console]         
-          set_property IOSTANDARD LVCMOS33 [get_ports debug_console]
+    set_property IOSTANDARD LVCMOS33 [get_ports debug_console]
  
 
 ## LEDs
-#set_property PACKAGE_PIN U16 [get_ports out_port{0}]					
-	#set_property IOSTANDARD LVCMOS33 [get_ports out_port{0}]
+set_property PACKAGE_PIN U16 [get_ports {out_port[0]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {out_port[0]}]
 set_property PACKAGE_PIN E19 [get_ports {out_port[1]}]					
 	set_property IOSTANDARD LVCMOS33 [get_ports {out_port[1]}]
 set_property PACKAGE_PIN U19 [get_ports {out_port[2]}]					
@@ -179,17 +179,16 @@ set_property PACKAGE_PIN C16 [get_ports {in_port[15]}]
  
 
 
-
+create_clock -add -name stm_sys_clk -period 10.00 -waveform {0 5} [get_ports stm_sys_clk]
 
 ##Pmod Header JC
 ##Sch name = JC1
 set_property PACKAGE_PIN K17 [get_ports stm_sys_clk]					
-	set_property IOSTANDARD LVCMOS33 [get_ports stm_sys_clk]
-	create_clock -add -name stm_sys_clk -period 10.00 -waveform {0 5} [get_ports stm_sys_clk]
+        set_property IOSTANDARD LVCMOS33 [get_ports stm_sys_clk]        
 	set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets {stm_sys_clk}]
 ##Sch name = JC2
-set_property PACKAGE_PIN M18 [get_ports {out_port[0]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {out_port[0]}]
+set_property PACKAGE_PIN M18 [get_ports {stm_ack}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {stm_ack}]
 ##Sch name = JC3
 #set_property PACKAGE_PIN N17 [get_ports {JC[2]}]					
 	#set_property IOSTANDARD LVCMOS33 [get_ports {JC[2]}]

@@ -14,12 +14,12 @@ Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 31696 
+INFO: Helper process launched with PID 34288 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 391.156 ; gain = 99.520
+Starting RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 391.184 ; gain = 99.883
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-638] synthesizing module 'cpu_top' [C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_top.vhd:33]
-INFO: [Synth 8-638] synthesizing module 'datapath' [C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd:28]
+INFO: [Synth 8-638] synthesizing module 'cpu_top' [C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_top.vhd:34]
+INFO: [Synth 8-638] synthesizing module 'datapath' [C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd:30]
 INFO: [Synth 8-638] synthesizing module 'mem_manager' [C:/Users/Brett/source/repos/ECE449/sub_modules/memory/mem_manager.vhd:34]
 INFO: [Synth 8-638] synthesizing module 'rom' [C:/Users/Brett/source/repos/ECE449/sub_modules/memory/rom.vhd:22]
 	Parameter MEMORY_SIZE bound to: 8192 - type: integer 
@@ -126,8 +126,8 @@ INFO: [Synth 8-638] synthesizing module 'ram' [C:/Users/Brett/source/repos/ECE44
 	Parameter MEMORY_SIZE bound to: 8192 - type: integer 
 	Parameter CLOCKING_MODE bound to: common_clock - type: string 
 	Parameter MEMORY_INIT_FILE bound to: none - type: string 
-	Parameter MEMORY_INIT_PARAM bound to: (null) - type: string 
-	Parameter USE_MEM_INIT bound to: 1 - type: integer 
+	Parameter MEMORY_INIT_PARAM bound to: 0 - type: string 
+	Parameter USE_MEM_INIT bound to: 0 - type: integer 
 	Parameter MESSAGE_CONTROL bound to: 0 - type: integer 
 	Parameter USE_EMBEDDED_CONSTRAINT bound to: 0 - type: integer 
 	Parameter MEMORY_OPTIMIZATION bound to: true - type: string 
@@ -146,8 +146,8 @@ INFO: [Synth 8-638] synthesizing module 'xpm_memory_dpdistram' [C:/Xilinx/Vivado
 	Parameter MEMORY_SIZE bound to: 8192 - type: integer 
 	Parameter CLOCKING_MODE bound to: common_clock - type: string 
 	Parameter MEMORY_INIT_FILE bound to: none - type: string 
-	Parameter MEMORY_INIT_PARAM bound to: (null) - type: string 
-	Parameter USE_MEM_INIT bound to: 1 - type: integer 
+	Parameter MEMORY_INIT_PARAM bound to: 0 - type: string 
+	Parameter USE_MEM_INIT bound to: 0 - type: integer 
 	Parameter MESSAGE_CONTROL bound to: 0 - type: integer 
 	Parameter USE_EMBEDDED_CONSTRAINT bound to: 0 - type: integer 
 	Parameter MEMORY_OPTIMIZATION bound to: true - type: string 
@@ -170,8 +170,8 @@ INFO: [Synth 8-638] synthesizing module 'xpm_memory_base__parameterized0' [C:/Xi
 	Parameter CLOCKING_MODE bound to: 0 - type: integer 
 	Parameter ECC_MODE bound to: 0 - type: integer 
 	Parameter MEMORY_INIT_FILE bound to: none - type: string 
-	Parameter MEMORY_INIT_PARAM bound to: (null) - type: string 
-	Parameter USE_MEM_INIT bound to: 1 - type: integer 
+	Parameter MEMORY_INIT_PARAM bound to: 0 - type: string 
+	Parameter USE_MEM_INIT bound to: 0 - type: integer 
 	Parameter MEMORY_OPTIMIZATION bound to: true - type: string 
 	Parameter WAKEUP_TIME bound to: 0 - type: integer 
 	Parameter AUTO_SLEEP_TIME bound to: 0 - type: integer 
@@ -223,7 +223,6 @@ INFO: [Synth 8-638] synthesizing module 'xpm_memory_base__parameterized0' [C:/Xi
 	Parameter MAX_NUM_CHAR bound to: 0 - type: integer 
 	Parameter P_MIN_WIDTH_DATA_SHFT bound to: 16 - type: integer 
 	Parameter P_MIN_WIDTH_DATA_LDW bound to: 4 - type: integer 
-INFO: [Synth 8-6059] Synth Info: [XPM_MEMORY 20-2] MEMORY_INIT_FILE (none), MEMORY_INIT_PARAM together specify no memory initialization. Initial memory contents will be all 0's.   [C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:458]
 WARNING: [Synth 8-6060] Synth Warning: [XPM_MEMORY 30-15] MEMORY_TYPE (2) and MEMORY_PRIMITIVE (1) together specify a true dual port distributed RAM, which will be mapped to a dual port RAM structure using port A and B read interfaces but a single port A write interface, leaving the port B write interface unused.   [C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv:495]
 INFO: [Synth 8-5772] Detected attribute (* rw_addr_collision = "yes" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
 INFO: [Synth 8-5772] Detected attribute (* ram_ecc = "no_ecc" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
@@ -254,20 +253,22 @@ INFO: [Synth 8-256] done synthesizing module 'sign_extend' (14#1) [C:/Users/Bret
 INFO: [Synth 8-638] synthesizing module 'decode_register' [C:/Users/Brett/source/repos/ECE449/sub_modules/decode/decode_register.vhd:54]
 INFO: [Synth 8-256] done synthesizing module 'decode_register' (15#1) [C:/Users/Brett/source/repos/ECE449/sub_modules/decode/decode_register.vhd:54]
 INFO: [Synth 8-638] synthesizing module 'ALU' [C:/Users/Brett/source/repos/ECE449/sub_modules/execute/alu.vhd:20]
-INFO: [Synth 8-226] default block is never used [C:/Users/Brett/source/repos/ECE449/sub_modules/execute/alu.vhd:29]
+INFO: [Synth 8-226] default block is never used [C:/Users/Brett/source/repos/ECE449/sub_modules/execute/alu.vhd:30]
 INFO: [Synth 8-256] done synthesizing module 'ALU' (16#1) [C:/Users/Brett/source/repos/ECE449/sub_modules/execute/alu.vhd:20]
 INFO: [Synth 8-638] synthesizing module 'branch_unit' [C:/Users/Brett/source/repos/ECE449/sub_modules/memory/branch_unit.vhd:22]
 INFO: [Synth 8-256] done synthesizing module 'branch_unit' (17#1) [C:/Users/Brett/source/repos/ECE449/sub_modules/memory/branch_unit.vhd:22]
-INFO: [Synth 8-638] synthesizing module 'execute_register' [C:/Users/Brett/source/repos/ECE449/sub_modules/execute/execute_register.vhd:51]
-INFO: [Synth 8-256] done synthesizing module 'execute_register' (18#1) [C:/Users/Brett/source/repos/ECE449/sub_modules/execute/execute_register.vhd:51]
+INFO: [Synth 8-638] synthesizing module 'execute_register' [C:/Users/Brett/source/repos/ECE449/sub_modules/execute/execute_register.vhd:55]
+INFO: [Synth 8-256] done synthesizing module 'execute_register' (18#1) [C:/Users/Brett/source/repos/ECE449/sub_modules/execute/execute_register.vhd:55]
 INFO: [Synth 8-638] synthesizing module 'memory_register' [C:/Users/Brett/source/repos/ECE449/sub_modules/memory/memory_register.vhd:49]
 INFO: [Synth 8-256] done synthesizing module 'memory_register' (19#1) [C:/Users/Brett/source/repos/ECE449/sub_modules/memory/memory_register.vhd:49]
 INFO: [Synth 8-5772] Detected attribute (* rw_addr_collision = "yes" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
-INFO: [Synth 8-256] done synthesizing module 'datapath' (20#1) [C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd:28]
+INFO: [Synth 8-256] done synthesizing module 'datapath' (20#1) [C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd:30]
 INFO: [Synth 8-638] synthesizing module 'controller' [C:/Users/Brett/source/repos/ECE449/sub_modules/controller.vhd:24]
 INFO: [Synth 8-256] done synthesizing module 'controller' (21#1) [C:/Users/Brett/source/repos/ECE449/sub_modules/controller.vhd:24]
-INFO: [Synth 8-638] synthesizing module 'led_display' [C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/led_display.vhd:20]
-INFO: [Synth 8-256] done synthesizing module 'led_display' (22#1) [C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/led_display.vhd:20]
+INFO: [Synth 8-3491] module 'led_display' declared at 'C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/led_display.vhd:5' bound to instance 'led_display_memory' of component 'led_display' [C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_top.vhd:206]
+INFO: [Synth 8-638] synthesizing module 'led_display' [C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/led_display.vhd:19]
+INFO: [Synth 8-256] done synthesizing module 'led_display' (22#1) [C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/led_display.vhd:19]
+INFO: [Synth 8-3491] module 'console' declared at 'C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/console.vhd:5' bound to instance 'console_display' of component 'console' [C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_top.vhd:217]
 INFO: [Synth 8-638] synthesizing module 'console' [C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/console.vhd:131]
 	Parameter HSYNC_POLARITY bound to: 1'b0 
 	Parameter VSYNC_POLARITY bound to: 1'b0 
@@ -421,7 +422,7 @@ WARNING: [Synth 8-3936] Found unconnected internal register 'Hdot_delayed_reg' a
 WARNING: [Synth 8-3936] Found unconnected internal register 'Vline_delayed_reg' and it is trimmed from '10' to '7' bits. [C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/console.vhd:1417]
 INFO: [Synth 8-256] done synthesizing module 'console' (27#1) [C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/console.vhd:131]
 INFO: [Synth 8-5772] Detected attribute (* rw_addr_collision = "yes" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
-INFO: [Synth 8-256] done synthesizing module 'cpu_top' (28#1) [C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_top.vhd:33]
+INFO: [Synth 8-256] done synthesizing module 'cpu_top' (28#1) [C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_top.vhd:34]
 WARNING: [Synth 8-3331] design xpm_memory_base__parameterized0 has unconnected port sleep
 WARNING: [Synth 8-3331] design xpm_memory_base__parameterized0 has unconnected port rsta
 WARNING: [Synth 8-3331] design xpm_memory_base__parameterized0 has unconnected port regcea
@@ -507,7 +508,7 @@ WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[0]
 WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port injectsbiterrb
 WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port injectdbiterrb
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 456.746 ; gain = 165.109
+Finished RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 457.383 ; gain = 166.082
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -517,7 +518,7 @@ Report Check Netlist:
 |1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
 +------+------------------+-------+---------+-------+------------------+
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 456.746 ; gain = 165.109
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 457.383 ; gain = 166.082
 ---------------------------------------------------------------------------------
 INFO: [Device 21-403] Loading part xc7a35tcpg236-1
 INFO: [Project 1-570] Preparing netlist for logic optimization
@@ -538,23 +539,23 @@ Completed Processing XDC Constraints
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 803.293 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 803.500 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 803.395 ; gain = 511.758
+Finished Constraint Validation : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 803.594 ; gain = 512.293
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35tcpg236-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 803.395 ; gain = 511.758
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 803.594 ; gain = 512.293
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 Applied set_property DONT_TOUCH = true for dp_0/mem/ram_0/xpm_memory_dpdistram_inst. (constraint file  auto generated constraint, line ).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 803.395 ; gain = 511.758
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 803.594 ; gain = 512.293
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-5546] ROM "ram_b_enable_i" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "rom_enable_i" won't be mapped to RAM because it is too sparse
@@ -569,14 +570,14 @@ INFO: [Synth 8-5544] ROM "reg_file[4]" won't be mapped to Block RAM because addr
 INFO: [Synth 8-5544] ROM "reg_file[5]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "reg_file[6]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "reg_file[7]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
-INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the output of the operator [C:/Users/Brett/source/repos/ECE449/sub_modules/execute/alu.vhd:29]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the output of the operator [C:/Users/Brett/source/repos/ECE449/sub_modules/execute/alu.vhd:30]
 INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'controller'
 INFO: [Synth 8-5544] ROM "sys_rst" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "decode_ctl[reg_src]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "sys_rst" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "decode_ctl[reg_src]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "boot_mode" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
-WARNING: [Synth 8-6014] Unused sequential element divider_reg was removed.  [C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/led_display.vhd:46]
+WARNING: [Synth 8-6014] Unused sequential element divider_reg was removed.  [C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/led_display.vhd:39]
 WARNING: [Synth 8-6014] Unused sequential element h_dot_int_reg was removed.  [C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/video_timing.vhd:102]
 WARNING: [Synth 8-6014] Unused sequential element v_line_int_reg was removed.  [C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/video_timing.vhd:114]
 INFO: [Synth 8-41] '+' operator could not be merged with '+' operator due to loss of accuracy [C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/word_to_ascii.vhd:65]
@@ -606,7 +607,7 @@ WARNING: [Synth 8-6014] Unused sequential element display_address_reg_rep was re
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'controller'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 803.395 ; gain = 511.758
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 803.594 ; gain = 512.293
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -640,7 +641,7 @@ Detailed RTL Component Info :
 	                4 Bit    Registers := 4     
 	                3 Bit    Registers := 7     
 	                2 Bit    Registers := 2     
-	                1 Bit    Registers := 10    
+	                1 Bit    Registers := 12    
 +---RAMs : 
 	               4K Bit         RAMs := 1     
 +---Muxes : 
@@ -765,7 +766,7 @@ Detailed RTL Component Info :
 	               16 Bit    Registers := 6     
 	                7 Bit    Registers := 1     
 	                3 Bit    Registers := 2     
-	                1 Bit    Registers := 3     
+	                1 Bit    Registers := 5     
 Module memory_register 
 Detailed RTL Component Info : 
 +---Registers : 
@@ -874,7 +875,7 @@ INFO: [Synth 8-5546] ROM "p_0_out" won't be mapped to RAM because it is too spar
 INFO: [Synth 8-5546] ROM "dp_0/mem/ram_b_enable_i" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "dp_0/mem/rom_enable_i" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "dp_0/hazard_detect/stall_count" won't be mapped to RAM because it is too sparse
-WARNING: [Synth 8-6014] Unused sequential element led_display_memory/divider_reg was removed.  [C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/led_display.vhd:46]
+WARNING: [Synth 8-6014] Unused sequential element led_display_memory/divider_reg was removed.  [C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/led_display.vhd:39]
 DSP Report: Generating DSP dp_0/ALU_inst/temp_result0, operation Mode is: A2*B2.
 DSP Report: register dp_0/decode_r/rd_reg_data2_reg is absorbed into DSP dp_0/ALU_inst/temp_result0.
 DSP Report: register dp_0/decode_r/rd_reg_data1_reg is absorbed into DSP dp_0/ALU_inst/temp_result0.
@@ -899,20 +900,29 @@ INFO: [Common 17-14] Message 'Synth 8-3331' appears 100 times and further instan
 warning: Removed RAM main_buffer_reg due to inactive write enable
 WARNING: [Synth 8-6014] Unused sequential element display_address_reg_rep was removed.  [C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/console.vhd:1465]
 WARNING: [Synth 8-6014] Unused sequential element main_buffer_reg was removed. 
-INFO: [Synth 8-3886] merging instance 'dp_0/decode_r/rd_extended_disp_reg[11]' (FDR) to 'dp_0/decode_r/rd_extended_disp_reg[9]'
-INFO: [Synth 8-3886] merging instance 'dp_0/decode_r/rd_extended_disp_reg[12]' (FDR) to 'dp_0/decode_r/rd_extended_disp_reg[9]'
-INFO: [Synth 8-3886] merging instance 'dp_0/decode_r/rd_extended_disp_reg[13]' (FDR) to 'dp_0/decode_r/rd_extended_disp_reg[9]'
-INFO: [Synth 8-3886] merging instance 'dp_0/decode_r/rd_extended_disp_reg[14]' (FDR) to 'dp_0/decode_r/rd_extended_disp_reg[9]'
-INFO: [Synth 8-3886] merging instance 'dp_0/decode_r/rd_extended_disp_reg[15]' (FDR) to 'dp_0/decode_r/rd_extended_disp_reg[9]'
+INFO: [Synth 8-3886] merging instance 'dp_0/decode_r/rd_inport_data_reg[0]' (FDR) to 'dp_0/decode_r/rd_inport_data_reg[1]'
+INFO: [Synth 8-3886] merging instance 'dp_0/decode_r/rd_inport_data_reg[1]' (FDR) to 'dp_0/decode_r/rd_inport_data_reg[2]'
+INFO: [Synth 8-3886] merging instance 'dp_0/decode_r/rd_inport_data_reg[2]' (FDR) to 'dp_0/decode_r/rd_inport_data_reg[3]'
+INFO: [Synth 8-3886] merging instance 'dp_0/decode_r/rd_inport_data_reg[3]' (FDR) to 'dp_0/decode_r/rd_inport_data_reg[4]'
+INFO: [Synth 8-3886] merging instance 'dp_0/decode_r/rd_inport_data_reg[4]' (FDR) to 'dp_0/decode_r/rd_inport_data_reg[5]'
+INFO: [Synth 8-3886] merging instance 'dp_0/decode_r/rd_inport_data_reg[5]' (FDR) to 'dp_0/decode_r/rd_extended_disp_reg[0]'
+INFO: [Synth 8-3886] merging instance 'dp_0/execute_r/rd_inport_data_reg[0]' (FDR) to 'dp_0/execute_r/rd_inport_data_reg[1]'
+INFO: [Synth 8-3886] merging instance 'dp_0/execute_r/rd_inport_data_reg[1]' (FDR) to 'dp_0/execute_r/rd_inport_data_reg[2]'
+INFO: [Synth 8-3886] merging instance 'dp_0/execute_r/rd_inport_data_reg[2]' (FDR) to 'dp_0/execute_r/rd_inport_data_reg[3]'
+INFO: [Synth 8-3886] merging instance 'dp_0/execute_r/rd_inport_data_reg[3]' (FDR) to 'dp_0/execute_r/rd_inport_data_reg[4]'
+INFO: [Synth 8-3886] merging instance 'dp_0/execute_r/rd_inport_data_reg[4]' (FDR) to 'dp_0/execute_r/rd_inport_data_reg[5]'
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (\dp_0/decode_r/rd_extended_disp_reg[0] )
 INFO: [Synth 8-3886] merging instance 'dp_0/decode_r/rd_extended_disp_reg[9]' (FDR) to 'dp_0/decode_r/rd_extended_disp_reg[10]'
-INFO: [Synth 8-3886] merging instance 'console_display/opcode_reg[0]' (FDE_1) to 'console_display/opcode_reg[6]'
-INFO: [Synth 8-3886] merging instance 'console_display/opcode_reg[3]' (FDE_1) to 'console_display/opcode_reg[6]'
-INFO: [Synth 8-3886] merging instance 'console_display/opcode_reg[6]' (FDE_1) to 'console_display/opcode_reg[5]'
-INFO: [Synth 8-3886] merging instance 'console_display/opcode_reg[1]' (FDE_1) to 'console_display/opcode_reg[5]'
-INFO: [Synth 8-3886] merging instance 'console_display/opcode_reg[2]' (FDE_1) to 'console_display/opcode_reg[5]'
-INFO: [Synth 8-3886] merging instance 'console_display/opcode_reg[4]' (FDE_1) to 'console_display/opcode_reg[5]'
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (console_display/\opcode_reg[5] )
+INFO: [Synth 8-3886] merging instance 'dp_0/decode_r/rd_extended_disp_reg[10]' (FDR) to 'dp_0/decode_r/rd_extended_disp_reg[11]'
+INFO: [Synth 8-3886] merging instance 'dp_0/decode_r/rd_extended_disp_reg[11]' (FDR) to 'dp_0/decode_r/rd_extended_disp_reg[12]'
+INFO: [Synth 8-3886] merging instance 'dp_0/decode_r/rd_extended_disp_reg[12]' (FDR) to 'dp_0/decode_r/rd_extended_disp_reg[13]'
+INFO: [Synth 8-3886] merging instance 'dp_0/decode_r/rd_extended_disp_reg[13]' (FDR) to 'dp_0/decode_r/rd_extended_disp_reg[14]'
+INFO: [Synth 8-3886] merging instance 'dp_0/decode_r/rd_extended_disp_reg[14]' (FDR) to 'dp_0/decode_r/rd_extended_disp_reg[15]'
+INFO: [Synth 8-3886] merging instance 'dp_0/mem_r/rd_inport_data_reg[0]' (FDR) to 'dp_0/mem_r/rd_inport_data_reg[1]'
+INFO: [Synth 8-3886] merging instance 'dp_0/mem_r/rd_inport_data_reg[1]' (FDR) to 'dp_0/mem_r/rd_inport_data_reg[2]'
+INFO: [Synth 8-3886] merging instance 'dp_0/mem_r/rd_inport_data_reg[2]' (FDR) to 'dp_0/mem_r/rd_inport_data_reg[3]'
+INFO: [Synth 8-3886] merging instance 'dp_0/mem_r/rd_inport_data_reg[3]' (FDR) to 'dp_0/mem_r/rd_inport_data_reg[4]'
+INFO: [Synth 8-3886] merging instance 'dp_0/mem_r/rd_inport_data_reg[4]' (FDR) to 'dp_0/mem_r/rd_inport_data_reg[5]'
 INFO: [Synth 8-3886] merging instance 'console_display/vga_blue_reg[0]' (FDS) to 'console_display/vga_blue_reg[1]'
 INFO: [Synth 8-3886] merging instance 'console_display/vga_blue_reg[1]' (FDS) to 'console_display/vga_blue_reg[2]'
 INFO: [Synth 8-3886] merging instance 'console_display/vga_blue_reg[2]' (FDS) to 'console_display/vga_blue_reg[3]'
@@ -925,12 +935,13 @@ INFO: [Synth 8-3886] merging instance 'console_display/vga_red_reg[0]' (FDS) to 
 INFO: [Synth 8-3886] merging instance 'console_display/vga_red_reg[1]' (FDS) to 'console_display/vga_red_reg[2]'
 INFO: [Synth 8-3886] merging instance 'console_display/vga_red_reg[2]' (FDS) to 'console_display/vga_red_reg[3]'
 WARNING: [Synth 8-3332] Sequential element (count_reg[1]) is unused and will be removed from module video_timing.
-WARNING: [Synth 8-3332] Sequential element (opcode_reg[5]) is unused and will be removed from module console.
 WARNING: [Synth 8-3332] Sequential element (Vline_delayed_reg[6]) is unused and will be removed from module console.
 WARNING: [Synth 8-3332] Sequential element (Vline_delayed_reg[5]) is unused and will be removed from module console.
+WARNING: [Synth 8-3332] Sequential element (dp_0/execute_r/rd_inport_data_reg[5]) is unused and will be removed from module cpu_top.
+WARNING: [Synth 8-3332] Sequential element (dp_0/mem_r/rd_inport_data_reg[5]) is unused and will be removed from module cpu_top.
 WARNING: [Synth 8-3332] Sequential element (dp_0/decode_r/rd_extended_disp_reg[0]) is unused and will be removed from module cpu_top.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:29 ; elapsed = 00:00:30 . Memory (MB): peak = 803.395 ; gain = 511.758
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:30 ; elapsed = 00:00:32 . Memory (MB): peak = 803.594 ; gain = 512.293
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -941,8 +952,6 @@ ROM:
 |Module Name     | RTL Object         | Depth x Width | Implemented As | 
 +----------------+--------------------+---------------+----------------+
 |xpm_memory_base | p_0_out            | 64x16         | LUT            | 
-|console         | instruction_set[0] | 256x6         | LUT            | 
-|console         | instruction_set[0] | 256x6         | LUT            | 
 |console         | instruction_set[0] | 256x6         | LUT            | 
 |console         | instruction_set[0] | 256x6         | LUT            | 
 |console         | instruction_set[0] | 256x6         | LUT            | 
@@ -990,13 +999,13 @@ Report RTL Partitions:
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:42 ; elapsed = 00:00:43 . Memory (MB): peak = 859.316 ; gain = 567.680
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:43 ; elapsed = 00:00:44 . Memory (MB): peak = 869.855 ; gain = 578.555
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:46 ; elapsed = 00:00:48 . Memory (MB): peak = 964.062 ; gain = 672.426
+Finished Timing Optimization : Time (s): cpu = 00:00:46 ; elapsed = 00:00:47 . Memory (MB): peak = 950.562 ; gain = 659.262
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -1022,7 +1031,7 @@ Report RTL Partitions:
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:47 ; elapsed = 00:00:49 . Memory (MB): peak = 965.398 ; gain = 673.762
+Finished Technology Mapping : Time (s): cpu = 00:00:46 ; elapsed = 00:00:48 . Memory (MB): peak = 961.141 ; gain = 669.840
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1046,7 +1055,7 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:48 ; elapsed = 00:00:50 . Memory (MB): peak = 965.398 ; gain = 673.762
+Finished IO Insertion : Time (s): cpu = 00:00:47 ; elapsed = 00:00:49 . Memory (MB): peak = 961.141 ; gain = 669.840
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -1059,7 +1068,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:48 ; elapsed = 00:00:50 . Memory (MB): peak = 965.398 ; gain = 673.762
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:47 ; elapsed = 00:00:49 . Memory (MB): peak = 961.141 ; gain = 669.840
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1071,25 +1080,25 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:48 ; elapsed = 00:00:50 . Memory (MB): peak = 965.398 ; gain = 673.762
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:48 ; elapsed = 00:00:49 . Memory (MB): peak = 961.141 ; gain = 669.840
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:48 ; elapsed = 00:00:50 . Memory (MB): peak = 965.398 ; gain = 673.762
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:48 ; elapsed = 00:00:49 . Memory (MB): peak = 961.141 ; gain = 669.840
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:48 ; elapsed = 00:00:50 . Memory (MB): peak = 965.398 ; gain = 673.762
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:48 ; elapsed = 00:00:49 . Memory (MB): peak = 961.141 ; gain = 669.840
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:48 ; elapsed = 00:00:50 . Memory (MB): peak = 965.398 ; gain = 673.762
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:48 ; elapsed = 00:00:49 . Memory (MB): peak = 961.141 ; gain = 669.840
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -1108,59 +1117,59 @@ Report Cell Usage:
 |1     |BUFG      |     3|
 |2     |CARRY4    |    42|
 |3     |DSP48E1   |     1|
-|4     |LUT1      |     7|
-|5     |LUT2      |   106|
-|6     |LUT3      |    84|
-|7     |LUT4      |   115|
-|8     |LUT5      |   190|
-|9     |LUT6      |   493|
-|10    |MUXF7     |    62|
-|11    |MUXF8     |     1|
+|4     |LUT1      |     8|
+|5     |LUT2      |   110|
+|6     |LUT3      |   100|
+|7     |LUT4      |   165|
+|8     |LUT5      |   239|
+|9     |LUT6      |   510|
+|10    |MUXF7     |    71|
+|11    |MUXF8     |     4|
 |12    |RAM128X1D |    64|
 |13    |FDCE      |   140|
 |14    |FDPE      |     8|
-|15    |FDRE      |   478|
+|15    |FDRE      |   469|
 |16    |FDSE      |     6|
-|17    |IBUF      |    21|
-|18    |OBUF      |    41|
+|17    |IBUF      |    15|
+|18    |OBUF      |    42|
 +------+----------+------+
 
 Report Instance Areas: 
 +------+----------------------------------+--------------------------------+------+
 |      |Instance                          |Module                          |Cells |
 +------+----------------------------------+--------------------------------+------+
-|1     |top                               |                                |  1862|
-|2     |  console_display                 |console                         |   415|
-|3     |    timing                        |video_timing                    |   175|
-|4     |  ctrl_0                          |controller                      |    37|
-|5     |  dp_0                            |datapath                        |  1266|
+|1     |top                               |                                |  1997|
+|2     |  console_display                 |console                         |   557|
+|3     |    timing                        |video_timing                    |   183|
+|4     |  ctrl_0                          |controller                      |    58|
+|5     |  dp_0                            |datapath                        |  1256|
 |6     |    ALU_inst                      |ALU                             |     6|
 |7     |    Register_File_inst            |register_file                   |   224|
 |8     |    adder_pc                      |adder                           |     4|
-|9     |    branch_unit                   |branch_unit                     |    38|
-|10    |    decode_r                      |decode_register                 |   358|
-|11    |    execute_r                     |execute_register                |   151|
-|12    |    fetch_r                       |fetch_register                  |   138|
+|9     |    branch_unit                   |branch_unit                     |    19|
+|10    |    decode_r                      |decode_register                 |   324|
+|11    |    execute_r                     |execute_register                |   152|
+|12    |    fetch_r                       |fetch_register                  |   116|
 |13    |    hazard_detect                 |hazard_detect_unit              |    11|
-|14    |    mem                           |mem_manager                     |   168|
-|15    |      ram_0                       |ram__5                          |   143|
+|14    |    mem                           |mem_manager                     |   207|
+|15    |      ram_0                       |ram__5                          |   140|
 |16    |        xpm_memory_dpdistram_inst |xpm_memory_dpdistram            |   100|
 |17    |          xpm_memory_base_inst    |xpm_memory_base__parameterized0 |   100|
-|18    |      rom_0                       |rom                             |    25|
-|19    |        xpm_memory_sprom_inst     |xpm_memory_sprom                |    25|
+|18    |      rom_0                       |rom                             |    67|
+|19    |        xpm_memory_sprom_inst     |xpm_memory_sprom                |    67|
 |20    |          xpm_memory_base_inst    |xpm_memory_base                 |    13|
-|21    |    mem_r                         |memory_register                 |   144|
-|22    |    pc                            |program_counter                 |    20|
+|21    |    mem_r                         |memory_register                 |   138|
+|22    |    pc                            |program_counter                 |    51|
 |23    |  led_display_memory              |led_display                     |    66|
 +------+----------------------------------+--------------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:48 ; elapsed = 00:00:50 . Memory (MB): peak = 965.398 ; gain = 673.762
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:48 ; elapsed = 00:00:49 . Memory (MB): peak = 961.141 ; gain = 669.840
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 99 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:35 ; elapsed = 00:00:43 . Memory (MB): peak = 965.398 ; gain = 327.113
-Synthesis Optimization Complete : Time (s): cpu = 00:00:48 ; elapsed = 00:00:50 . Memory (MB): peak = 965.398 ; gain = 673.762
+Synthesis finished with 0 errors, 0 critical warnings and 100 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:35 ; elapsed = 00:00:43 . Memory (MB): peak = 961.141 ; gain = 323.629
+Synthesis Optimization Complete : Time (s): cpu = 00:00:48 ; elapsed = 00:00:50 . Memory (MB): peak = 961.141 ; gain = 669.840
 INFO: [Project 1-571] Translating synthesized netlist
-INFO: [Netlist 29-17] Analyzing 191 Unisim elements for replacement
+INFO: [Netlist 29-17] Analyzing 197 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
@@ -1169,10 +1178,10 @@ INFO: [Project 1-111] Unisim Transformation Summary:
   RAM128X1D => RAM128X1D (RAMD64E, RAMD64E, MUXF7, MUXF7, RAMD64E, RAMD64E): 64 instances
 
 INFO: [Common 17-83] Releasing license: Synthesis
-199 Infos, 124 Warnings, 0 Critical Warnings and 0 Errors encountered.
+209 Infos, 125 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:51 ; elapsed = 00:00:54 . Memory (MB): peak = 965.398 ; gain = 686.684
+synth_design: Time (s): cpu = 00:00:51 ; elapsed = 00:00:54 . Memory (MB): peak = 961.141 ; gain = 682.848
 INFO: [Common 17-1381] The checkpoint 'C:/Users/Brett/source/repos/ECE449/project_cpu/project_cpu.runs/synth_1/cpu_top.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file cpu_top_utilization_synth.rpt -pb cpu_top_utilization_synth.pb
-report_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.030 . Memory (MB): peak = 965.398 ; gain = 0.000
-INFO: [Common 17-206] Exiting Vivado at Sat Mar 22 13:00:51 2025...
+report_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.029 . Memory (MB): peak = 961.141 ; gain = 0.000
+INFO: [Common 17-206] Exiting Vivado at Sat Mar 22 18:33:05 2025...

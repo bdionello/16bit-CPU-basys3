@@ -9,11 +9,11 @@ entity ALU is
         in1           : in std_logic_vector(15 downto 0);  -- First operand
         in2           : in std_logic_vector(15 downto 0);  -- Second operand
         shift         : in std_logic_vector(3 downto 0);   -- Shift amount
-        alu_mode      : in alu_op_type := alu_NOP;    -- ALU opcode (7-bit)
+        alu_mode      : in alu_op_type;                    -- ALU opcode (7-bit)
         
         alu_out       : out std_logic_vector(15 downto 0); -- ALU result        
-        zero_flag     : out std_logic := '0';                -- Zero flag (Z)
-        negative_flag : out std_logic := '0'                -- Negative flag (N)
+        zero_flag     : out std_logic;                     -- Zero flag (Z)
+        negative_flag : out std_logic                      -- Negative flag (N)
     );
 end ALU;
 

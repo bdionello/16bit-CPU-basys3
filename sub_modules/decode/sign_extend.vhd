@@ -14,12 +14,9 @@ end sign_extend;
 
 architecture Behavioral of sign_extend is
     
-    
-    begin
-    
+    begin    
         process (op_code, disp_l, disp_s) is
-            variable sign_extended_displacement : word_t;  
-              
+            variable sign_extended_displacement : word_t;                
         begin
             case op_code is
                 when BRR | BRR_N | BRR_Z =>  
@@ -32,8 +29,7 @@ architecture Behavioral of sign_extend is
                     
                 when others => 
                     sign_extended_displacement := (others => '0');
-                end case;
-                
+                end case;                
                 extended_disp <= sign_extended_displacement(14 downto 0) & '0';
         end process;
 end Behavioral;

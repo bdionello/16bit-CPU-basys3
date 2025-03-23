@@ -12,9 +12,9 @@ use xpm.vcomponents.all;
 --use UNISIM.VComponents.all
 entity rom is
     port(
-        clk : in std_logic;
-        rst : in std_logic;
-        en : in std_logic;
+        clk  : in std_logic;
+        rst  : in std_logic;
+        en   : in std_logic;
         addr : in std_logic_vector(8 downto 0);
         dout : out std_logic_vector(15 downto 0)       
     );
@@ -29,7 +29,7 @@ architecture rom_arch of rom is
             -- Common module generics
             MEMORY_SIZE             => 8192,            --positive integer
             MEMORY_PRIMITIVE        => "auto",          --string; "auto", "distributed", or "block";
-            MEMORY_INIT_FILE        => "testB2.mem",          --string; "none" or "<filename>.mem" 
+            MEMORY_INIT_FILE        => "testB2.mem",    --string; "none" or "<filename>.mem" 
             MEMORY_INIT_PARAM       => "",              --string;
             USE_MEM_INIT            => 1,               --integer; 0,1
             WAKEUP_TIME             => "disable_sleep", --string; "disable_sleep" or "use_sleep_pin" 

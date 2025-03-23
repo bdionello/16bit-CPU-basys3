@@ -2,7 +2,6 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use ieee.numeric_std.all;
 
-
 entity led_display is
     Port (
 
@@ -32,26 +31,18 @@ signal digit_select : UNSIGNED( 1 downto 0 ) := "00";
 
 begin
 
-clock_divider : process
-( 
-    board_clock
-)
-
+clock_divider : process(board_clock)
 
 variable divider : integer range 0 to 100000 := 0;
-
 begin
-
     if ( rising_edge( board_clock )) then
         divider := divider + 1;
         if ( divider = 100000 ) then
             divider := 0;
-
             digit_select <= digit_select + 1;
         end if;
     end if;
 end process;
-
 
 with digit_select select
     led_digits <= 
@@ -66,8 +57,6 @@ with digit_select select
         led_data( 7 downto 4 ) when "01",
         led_data( 11 downto 8 ) when "10",
         led_data( 15 downto 12 ) when others;
-
-
 --
 --   HEX:   in    STD_LOGIC_VECTOR (3 downto 0);
 --   LED:   out   STD_LOGIC_VECTOR (6 downto 0);
@@ -100,7 +89,6 @@ with nibble select
         "0001110" when "1111",   --F
         "1000000" when others;   --0
 
-
 --segments_decode : hex_to_led
 --port map (
 --    hex => nibble,
@@ -125,5 +113,4 @@ write_led : process
             end if;
         end if;
     end process;
-
 end Behavioral;

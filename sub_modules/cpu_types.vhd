@@ -54,6 +54,81 @@ package cpu_types is
         r_src        :  std_logic_vector(2 downto 0);  -- Source register    
     end record instruction_type;
     
+    type display_fetch_type is record
+        s1_pc   :  STD_LOGIC_VECTOR ( 15 downto 0 );
+        s1_inst :  STD_LOGIC_VECTOR ( 15 downto 0 );    
+    end record display_fetch_type;
+    
+    constant display_fetch_type_init_c : display_fetch_type := ( s1_pc => (others => '0'),
+                                                               s1_inst => (others => '0')
+                                                               );                                                               
+    type display_decode_type is record
+        s2_pc         :  STD_LOGIC_VECTOR ( 15 downto 0 );
+        s2_inst       :  STD_LOGIC_VECTOR ( 15 downto 0 );      
+        s2_reg_a      :  STD_LOGIC_VECTOR( 2 downto 0 );
+        s2_reg_b      :  STD_LOGIC_VECTOR( 2 downto 0 );
+        s2_reg_c      :  STD_LOGIC_VECTOR( 2 downto 0 );      
+        s2_reg_a_data :  STD_LOGIC_VECTOR( 15 downto 0 );
+        s2_reg_b_data :  STD_LOGIC_VECTOR( 15 downto 0 );
+        s2_reg_c_data :  STD_LOGIC_VECTOR( 15 downto 0 );      
+        s2_immediate  :  STD_LOGIC_VECTOR( 15 downto 0 );    
+    end record display_decode_type;
+    
+    type display_execute_type is record
+        s3_pc         :  STD_LOGIC_VECTOR ( 15 downto 0 );
+        s3_inst       :  STD_LOGIC_VECTOR ( 15 downto 0 );      
+        s3_reg_a      :  STD_LOGIC_VECTOR( 2 downto 0 );
+        s3_reg_b      :  STD_LOGIC_VECTOR( 2 downto 0 );
+        s3_reg_c      :  STD_LOGIC_VECTOR( 2 downto 0 );      
+        s3_reg_a_data :  STD_LOGIC_VECTOR( 15 downto 0 );
+        s3_reg_b_data :  STD_LOGIC_VECTOR( 15 downto 0 );
+        s3_reg_c_data :  STD_LOGIC_VECTOR( 15 downto 0 );      
+        s3_immediate  :  STD_LOGIC_VECTOR( 15 downto 0 );
+        zero_flag     :  STD_LOGIC;
+        negative_flag :  STD_LOGIC;
+        overflow_flag :  STD_LOGIC;   
+    end record display_execute_type;
+    
+    type display_branch_memory_op_type is record
+        s3_r_wb          :  STD_LOGIC;
+        s3_r_wb_data     :  STD_LOGIC_VECTOR( 15 downto 0 );      
+        s3_br_wb         :  STD_LOGIC;
+        s3_br_wb_address :  STD_LOGIC_VECTOR( 15 downto 0 );      
+        s3_mr_wr         :  STD_LOGIC;
+        s3_mr_wr_address :  STD_LOGIC_VECTOR( 15 downto 0 );
+        s3_mr_wr_data    :  STD_LOGIC_VECTOR( 15 downto 0 );      
+        s3_mr_rd         :  STD_LOGIC;
+        s3_mr_rd_address :  STD_LOGIC_VECTOR( 15 downto 0 );  
+    end record display_branch_memory_op_type;
+    
+    type display_memory_type is record
+        s4_pc        :  STD_LOGIC_VECTOR( 15 downto 0 );
+        s4_inst      :  STD_LOGIC_VECTOR( 15 downto 0 );      
+        s4_reg_a     :  STD_LOGIC_VECTOR( 2 downto 0 );      
+        s4_r_wb      :  STD_LOGIC;
+        s4_r_wb_data :  STD_LOGIC_VECTOR( 15 downto 0 );  
+    end record display_memory_type;    
+    
+    type display_register_type is record
+        register_0    :  STD_LOGIC_VECTOR ( 15 downto 0 );
+        register_1    :  STD_LOGIC_VECTOR ( 15 downto 0 );
+        register_2    :  STD_LOGIC_VECTOR ( 15 downto 0 );
+        register_3    :  STD_LOGIC_VECTOR ( 15 downto 0 );
+        register_4    :  STD_LOGIC_VECTOR ( 15 downto 0 );
+        register_5    :  STD_LOGIC_VECTOR ( 15 downto 0 );
+        register_6    :  STD_LOGIC_VECTOR ( 15 downto 0 );
+        register_7    :  STD_LOGIC_VECTOR ( 15 downto 0 );
+        register_0_of :  STD_LOGIC;
+        register_1_of :  STD_LOGIC;
+        register_2_of :  STD_LOGIC;
+        register_3_of :  STD_LOGIC;
+        register_4_of :  STD_LOGIC;
+        register_5_of :  STD_LOGIC;
+        register_6_of :  STD_LOGIC;
+        register_7_of :  STD_LOGIC;   
+    end record display_register_type;
+    
+    
     -- Initalization constants for record types
     constant instruction_type_init_c : instruction_type := (opcode => (others => '0'),
                                                             ra => (others => '0'),
