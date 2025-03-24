@@ -19,6 +19,7 @@ entity memory_register is
            clk : in std_logic := '0';
            wr_enable: in std_logic := '0';
            -- inputs
+           --wr_instruction : in word_t;
            wr_pc : in word_t := (others=>'0');
            -- alu
            wr_alu_result  : in word_t := (others=>'0');
@@ -32,6 +33,7 @@ entity memory_register is
            wr_write_back_ctl : in write_back_type := write_back_type_init_c;           
            -- outputs
            rd_pc : out word_t := (others=>'0');
+           rd_instruction : out word_t := (others=>'0');
            -- alu
            rd_alu_result  : out word_t := (others=>'0');
            -- register file
@@ -53,6 +55,7 @@ architecture Behavioral of memory_register is
         begin
             if(rising_edge(clk)) then
                 if(rst='1') then
+                    --rd_instruction <= x"0000";
                     rd_pc <= (others=>'0');
                     rd_alu_result  <= (others=>'0');
                     rd_reg_data1  <= (others=>'0');
@@ -62,6 +65,7 @@ architecture Behavioral of memory_register is
                     rd_inport_data <= (others=>'0');
                     rd_write_back_ctl <= write_back_type_init_c;                    
                 elsif(wr_enable='1') then
+                    --rd_instruction <= wr_instruction;
                     rd_pc <= wr_pc;
                     rd_alu_result <= wr_alu_result;
                     rd_reg_data1 <= wr_reg_data1;

@@ -50,12 +50,14 @@ architecture rtl of cpu_top is
     signal display_fetch_i  :  display_fetch_type;
     signal display_decode_i :  display_decode_type;  
     signal display_execute_i:  display_execute_type;
+    signal display_memory_i :  display_memory_type;
+    signal display_register_i :  display_register_type;
           
 begin
-    debug_console_i <= dip_switches_i(15);
-    stm_ack <= out_port_i(0);
+    debug_console_i <= dip_switches_i(15);    
     dip_switches_i <= dip_switches;
     out_port <= out_port_i;
+    stm_ack <= out_port_i(0);
     in_port_i <= in_port(15 downto 6) & "000000";
     -------------- CPU System --------------------------
     dp_0: entity work.datapath
@@ -79,7 +81,9 @@ begin
             -- Display console signals
             display_fetch => display_fetch_i,
             display_decode => display_decode_i,
-            display_execute => display_execute_i            
+            display_execute => display_execute_i,
+            display_memory => display_memory_i,
+            display_register => display_register_i           
         );    
     ctrl_0: entity work.controller 
         port map (
@@ -133,7 +137,7 @@ begin
         -- Stage 3 Execute
         --        
             s3_pc => display_execute_i.s3_pc,
-            s3_inst => x"0000",        
+            s3_inst => display_execute_i.s3_inst,        
             s3_reg_a => display_execute_i.s3_reg_a,
             s3_reg_b => "000",
             s3_reg_c => "000",        
@@ -152,23 +156,23 @@ begin
             s3_mr_rd_address => display_execute_i.s3_mr_rd_address,        
         --
         -- Stage 4 Memory
-        --        
-            s4_pc => x"0000",
-            s4_inst => x"0000",
-            s4_reg_a => "000",
-            s4_r_wb => '0',
-            s4_r_wb_data => x"0000",        
+        --        display_memory_i
+            s4_pc => display_memory_i.s4_pc,
+            s4_inst => display_memory_i.s4_inst,
+            s4_reg_a => display_memory_i.s4_reg_a,
+            s4_r_wb => display_memory_i.s4_r_wb,
+            s4_r_wb_data => display_memory_i.s4_r_wb_data,        
         --
         -- CPU registers
         --        
-            register_0 => x"0000",
-            register_1 => x"0000",
-            register_2 => x"0000",
-            register_3 => x"0000",
-            register_4 => x"0000",
-            register_5 => x"0000",
-            register_6 => x"0000",
-            register_7 => x"0000",        
+            register_0 => display_register_i.register_0,
+            register_1 => display_register_i.register_1,
+            register_2 => display_register_i.register_2,
+            register_3 => display_register_i.register_3,
+            register_4 => display_register_i.register_4,
+            register_5 => display_register_i.register_5,
+            register_6 => display_register_i.register_6,
+            register_7 => display_register_i.register_7,        
             register_0_of => '0',
             register_1_of => '0',
             register_2_of => '0',
@@ -180,8 +184,8 @@ begin
         --
         -- CPU Flags
         --
-            zero_flag => '0',
-            negative_flag => '0',
+            zero_flag => display_execute_i.zero_flag,
+            negative_flag => display_execute_i.negative_flag,
             overflow_flag => '0',        
         --
         -- Debug screen enable

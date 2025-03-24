@@ -25,7 +25,7 @@ architecture controller_arch of controller is
     signal state       : ctrl_state_type := IDLE_STATE;
     signal nextstate   : ctrl_state_type;
     signal op_code_i   : op_code_t;
-    signal state_code  : op_code_t;
+    signal state_code  : op_code_t := (others=>'0');
 
 begin
     op_code_i <= op_code; -- connect port to internal

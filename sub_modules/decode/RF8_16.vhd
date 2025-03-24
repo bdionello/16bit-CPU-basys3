@@ -16,7 +16,17 @@ entity register_file is
         wr_enable: in std_logic;
         -- out puts
         rd_data1: out std_logic_vector(15 downto 0); 
-        rd_data2: out std_logic_vector(15 downto 0)
+        rd_data2: out std_logic_vector(15 downto 0);
+        
+        -- Console display output
+        register_0    :  out STD_LOGIC_VECTOR ( 15 downto 0 );
+        register_1    :  out STD_LOGIC_VECTOR ( 15 downto 0 );
+        register_2    :  out STD_LOGIC_VECTOR ( 15 downto 0 );
+        register_3    :  out STD_LOGIC_VECTOR ( 15 downto 0 );
+        register_4    :  out STD_LOGIC_VECTOR ( 15 downto 0 );
+        register_5    :  out STD_LOGIC_VECTOR ( 15 downto 0 );
+        register_6    :  out STD_LOGIC_VECTOR ( 15 downto 0 );
+        register_7    :  out STD_LOGIC_VECTOR ( 15 downto 0 )
         );
 end register_file;
 
@@ -68,5 +78,14 @@ begin
     reg_file(5) when(rd_index2="101") else
     reg_file(6) when(rd_index2="110") else
     reg_file(7);
-    --fill this part
+    --map registers to console display ports
+    register_0 <= reg_file(0);
+    register_1 <= reg_file(1);
+    register_2 <= reg_file(2);
+    register_3 <= reg_file(3);
+    register_4 <= reg_file(4);
+    register_5 <= reg_file(5);
+    register_6 <= reg_file(6);
+    register_7 <= reg_file(7);
+        
 end behavioural;

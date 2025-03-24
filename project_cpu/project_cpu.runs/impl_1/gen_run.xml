@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="impl_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1742793098">
+<GenRun Id="impl_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1742852720">
   <File Type="PWROPT-DCP" Name="cpu_top_pwropt.dcp"/>
   <File Type="ROUTE-PWR" Name="cpu_top_power_routed.rpt"/>
   <File Type="PA-TCL" Name="cpu_top.tcl"/>
@@ -174,6 +174,12 @@
       </FileInfo>
     </File>
     <File Path="$PPRDIR/../sub_modules/execute/execute_register.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../sub_modules/decode/out_register.vhd">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="simulation"/>

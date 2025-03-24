@@ -1,7 +1,7 @@
 Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
-| Date         : Sun Mar 23 22:12:19 2025
+| Date         : Mon Mar 24 14:47:16 2025
 | Host         : ws11-11 running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file cpu_top_control_sets_placed.rpt
 | Design       : cpu_top
@@ -22,8 +22,8 @@ Table of Contents
 +----------------------------------------------------------+-------+
 |                          Status                          | Count |
 +----------------------------------------------------------+-------+
-| Number of unique control sets                            |    28 |
-| Unused register locations in slices containing registers |    50 |
+| Number of unique control sets                            |    29 |
+| Unused register locations in slices containing registers |    57 |
 +----------------------------------------------------------+-------+
 
 
@@ -33,50 +33,51 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |              56 |           29 |
+| No           | No                    | No                     |              56 |           31 |
 | No           | No                    | Yes                    |               0 |            0 |
-| No           | Yes                   | No                     |             355 |          151 |
-| Yes          | No                    | No                     |              19 |            6 |
-| Yes          | No                    | Yes                    |             128 |           67 |
-| Yes          | Yes                   | No                     |              72 |           38 |
+| No           | Yes                   | No                     |             387 |          166 |
+| Yes          | No                    | No                     |              26 |            9 |
+| Yes          | No                    | Yes                    |             145 |           72 |
+| Yes          | Yes                   | No                     |              65 |           38 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
 3. Detailed Control Set Information
 -----------------------------------
 
-+-----------------------------------------+--------------------------------------------------------------------------------------------------------------------+--------------------------------------+------------------+----------------+
-|               Clock Signal              |                                                    Enable Signal                                                   |           Set/Reset Signal           | Slice Load Count | Bel Load Count |
-+-----------------------------------------+--------------------------------------------------------------------------------------------------------------------+--------------------------------------+------------------+----------------+
-| ~stm_sys_clk_IBUF_BUFG                  |                                                                                                                    |                                      |                1 |              1 |
-|  board_clock_IBUF_BUFG                  |                                                                                                                    |                                      |                2 |              4 |
-|  stm_sys_clk_IBUF_BUFG                  |                                                                                                                    |                                      |                2 |              4 |
-| ~stm_sys_clk_IBUF_BUFG                  | dp_0/hazard_detect/stall_count[3]_i_1_n_0                                                                          |                                      |                1 |              4 |
-| ~console_display/timing/opcode_reg[6]_3 | console_display/timing/opcode_reg[6]_2                                                                             | console_display/timing/opcode_reg[0] |                3 |              7 |
-|  stm_sys_clk_IBUF_BUFG                  | dp_0/hazard_detect/E[0]                                                                                            | ctrl_0/state_code[6]_i_1_n_0         |                5 |              7 |
-|  video_clock                            | console_display/timing/h_dot0                                                                                      | console_display/timing/v_line_int    |                5 |             10 |
-|  video_clock                            |                                                                                                                    | console_display/timing/h_dot0        |                4 |             11 |
-|  video_clock                            | console_display/timing/display_address_reg[0]_rep__0                                                               |                                      |                5 |             15 |
-|  stm_sys_clk_IBUF_BUFG                  |                                                                                                                    | dp_0/execute_r/led_data_reg[0]       |                7 |             16 |
-|  stm_sys_clk_IBUF_BUFG                  | dp_0/hazard_detect/E[0]                                                                                            | ctrl_0/SR[0]                         |                6 |             16 |
-| ~stm_sys_clk_IBUF_BUFG                  | dp_0/mem_r/E[0]                                                                                                    | ctrl_0/SR[0]                         |                9 |             16 |
-| ~stm_sys_clk_IBUF_BUFG                  | dp_0/mem_r/reg_file_reg[2][0][0]                                                                                   | ctrl_0/SR[0]                         |                8 |             16 |
-| ~stm_sys_clk_IBUF_BUFG                  | dp_0/mem_r/reg_file_reg[3][0][0]                                                                                   | ctrl_0/SR[0]                         |                8 |             16 |
-| ~stm_sys_clk_IBUF_BUFG                  | dp_0/mem_r/reg_file_reg[5][0][0]                                                                                   | ctrl_0/SR[0]                         |                8 |             16 |
-| ~stm_sys_clk_IBUF_BUFG                  | dp_0/mem_r/reg_file_reg[7][0][0]                                                                                   | ctrl_0/SR[0]                         |               10 |             16 |
-| ~stm_sys_clk_IBUF_BUFG                  | dp_0/mem_r/reg_file_reg[4][0][0]                                                                                   | ctrl_0/SR[0]                         |                8 |             16 |
-| ~stm_sys_clk_IBUF_BUFG                  | dp_0/mem_r/reg_file_reg[1][0][0]                                                                                   | ctrl_0/SR[0]                         |                8 |             16 |
-| ~stm_sys_clk_IBUF_BUFG                  | dp_0/mem_r/reg_file_reg[6][0][0]                                                                                   | ctrl_0/SR[0]                         |                8 |             16 |
-|  board_clock_IBUF_BUFG                  |                                                                                                                    | led_display_memory/clear             |                5 |             17 |
-|  stm_sys_clk_IBUF_BUFG                  | dp_0/hazard_detect/E[0]                                                                                            | ctrl_0/rd_pc_reg[0][0]               |               19 |             32 |
-|  video_clock                            |                                                                                                                    |                                      |               24 |             47 |
-|  stm_sys_clk_IBUF_BUFG                  | dp_0/mem/ram_0/xpm_memory_dpdistram_inst/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_0_127_0_0_i_1_n_0   |                                      |               16 |             64 |
-|  stm_sys_clk_IBUF_BUFG                  | dp_0/mem/ram_0/xpm_memory_dpdistram_inst/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_256_383_0_0_i_1_n_0 |                                      |               16 |             64 |
-|  stm_sys_clk_IBUF_BUFG                  | dp_0/mem/ram_0/xpm_memory_dpdistram_inst/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_128_255_0_0_i_1_n_0 |                                      |               16 |             64 |
-|  stm_sys_clk_IBUF_BUFG                  | dp_0/mem/ram_0/xpm_memory_dpdistram_inst/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_384_511_0_0_i_1_n_0 |                                      |               16 |             64 |
-|  stm_sys_clk_IBUF_BUFG                  |                                                                                                                    | ctrl_0/rd_pc_reg[0][0]               |               46 |            106 |
-|  stm_sys_clk_IBUF_BUFG                  |                                                                                                                    | ctrl_0/SR[0]                         |               89 |            205 |
-+-----------------------------------------+--------------------------------------------------------------------------------------------------------------------+--------------------------------------+------------------+----------------+
++---------------------------------------+--------------------------------------------------------------------------------------------------------------------+-----------------------------------+------------------+----------------+
+|              Clock Signal             |                                                    Enable Signal                                                   |          Set/Reset Signal         | Slice Load Count | Bel Load Count |
++---------------------------------------+--------------------------------------------------------------------------------------------------------------------+-----------------------------------+------------------+----------------+
+| ~stm_sys_clk_IBUF_BUFG                |                                                                                                                    |                                   |                1 |              1 |
+|  board_clock_IBUF_BUFG                |                                                                                                                    |                                   |                2 |              4 |
+|  stm_sys_clk_IBUF_BUFG                |                                                                                                                    |                                   |                2 |              4 |
+| ~stm_sys_clk_IBUF_BUFG                | dp_0/hazard_detect/stall_count[3]_i_1_n_0                                                                          |                                   |                2 |              4 |
+| ~console_display/timing/opcode_reg[0] | console_display/timing/E[0]                                                                                        |                                   |                3 |              7 |
+|  stm_sys_clk_IBUF_BUFG                | dp_0/hazard_detect/E[0]                                                                                            | ctrl_0/state_code[6]_i_1_n_0      |                6 |              7 |
+|  video_clock                          | console_display/timing/h_dot0                                                                                      | console_display/timing/v_line_int |                4 |             10 |
+|  video_clock                          |                                                                                                                    | console_display/timing/h_dot0     |                5 |             11 |
+|  video_clock                          | console_display/timing/display_address_reg[0]_rep__0                                                               |                                   |                4 |             15 |
+|  stm_sys_clk_IBUF_BUFG                |                                                                                                                    | dp_0/execute_r/led_data_reg[0]    |                3 |             16 |
+|  stm_sys_clk_IBUF_BUFG                | dp_0/hazard_detect/E[0]                                                                                            | ctrl_0/sys_rst_i                  |               11 |             16 |
+| ~stm_sys_clk_IBUF_BUFG                | dp_0/mem_r/E[0]                                                                                                    | ctrl_0/sys_rst_i                  |                9 |             16 |
+| ~stm_sys_clk_IBUF_BUFG                | dp_0/mem_r/reg_file_reg[1][0][0]                                                                                   | ctrl_0/sys_rst_i                  |                8 |             16 |
+| ~stm_sys_clk_IBUF_BUFG                | dp_0/mem_r/reg_file_reg[2][0][0]                                                                                   | ctrl_0/sys_rst_i                  |                5 |             16 |
+| ~stm_sys_clk_IBUF_BUFG                | dp_0/mem_r/reg_file_reg[3][0][0]                                                                                   | ctrl_0/sys_rst_i                  |                8 |             16 |
+| ~stm_sys_clk_IBUF_BUFG                | dp_0/mem_r/reg_file_reg[4][0][0]                                                                                   | ctrl_0/sys_rst_i                  |                7 |             16 |
+| ~stm_sys_clk_IBUF_BUFG                | dp_0/mem_r/reg_file_reg[5][0][0]                                                                                   | ctrl_0/sys_rst_i                  |               10 |             16 |
+| ~stm_sys_clk_IBUF_BUFG                | dp_0/mem_r/reg_file_reg[6][0][0]                                                                                   | ctrl_0/sys_rst_i                  |                5 |             16 |
+| ~stm_sys_clk_IBUF_BUFG                | dp_0/mem_r/reg_file_reg[7][0][0]                                                                                   | ctrl_0/sys_rst_i                  |               12 |             16 |
+|  board_clock_IBUF_BUFG                |                                                                                                                    | led_display_memory/clear          |                5 |             17 |
+| ~stm_sys_clk_IBUF_BUFG                | dp_0/eqOp_inferred__1/out_i[15]_i_1_n_0                                                                            | ctrl_0/sys_rst_i                  |                8 |             17 |
+|  stm_sys_clk_IBUF_BUFG                | dp_0/hazard_detect/E[0]                                                                                            | dp_0/decode_r/SR[0]               |               17 |             32 |
+|  video_clock                          |                                                                                                                    |                                   |               26 |             47 |
+|  stm_sys_clk_IBUF_BUFG                | dp_0/mem/ram_0/xpm_memory_dpdistram_inst/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_128_255_0_0_i_1_n_0 |                                   |               16 |             64 |
+|  stm_sys_clk_IBUF_BUFG                | dp_0/mem/ram_0/xpm_memory_dpdistram_inst/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_0_127_0_0_i_1_n_0   |                                   |               16 |             64 |
+|  stm_sys_clk_IBUF_BUFG                | dp_0/mem/ram_0/xpm_memory_dpdistram_inst/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_384_511_0_0_i_1_n_0 |                                   |               16 |             64 |
+|  stm_sys_clk_IBUF_BUFG                | dp_0/mem/ram_0/xpm_memory_dpdistram_inst/xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_256_383_0_0_i_1_n_0 |                                   |               16 |             64 |
+|  stm_sys_clk_IBUF_BUFG                |                                                                                                                    | dp_0/decode_r/SR[0]               |               60 |            122 |
+|  stm_sys_clk_IBUF_BUFG                |                                                                                                                    | ctrl_0/sys_rst_i                  |               93 |            221 |
++---------------------------------------+--------------------------------------------------------------------------------------------------------------------+-----------------------------------+------------------+----------------+
 
 
 +--------+-----------------------+
@@ -88,7 +89,7 @@ Table of Contents
 | 10     |                     1 |
 | 11     |                     1 |
 | 15     |                     1 |
-| 16+    |                    19 |
+| 16+    |                    20 |
 +--------+-----------------------+
 
 

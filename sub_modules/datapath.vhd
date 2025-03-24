@@ -26,7 +26,9 @@ entity datapath is
         -- console display signals
         display_fetch  : out display_fetch_type;
         display_decode : out display_decode_type;
-        display_execute: out display_execute_type
+        display_execute: out display_execute_type;
+        display_memory : out display_memory_type;
+        display_register : out display_register_type
         );        
 end datapath;
 
@@ -51,7 +53,8 @@ architecture data_path_arch of datapath is
     signal decode_ctl_d       : decode_type; -- pass through
     signal execute_ctl_d      : execute_type; -- used in execute stage
     signal memory_ctl_d       : memory_type;    -- pass through
-    signal write_back_ctl_d   : write_back_type; -- pass through   
+    signal write_back_ctl_d   : write_back_type; -- pass through 
+     
     -- Signals for register_file
     signal rd_data1_d         : word_t; -- Read data 1 from register file
     signal rd_data2_d         : word_t; -- Read data 2 from register file
@@ -66,6 +69,7 @@ architecture data_path_arch of datapath is
     signal alu_shift_d        : std_logic_vector(3 downto 0);
     signal rst_decode_reg_d   : std_logic;
     -- Execute stage signals -- Denoted by:'_ex'
+    signal instruction_ex     : word_t;
     signal execute_ctl_ex     : execute_type; -- used in execute stage
     signal memory_ctl_ex      : memory_type;    -- pass through
     signal write_back_ctl_ex  : write_back_type; -- pass through
@@ -82,8 +86,9 @@ architecture data_path_arch of datapath is
     signal alu_result_ex      : word_t;
     signal alu_z_ex           : std_logic;
     signal alu_n_ex           : std_logic;
-    signal pc_src_ex         : std_logic; -- signal to select pc mux      
+    signal pc_src_ex          : std_logic; -- signal to select pc mux      
     -- Memory stage signals -- Denoted by:'_mem'
+    signal instruction_mem     : word_t;
     signal memory_ctl_mem     : memory_type; -- used in memory stage
     signal write_back_ctl_mem : write_back_type; -- pass through
     signal pc_current_mem        : word_t; -- UNUSED
@@ -99,7 +104,9 @@ architecture data_path_arch of datapath is
     signal imm_fwd_mem        : word_t;
     signal inport_fwd_mem     : word_t;    
     signal extended_disp_mem  : word_t;
+    signal out_port_enable_mem  : std_logic; 
     -- Write back stage signals -- Denoted by:'_wb'
+    signal instruction_wb     : word_t;
     signal write_back_ctl_wb  : write_back_type; -- used in wb stage
     signal pc_current_wb      : word_t;
     signal rd_data1_wb        : word_t;
@@ -107,8 +114,7 @@ architecture data_path_arch of datapath is
     signal wr_data_fwd_wb     : word_t; -- Data to write to register file
     signal wr_index_wb        : std_logic_vector(2 downto 0); 
     signal imm_fwd_wb         : word_t;
-    signal inport_fwd_wb      : word_t;
-    signal out_port_wb        : word_t;
+    signal inport_fwd_wb      : word_t;    
     signal alu_result_wb      : word_t; -- Data to write to register file
   
     begin
@@ -151,8 +157,8 @@ architecture data_path_arch of datapath is
         inport_fwd_d <= in_port when instr_decoded_d.opcode = IN_OP else
                         X"0000";
                                        
-        out_port <= rd_data1_mem when memory_ctl_mem.op_code_mem = OUT_OP else -- Ra to outport 
-                    X"0000";
+        out_port_enable_mem <= '1' when memory_ctl_mem.op_code_mem = OUT_OP else -- Ra to outport 
+                               '0';
          
         alu_shift_d <= instr_decoded_d.shift when (instr_decoded_d.opcode = SHL_OP or instr_decoded_d.opcode = SHR_OP) else
                        "0000";
@@ -243,12 +249,12 @@ architecture data_path_arch of datapath is
         -- display_decode.s2_reg_a_data <=
         display_decode.s2_reg_b_data <= rd_data1_d;
         display_decode.s2_reg_c_data <= rd_data2_d;
-        display_decode.s2_immediate <= imm_fwd_d;
-        
+        display_decode.s2_immediate <= imm_fwd_d;       
         hazard_detect: entity work.hazard_detect_unit 
             port map (
                 -- inputs 
-                clk => sys_clk, 
+                clk => sys_clk,
+                rst => sys_rst, 
                 -- Decode stage signals
                 source_reg1 => rd_index1_d, 
                 source_reg2 => rd_index2_d,
@@ -284,7 +290,15 @@ architecture data_path_arch of datapath is
                 wr_enable => write_back_ctl_wb.reg_write,    -- Write enable (controlled by op_code_f)
                 -- outputs
                 rd_data1  => rd_data1_d,    -- Read data 1 (rb value)
-                rd_data2  => rd_data2_d    -- Read data 2 (rc value)
+                rd_data2  => rd_data2_d,    -- Read data 2 (rc value)
+                register_0 => display_register.register_0,
+                register_1 => display_register.register_1, 
+                register_2 => display_register.register_2, 
+                register_3 => display_register.register_3, 
+                register_4 => display_register.register_4, 
+                register_5 => display_register.register_5, 
+                register_6 => display_register.register_6, 
+                register_7 => display_register.register_7 
             ); 
         -- Decode
         -- concatonate imm_upper and imm_lower    
@@ -305,6 +319,7 @@ architecture data_path_arch of datapath is
                    extended_disp   =>  extended_disp_d  -- Short displacement (for BR)
             );
             rst_decode_reg_d <= '1' when sys_rst = '1' or flush_d_reg_i ='1' else '0';
+            
         -- Decode
         decode_r: entity work.decode_register
             port map (
@@ -313,6 +328,7 @@ architecture data_path_arch of datapath is
                 clk => sys_clk,
                 wr_enable => '1', -- TODO hazard control 
                 -- inputs
+                wr_instruction => instruction_d,
                 wr_pc => pc_current_d,
                 -- register file
                 wr_reg_data1 => rd_data1_d,
@@ -327,6 +343,7 @@ architecture data_path_arch of datapath is
                 wr_memory_ctl => memory_ctl_d,
                 wr_write_back_ctl => write_back_ctl_d,                
                 -- outputs
+                rd_instruction => instruction_ex,
                 rd_pc => pc_current_ex,
                 -- register file
                 rd_reg_data1 => rd_data1_ex, -- to alu in1
@@ -343,7 +360,7 @@ architecture data_path_arch of datapath is
             );   
         --------------- Execute Stage Modules -------------------
         display_execute.s3_pc <= pc_current_ex;
-     -- display_execute.s3_inst
+        display_execute.s3_inst <= instruction_ex;
         display_execute.s3_reg_a <= wr_index_ex;
     --  display_execute.s3_reg_b <= 
     --  display_execute.s3_reg_c <=
@@ -397,6 +414,7 @@ architecture data_path_arch of datapath is
             rst => sys_rst,
             clk => sys_clk,
             wr_enable => '1', -- TODO hazard control
+            wr_instruction => instruction_ex,
             wr_pc => pc_current_ex,
             -- alu
             wr_alu_result => alu_result_ex,
@@ -413,6 +431,7 @@ architecture data_path_arch of datapath is
             wr_write_back_ctl => write_back_ctl_ex,
             
             -- outputs
+            rd_instruction => instruction_mem,
             rd_pc => pc_current_mem,
             -- alu
             rd_alu_result => alu_result_mem,
@@ -429,7 +448,22 @@ architecture data_path_arch of datapath is
             rd_write_back_ctl => write_back_ctl_mem            
             );
             
-        --------------- Memory Stage Modules ----------------                                                       
+        --------------- Memory Stage Modules ---------------- 
+        display_memory.s4_pc <= pc_current_mem;
+        display_memory.s4_inst <= instruction_mem;
+        display_memory.s4_reg_a <= wr_index_wb;
+        display_memory.s4_r_wb <= write_back_ctl_wb.reg_write;
+        display_memory.s4_r_wb_data <= wr_data_d;
+        
+        out_r: entity work.out_register
+            port map (                
+                clk => sys_clk,
+                rst => sys_rst,
+                wr_data => rd_data1_mem,
+                wr_enable => out_port_enable_mem,
+                -- out puts
+                rd_data => out_port           
+            );                                                      
         mem_r: entity work.memory_register
             port map(
                 -- inputs

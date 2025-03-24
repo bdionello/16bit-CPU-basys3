@@ -4,9 +4,6 @@ Info: [XPM_MEMORY 20-1] MEMORY_PRIMITIVE (0) instructs Vivado Synthesis to choos
 Time: 1 ps  Iteration: 0  Process: /test_System/cpu0/dp_0/mem/rom_0/xpm_memory_sprom_inst/xpm_memory_base_inst/Initial270_0  File: /wrk/2017.4/nightly/2017_12_15_2086221/prep/rdi/vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv
 Warning: [XPM_MEMORY 30-15] MEMORY_TYPE (2) and MEMORY_PRIMITIVE (1) together specify a true dual port distributed RAM, which will be mapped to a dual port RAM structure using port A and B read interfaces but a single port A write interface, leaving the port B write interface unused. test_System.cpu0.dp_0.mem.ram_0.xpm_memory_dpdistram_inst.xpm_memory_base_inst.config_drc
 Time: 1 ps  Iteration: 0  Process: /test_System/cpu0/dp_0/mem/ram_0/xpm_memory_dpdistram_inst/xpm_memory_base_inst/Initial270_5  File: /wrk/2017.4/nightly/2017_12_15_2086221/prep/rdi/vivado/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv
-Stopped at time : 35 ns : File "C:/Users/bdionello/source/ECE449/sub_modules/testbench/systemTB_Boot.vhd" Line 49
-Stopped at time : 290 ns : File "C:/Users/bdionello/source/ECE449/sub_modules/testbench/systemTB_Boot.vhd" Line 80
-Stopped at time : 440 ns : File "C:/Users/bdionello/source/ECE449/sub_modules/testbench/systemTB_Boot.vhd" Line 95
 Failure: Test: End - Force stop
-Time: 510 ns  Iteration: 1  Process: /test_System/line__40  File: C:/Users/bdionello/source/ECE449/sub_modules/testbench/systemTB_Boot.vhd
-$finish called at time : 510 ns : File "C:/Users/bdionello/source/ECE449/sub_modules/testbench/systemTB_Boot.vhd" Line 99
+Time: 1400 ns  Iteration: 1  Process: /test_System/line__40  File: C:/Users/bdionello/source/ECE449/sub_modules/testbench/systemTB_Boot.vhd
+$finish called at time : 1400 ns : File "C:/Users/bdionello/source/ECE449/sub_modules/testbench/systemTB_Boot.vhd" Line 155

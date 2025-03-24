@@ -203,8 +203,8 @@ set_property PACKAGE_PIN M18 [get_ports {stm_ack}]
 #set_property PACKAGE_PIN L17 [get_ports {JC[4]}]					
 	#set_property IOSTANDARD LVCMOS33 [get_ports {JC[4]}]
 ##Sch name = JC8
-#set_property PACKAGE_PIN M19 [get_ports {JC[5]}]					
-	#set_property IOSTANDARD LVCMOS33 [get_ports {JC[5]}]
+#set_property PACKAGE_PIN M19 [get_ports {in_port[7]}]					
+#	set_property IOSTANDARD LVCMOS33 [get_ports {in_port[7]}]
 ##Sch name = JC9
 set_property PACKAGE_PIN P17 [get_ports {in_port[6]}]					
 	set_property IOSTANDARD LVCMOS33 [get_ports {in_port[6]}]

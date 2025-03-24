@@ -76,7 +76,7 @@ package cpu_types is
     
     type display_execute_type is record
         s3_pc         :  STD_LOGIC_VECTOR ( 15 downto 0 );
-    --  s3_inst       :  STD_LOGIC_VECTOR ( 15 downto 0 );      
+        s3_inst       :  STD_LOGIC_VECTOR ( 15 downto 0 );      
         s3_reg_a      :  STD_LOGIC_VECTOR( 2 downto 0 );
     --  s3_reg_b      :  STD_LOGIC_VECTOR( 2 downto 0 );
     --  s3_reg_c      :  STD_LOGIC_VECTOR( 2 downto 0 );      
@@ -115,14 +115,14 @@ package cpu_types is
         register_5    :  STD_LOGIC_VECTOR ( 15 downto 0 );
         register_6    :  STD_LOGIC_VECTOR ( 15 downto 0 );
         register_7    :  STD_LOGIC_VECTOR ( 15 downto 0 );
-        register_0_of :  STD_LOGIC;
-        register_1_of :  STD_LOGIC;
-        register_2_of :  STD_LOGIC;
-        register_3_of :  STD_LOGIC;
-        register_4_of :  STD_LOGIC;
-        register_5_of :  STD_LOGIC;
-        register_6_of :  STD_LOGIC;
-        register_7_of :  STD_LOGIC;   
+--        register_0_of :  STD_LOGIC;
+--        register_1_of :  STD_LOGIC;
+--        register_2_of :  STD_LOGIC;
+--        register_3_of :  STD_LOGIC;
+--        register_4_of :  STD_LOGIC;
+--        register_5_of :  STD_LOGIC;
+--        register_6_of :  STD_LOGIC;
+--        register_7_of :  STD_LOGIC;   
     end record display_register_type;
     
     

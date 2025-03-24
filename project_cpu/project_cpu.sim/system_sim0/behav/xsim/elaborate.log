@@ -35,6 +35,7 @@ Compiling architecture behavioral of entity xil_defaultlib.decode_register [deco
 Compiling architecture behavioral of entity xil_defaultlib.ALU [alu_default]
 Compiling architecture behavioral of entity xil_defaultlib.branch_unit [branch_unit_default]
 Compiling architecture behavioral of entity xil_defaultlib.execute_register [execute_register_default]
+Compiling architecture behavioural of entity xil_defaultlib.out_register [out_register_default]
 Compiling architecture behavioral of entity xil_defaultlib.memory_register [memory_register_default]
 Compiling architecture data_path_arch of entity xil_defaultlib.datapath [datapath_default]
 Compiling architecture controller_arch of entity xil_defaultlib.controller [controller_default]

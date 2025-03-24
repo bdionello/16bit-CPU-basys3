@@ -18,6 +18,7 @@ entity decode_register is
            clk: in std_logic := '0';
            wr_enable: in std_logic := '0';
            -- inputs
+           wr_instruction : in word_t;
            wr_pc : in word_t := (others=>'0');
            -- register file
            wr_reg_data1  : in word_t := (others=>'0');
@@ -33,6 +34,7 @@ entity decode_register is
            wr_write_back_ctl : in write_back_type := write_back_type_init_c;
            
            -- outputs
+           rd_instruction : out word_t := (others=>'0');
            rd_pc : out word_t := (others=>'0');
            -- register file
            rd_reg_data1  : out word_t := (others=>'0');
@@ -58,6 +60,7 @@ architecture Behavioral of decode_register is
         begin
             if(rising_edge(clk)) then
                 if(rst='1') then
+                    rd_instruction <= x"0000";
                     rd_pc <= (others=>'0');
                     rd_reg_data1  <= (others=>'0');
                     rd_reg_data2  <= (others=>'0');
@@ -71,6 +74,7 @@ architecture Behavioral of decode_register is
                     rd_alu_shift <= (others=>'0');                    
                      
                 elsif(wr_enable='1') then
+                    rd_instruction <= wr_instruction;
                     rd_pc <= wr_pc;
                     rd_reg_data1 <= wr_reg_data1;
                     rd_reg_data2 <= wr_reg_data2;

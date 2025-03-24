@@ -60,6 +60,7 @@ read_vhdl -library xil_defaultlib {
   C:/Users/bdionello/source/ECE449/sub_modules/decode/sign_extend.vhd
   C:/Users/bdionello/source/ECE449/sub_modules/decode/decode_register.vhd
   C:/Users/bdionello/source/ECE449/sub_modules/execute/execute_register.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/decode/out_register.vhd
   C:/Users/bdionello/source/ECE449/sub_modules/memory/memory_register.vhd
   C:/Users/bdionello/source/ECE449/sub_modules/datapath.vhd
   C:/Users/bdionello/source/ECE449/sub_modules/debug_display/led_display.vhd
