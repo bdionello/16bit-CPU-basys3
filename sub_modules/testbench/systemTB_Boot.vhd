@@ -21,7 +21,7 @@ begin
     rst_ex => reset_execute, 
     rst_ld => reset_load, 
     in_port => input_data,
-    dip_switches => input_data,
+    dip_switches => X"1111",
     out_port => output_data,
     board_clock   => clk
     );
@@ -37,14 +37,22 @@ begin
      end process;
     
     --system test process       
-    process begin    
---        reset_execute <= '1';
---        reset_load <= '0';
---        wait until falling_edge(clk);
---        reset_execute <= '0';      
---        wait until falling_edge(clk);    
-        -- Do something?
+    process begin
         wait until falling_edge(clk); 
+        wait until falling_edge(clk); 
+        wait until falling_edge(clk);
+        wait until rising_edge(clk);      
+        reset_execute <= '0';
+        reset_load <= '1';
+        wait until rising_edge(clk);
+        wait until rising_edge(clk);
+        reset_execute <= '0';
+        reset_load <= '0';      
+        wait until falling_edge(clk);    
+        -- Do something?
+        input_data <= "0000000010";
+        wait until falling_edge(clk);
+        input_data <= "1010101000"; 
         wait until falling_edge(clk); 
         wait until falling_edge(clk); 
         wait until falling_edge(clk); 

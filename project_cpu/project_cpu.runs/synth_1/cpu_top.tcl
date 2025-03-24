@@ -16,57 +16,55 @@ proc create_report { reportName command } {
     send_msg_id runtcl-5 warning "$msg"
   }
 }
-set_msg_config -id {Synth 8-256} -limit 10000
-set_msg_config -id {Synth 8-638} -limit 10000
 create_project -in_memory -part xc7a35tcpg236-1
 
 set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
-set_property webtalk.parent_dir C:/Users/Brett/source/repos/ECE449/project_cpu/project_cpu.cache/wt [current_project]
-set_property parent.project_path C:/Users/Brett/source/repos/ECE449/project_cpu/project_cpu.xpr [current_project]
+set_property webtalk.parent_dir C:/Users/bdionello/source/ECE449/project_cpu/project_cpu.cache/wt [current_project]
+set_property parent.project_path C:/Users/bdionello/source/ECE449/project_cpu/project_cpu.xpr [current_project]
 set_property XPM_LIBRARIES XPM_MEMORY [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language VHDL [current_project]
-set_property ip_output_repo c:/Users/Brett/source/repos/ECE449/project_cpu/project_cpu.cache/ip [current_project]
+set_property ip_output_repo c:/Users/bdionello/source/ECE449/project_cpu/project_cpu.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 read_mem {
-  {C:/Users/Brett/source/repos/ECE449/mem code/rom_test.mem}
-  {C:/Users/Brett/source/repos/ECE449/mem code/testB2.mem}
-  {C:/Users/Brett/source/repos/ECE449/mem code/testA.mem}
-  {C:/Users/Brett/source/repos/ECE449/mem code/testB2_V2.mem}
-  {C:/Users/Brett/source/repos/ECE449/mem code/TestL.mem}
-  {C:/Users/Brett/source/repos/ECE449/mem code/testB2_V3.mem}
-  {C:/Users/Brett/source/repos/ECE449/mem code/load_hazard_test.mem}
-  {C:/Users/Brett/source/repos/ECE449/mem code/boot_loader.mem}
+  {C:/Users/bdionello/source/ECE449/mem code/rom_test.mem}
+  {C:/Users/bdionello/source/ECE449/mem code/testB2.mem}
+  {C:/Users/bdionello/source/ECE449/mem code/testA.mem}
+  {C:/Users/bdionello/source/ECE449/mem code/testB2_V2.mem}
+  {C:/Users/bdionello/source/ECE449/mem code/TestL.mem}
+  {C:/Users/bdionello/source/ECE449/mem code/testB2_V3.mem}
+  {C:/Users/bdionello/source/ECE449/mem code/load_hazard_test.mem}
+  {C:/Users/bdionello/source/ECE449/mem code/boot_loader.mem}
 }
 read_vhdl -library xil_defaultlib {
-  C:/Users/Brett/source/repos/ECE449/sub_modules/decode/RF8_16.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_types.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/decode/adder.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/execute/alu.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/bit_to_ascii.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/memory/branch_unit.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/console.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/controller.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/memory/rom.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/memory/ram.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/memory/mem_manager.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/fetch/program_counter.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/fetch/fetch_register.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/decode/hazard_detect_unit.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/decode/decoder.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/decode/imm_concat.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/decode/sign_extend.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/decode/decode_register.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/execute/execute_register.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/memory/memory_register.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/datapath.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/led_display.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/nibble_to_ascii.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/video_timing.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/debug_display/word_to_ascii.vhd
-  C:/Users/Brett/source/repos/ECE449/sub_modules/cpu_top.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/decode/RF8_16.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/cpu_types.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/decode/adder.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/execute/alu.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/debug_display/bit_to_ascii.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/memory/branch_unit.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/debug_display/console.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/controller.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/memory/rom.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/memory/ram.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/memory/mem_manager.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/fetch/program_counter.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/fetch/fetch_register.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/decode/hazard_detect_unit.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/decode/decoder.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/decode/imm_concat.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/decode/sign_extend.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/decode/decode_register.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/execute/execute_register.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/memory/memory_register.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/datapath.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/debug_display/led_display.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/debug_display/nibble_to_ascii.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/debug_display/video_timing.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/debug_display/word_to_ascii.vhd
+  C:/Users/bdionello/source/ECE449/sub_modules/cpu_top.vhd
 }
 # Mark all dcp files as not used in implementation to prevent them from being
 # stitched into the results of this synthesis run. Any black boxes in the
@@ -76,8 +74,8 @@ read_vhdl -library xil_defaultlib {
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc C:/Users/Brett/source/repos/ECE449/constraints/CPU16_BASYS3.xdc
-set_property used_in_implementation false [get_files C:/Users/Brett/source/repos/ECE449/constraints/CPU16_BASYS3.xdc]
+read_xdc C:/Users/bdionello/source/ECE449/constraints/CPU16_BASYS3.xdc
+set_property used_in_implementation false [get_files C:/Users/bdionello/source/ECE449/constraints/CPU16_BASYS3.xdc]
 
 
 synth_design -top cpu_top -part xc7a35tcpg236-1

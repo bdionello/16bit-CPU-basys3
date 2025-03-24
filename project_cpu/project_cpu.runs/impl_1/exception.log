@@ -1,4 +1,0 @@
-ERROR: Exception caught trying to open file C:\Users\Brett\source\repos\ECE449\project_cpu\project_cpu.runs\impl_1/runme.log
-	Exception name: Error
-	Exception error code: 70
-	Exception message: Permission denied

@@ -118,11 +118,12 @@ architecture data_path_arch of datapath is
                         instruction_f(15 downto 9);                        
         ---------- Fetch
         -- program counter mux
-
+        inst_addr_f <= X"0000" when boot_mode = BOOT_EXECUTE else
+                       X"0002" when boot_mode = BOOT_LOAD else
+                       pc_out_f;
+                       
         -- pc source mux
-        pc_in_f <= pc_branch_addr_ex when (pc_src_ex = '1') and (boot_mode = RUN) else                   
-                   X"0000" when boot_mode = BOOT_EXECUTE else
-                   X"0002" when boot_mode = BOOT_LOAD else
+        pc_in_f <= pc_branch_addr_ex when (pc_src_ex = '1') else 
                    pc_next_f;
                        
         ---------- Decode
@@ -205,7 +206,7 @@ architecture data_path_arch of datapath is
                 --write signals
                 wr_instr_addr => pc_in_f, --: in std_logic_vector(15 downto 0);                
                 --read signals
-                rd_instr_addr => inst_addr_f --: out std_logic_vector(15 downto 0);          
+                rd_instr_addr => pc_out_f --: out std_logic_vector(15 downto 0);          
         );        
 
         -- Fetch

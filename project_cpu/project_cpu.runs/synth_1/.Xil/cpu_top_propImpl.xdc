@@ -1,5 +1,5 @@
-set_property SRC_FILE_INFO {cfile:C:/Users/Brett/source/repos/ECE449/constraints/CPU16_BASYS3.xdc rfile:../../../../constraints/CPU16_BASYS3.xdc id:1} [current_design]
-set_property SRC_FILE_INFO {cfile:C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl rfile:../../../../../../../../../Xilinx/Vivado/2017.4/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl id:2 order:LATE scoped_inst:dp_0/mem/ram_0/xpm_memory_dpdistram_inst unmanaged:yes} [current_design]
+set_property SRC_FILE_INFO {cfile:C:/Users/bdionello/source/ECE449/constraints/CPU16_BASYS3.xdc rfile:../../../../constraints/CPU16_BASYS3.xdc id:1} [current_design]
+set_property SRC_FILE_INFO {cfile:C:/Xilinx/Vivado/2017.4/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl rfile:../../../../../../../../Xilinx/Vivado/2017.4/data/ip/xpm/xpm_memory/tcl/xpm_memory_xdc.tcl id:2 order:LATE scoped_inst:dp_0/mem/ram_0/xpm_memory_dpdistram_inst unmanaged:yes} [current_design]
 set_property src_info {type:XDC file:1 line:7 export:INPUT save:INPUT read:READ} [current_design]
 set_property PACKAGE_PIN W5 [get_ports board_clock]
 set_property src_info {type:XDC file:1 line:15 export:INPUT save:INPUT read:READ} [current_design]
