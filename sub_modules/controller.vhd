@@ -26,12 +26,13 @@ architecture controller_arch of controller is
     signal nextstate   : ctrl_state_type;
     signal op_code_i   : op_code_t;
     signal state_code  : op_code_t;
-    signal boot_mode_i : boot_mode_type;   
+
 begin
     op_code_i <= op_code; -- connect port to internal
     -- Update state
     nextstate <=    IDLE_STATE when state = IDLE_STATE else
-                    BOOT_STATE when state = RESET_STATE else
+                    BOOT_LD_STATE when (state = RESET_LD_STATE) else
+                    BOOT_EX_STATE when (state = RESET_EX_STATE) else
                     NOP_STATE when  (op_code_i = NOP) else
                     A1_STATE when ( op_code_i = ADD or
                                     op_code_i = SUB or
@@ -54,32 +55,32 @@ begin
                     L2_LOAD_STATE when op_code_i = LOAD else
                     L2_STORE_STATE when op_code_i = STORE else 
                     L2_MOV_STATE when op_code_i = MOV else
-                    RESET_STATE; -- Clear all outputs
+                    IDLE_STATE; -- Clear all outputs
     -- state register    
     process (clk, reset_ex, reset_ld)
         begin
-        -- check reset
-        if (reset_ld = '1') or (reset_ex  = '1') then
-            state <= RESET_STATE; -- Asynchronous
-            state_code <= (others=> '0');
-            if reset_ld = '1' then
-                boot_mode_i <= BOOT_LOAD;
-            elsif reset_ex  = '1' then
-                boot_mode_i <= BOOT_EXECUTE;
-            end if; 
-        -- update state    
-        elsif rising_edge(clk) then
-            if(wr_enable='1') then    
-                state <= nextstate; -- Synchronous 
-                state_code <= op_code_i;
-            end if;            
-        end if;    
+            -- update state    
+            if rising_edge(clk) then
+                -- check reset
+                if (reset_ex = '1') then
+                    state <= RESET_EX_STATE;
+                    state_code <= (others=> '0');
+                elsif (reset_ld = '1') then
+                    state <= RESET_LD_STATE;
+                    state_code <= (others=> '0');
+                elsif(wr_enable='1') then    
+                    state <= nextstate; -- Synchronous 
+                    state_code <= op_code_i;  
+                end if;                
+            end if;           
     end process;  
     -- controller outputs  
     -- RESET STATE        
-    sys_rst <= '1' when (state = RESET_STATE) OR (state = IDLE_STATE) else '0';
-                                   
-    boot_mode <= boot_mode_i when state = RESET_STATE or state = BOOT_STATE else RUN;
+    sys_rst <= '1' when (state = RESET_LD_STATE) OR (state = RESET_EX_STATE) OR (state = IDLE_STATE) else '0';
+                                                                          
+    boot_mode <= BOOT_LOAD when state = BOOT_LD_STATE else
+                 BOOT_EXECUTE when state = BOOT_EX_STATE else
+                 RUN;
                  
    -- All states: RESET_STATE, BOOT_STATE, NOP_STATE, A1_STATE, A2_SATE, A3_STATE, B1_STATE, B2_STATE, RETURN_STATE, L1_LOAD_IMM_STATE, L2_LOAD_STATE, L2_STORE_STATE
     -- 0 for (ra <- rb op rc), 1 for (ra <- ra op rb)  
@@ -150,7 +151,7 @@ begin
 --                           '0' when state = L2_STORE_STATE else
 --                           '0';       
                            
-    memory_ctl.op_code_mem <= (others => '0') when state = RESET_STATE else
+    memory_ctl.op_code_mem <= (others => '0') when (state = RESET_LD_STATE) OR (state = RESET_EX_STATE) else
                               state_code;                              
                            
     memory_ctl.memory_read <= '0' when state = A1_STATE else

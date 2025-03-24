@@ -6,8 +6,8 @@ use ieee.numeric_std.all;
 package cpu_types is
     type alu_op_type is (alu_NOP, alu_ADD, alu_SUB, alu_MUL, alu_NAND, alu_SHL, alu_SHR, alu_TEST); 
     type wb_src_type is (ALU_RES, MEMORY_DATA, RETURN_PC, IMM_FWD, INPORT_FWD, MOV_REG, NONE);
-    type boot_mode_type is (BOOT_LOAD, BOOT_EXECUTE, IDLE, RUN);
-    type ctrl_state_type is (IDLE_STATE, RESET_STATE, BOOT_STATE, NOP_STATE, A1_STATE, A2_STATE, A3_STATE, B1_STATE, B2_STATE, RETURN_STATE, L1_LOAD_IMM_STATE, L2_LOAD_STATE, L2_STORE_STATE, L2_MOV_STATE);
+    type boot_mode_type is (BOOT_LOAD, BOOT_EXECUTE, RUN);
+    type ctrl_state_type is (IDLE_STATE, RESET_LD_STATE, RESET_EX_STATE, BOOT_LD_STATE, BOOT_EX_STATE, NOP_STATE, A1_STATE, A2_STATE, A3_STATE, B1_STATE, B2_STATE, RETURN_STATE, L1_LOAD_IMM_STATE, L2_LOAD_STATE, L2_STORE_STATE, L2_MOV_STATE);
     subtype word_t is std_logic_vector(15 downto 0); -- 2 bytes word = 16 bits
     subtype op_code_t is std_logic_vector(6 downto 0);
     subtype alu_op_t is std_logic_vector(2 downto 0);
@@ -68,7 +68,7 @@ package cpu_types is
         s2_reg_a      :  STD_LOGIC_VECTOR( 2 downto 0 );
         s2_reg_b      :  STD_LOGIC_VECTOR( 2 downto 0 );
         s2_reg_c      :  STD_LOGIC_VECTOR( 2 downto 0 );      
-        s2_reg_a_data :  STD_LOGIC_VECTOR( 15 downto 0 );
+       -- s2_reg_a_data :  STD_LOGIC_VECTOR( 15 downto 0 );
         s2_reg_b_data :  STD_LOGIC_VECTOR( 15 downto 0 );
         s2_reg_c_data :  STD_LOGIC_VECTOR( 15 downto 0 );      
         s2_immediate  :  STD_LOGIC_VECTOR( 15 downto 0 );    
@@ -76,20 +76,14 @@ package cpu_types is
     
     type display_execute_type is record
         s3_pc         :  STD_LOGIC_VECTOR ( 15 downto 0 );
-        s3_inst       :  STD_LOGIC_VECTOR ( 15 downto 0 );      
+    --  s3_inst       :  STD_LOGIC_VECTOR ( 15 downto 0 );      
         s3_reg_a      :  STD_LOGIC_VECTOR( 2 downto 0 );
-        s3_reg_b      :  STD_LOGIC_VECTOR( 2 downto 0 );
-        s3_reg_c      :  STD_LOGIC_VECTOR( 2 downto 0 );      
-        s3_reg_a_data :  STD_LOGIC_VECTOR( 15 downto 0 );
+    --  s3_reg_b      :  STD_LOGIC_VECTOR( 2 downto 0 );
+    --  s3_reg_c      :  STD_LOGIC_VECTOR( 2 downto 0 );      
+    --  s3_reg_a_data :  STD_LOGIC_VECTOR( 15 downto 0 );
         s3_reg_b_data :  STD_LOGIC_VECTOR( 15 downto 0 );
         s3_reg_c_data :  STD_LOGIC_VECTOR( 15 downto 0 );      
         s3_immediate  :  STD_LOGIC_VECTOR( 15 downto 0 );
-        zero_flag     :  STD_LOGIC;
-        negative_flag :  STD_LOGIC;
-        overflow_flag :  STD_LOGIC;   
-    end record display_execute_type;
-    
-    type display_branch_memory_op_type is record
         s3_r_wb          :  STD_LOGIC;
         s3_r_wb_data     :  STD_LOGIC_VECTOR( 15 downto 0 );      
         s3_br_wb         :  STD_LOGIC;
@@ -98,9 +92,12 @@ package cpu_types is
         s3_mr_wr_address :  STD_LOGIC_VECTOR( 15 downto 0 );
         s3_mr_wr_data    :  STD_LOGIC_VECTOR( 15 downto 0 );      
         s3_mr_rd         :  STD_LOGIC;
-        s3_mr_rd_address :  STD_LOGIC_VECTOR( 15 downto 0 );  
-    end record display_branch_memory_op_type;
-    
+        s3_mr_rd_address :  STD_LOGIC_VECTOR( 15 downto 0 );
+        zero_flag     :  STD_LOGIC;
+        negative_flag :  STD_LOGIC;
+       -- overflow_flag :  STD_LOGIC;   -- TODO IMPLEMENT ME
+    end record display_execute_type;
+        
     type display_memory_type is record
         s4_pc        :  STD_LOGIC_VECTOR( 15 downto 0 );
         s4_inst      :  STD_LOGIC_VECTOR( 15 downto 0 );      

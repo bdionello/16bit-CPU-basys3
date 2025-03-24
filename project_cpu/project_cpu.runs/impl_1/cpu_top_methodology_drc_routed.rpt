@@ -1,7 +1,7 @@
 Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
-| Date         : Sun Mar 23 16:07:06 2025
+| Date         : Sun Mar 23 22:12:47 2025
 | Host         : ws11-11 running 64-bit major release  (build 9200)
 | Command      : report_methodology -file cpu_top_methodology_drc_routed.rpt -pb cpu_top_methodology_drc_routed.pb -rpx cpu_top_methodology_drc_routed.rpx
 | Design       : cpu_top
@@ -23,93 +23,17 @@ Table of Contents
           Floorplan: design_1
       Design limits: <entire design considered>
              Max violations: <unlimited>
-             Violations found: 158
+             Violations found: 147
 +-----------+----------+---------------------------------------------+------------+
 | Rule      | Severity | Description                                 | Violations |
 +-----------+----------+---------------------------------------------+------------+
-| TIMING-15 | Warning  | Large hold violation on inter-clock path    | 15         |
-| TIMING-17 | Warning  | Non-clocked sequential cell                 | 86         |
+| TIMING-17 | Warning  | Non-clocked sequential cell                 | 90         |
 | TIMING-18 | Warning  | Missing input or output delay               | 56         |
 | TIMING-35 | Warning  | No common node in paths with the same clock | 1          |
 +-----------+----------+---------------------------------------------+------------+
 
 2. REPORT DETAILS
 -----------------
-TIMING-15#1 Warning
-Large hold violation on inter-clock path  
-There is a large inter-clock skew of 9.538 ns between stm_sys_clk (clocked by stm_sys_clk) and dp_0/mem_r/rd_mem_data_reg[0]/D (clocked by stm_sys_clk) that results in large hold timing violation(s) of -1.220 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
-Related violations: <none>
-
-TIMING-15#2 Warning
-Large hold violation on inter-clock path  
-There is a large inter-clock skew of 9.538 ns between stm_sys_clk (clocked by stm_sys_clk) and dp_0/mem_r/rd_mem_data_reg[4]/D (clocked by stm_sys_clk) that results in large hold timing violation(s) of -1.285 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
-Related violations: <none>
-
-TIMING-15#3 Warning
-Large hold violation on inter-clock path  
-There is a large inter-clock skew of 9.538 ns between stm_sys_clk (clocked by stm_sys_clk) and dp_0/mem_r/rd_mem_data_reg[7]/D (clocked by stm_sys_clk) that results in large hold timing violation(s) of -1.220 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
-Related violations: <none>
-
-TIMING-15#4 Warning
-Large hold violation on inter-clock path  
-There is a large inter-clock skew of 9.540 ns between stm_sys_clk (clocked by stm_sys_clk) and dp_0/mem_r/rd_mem_data_reg[12]/D (clocked by stm_sys_clk) that results in large hold timing violation(s) of -1.525 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
-Related violations: <none>
-
-TIMING-15#5 Warning
-Large hold violation on inter-clock path  
-There is a large inter-clock skew of 9.540 ns between stm_sys_clk (clocked by stm_sys_clk) and dp_0/mem_r/rd_mem_data_reg[3]/D (clocked by stm_sys_clk) that results in large hold timing violation(s) of -3.372 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
-Related violations: <none>
-
-TIMING-15#6 Warning
-Large hold violation on inter-clock path  
-There is a large inter-clock skew of 9.540 ns between stm_sys_clk (clocked by stm_sys_clk) and dp_0/mem_r/rd_mem_data_reg[5]/D (clocked by stm_sys_clk) that results in large hold timing violation(s) of -2.988 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
-Related violations: <none>
-
-TIMING-15#7 Warning
-Large hold violation on inter-clock path  
-There is a large inter-clock skew of 9.540 ns between stm_sys_clk (clocked by stm_sys_clk) and dp_0/mem_r/rd_mem_data_reg[6]/D (clocked by stm_sys_clk) that results in large hold timing violation(s) of -2.956 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
-Related violations: <none>
-
-TIMING-15#8 Warning
-Large hold violation on inter-clock path  
-There is a large inter-clock skew of 9.540 ns between stm_sys_clk (clocked by stm_sys_clk) and dp_0/mem_r/rd_mem_data_reg[8]/D (clocked by stm_sys_clk) that results in large hold timing violation(s) of -1.500 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
-Related violations: <none>
-
-TIMING-15#9 Warning
-Large hold violation on inter-clock path  
-There is a large inter-clock skew of 9.541 ns between stm_sys_clk (clocked by stm_sys_clk) and dp_0/mem_r/rd_mem_data_reg[2]/D (clocked by stm_sys_clk) that results in large hold timing violation(s) of -2.703 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
-Related violations: <none>
-
-TIMING-15#10 Warning
-Large hold violation on inter-clock path  
-There is a large inter-clock skew of 9.542 ns between stm_sys_clk (clocked by stm_sys_clk) and dp_0/mem_r/rd_mem_data_reg[13]/D (clocked by stm_sys_clk) that results in large hold timing violation(s) of -1.772 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
-Related violations: <none>
-
-TIMING-15#11 Warning
-Large hold violation on inter-clock path  
-There is a large inter-clock skew of 9.542 ns between stm_sys_clk (clocked by stm_sys_clk) and dp_0/mem_r/rd_mem_data_reg[14]/D (clocked by stm_sys_clk) that results in large hold timing violation(s) of -1.912 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
-Related violations: <none>
-
-TIMING-15#12 Warning
-Large hold violation on inter-clock path  
-There is a large inter-clock skew of 9.542 ns between stm_sys_clk (clocked by stm_sys_clk) and dp_0/mem_r/rd_mem_data_reg[9]/D (clocked by stm_sys_clk) that results in large hold timing violation(s) of -2.014 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
-Related violations: <none>
-
-TIMING-15#13 Warning
-Large hold violation on inter-clock path  
-There is a large inter-clock skew of 9.543 ns between stm_sys_clk (clocked by stm_sys_clk) and dp_0/mem_r/rd_mem_data_reg[10]/D (clocked by stm_sys_clk) that results in large hold timing violation(s) of -2.297 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
-Related violations: <none>
-
-TIMING-15#14 Warning
-Large hold violation on inter-clock path  
-There is a large inter-clock skew of 9.543 ns between stm_sys_clk (clocked by stm_sys_clk) and dp_0/mem_r/rd_mem_data_reg[11]/D (clocked by stm_sys_clk) that results in large hold timing violation(s) of -2.300 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
-Related violations: <none>
-
-TIMING-15#15 Warning
-Large hold violation on inter-clock path  
-There is a large inter-clock skew of 9.543 ns between stm_sys_clk (clocked by stm_sys_clk) and dp_0/mem_r/rd_mem_data_reg[15]/D (clocked by stm_sys_clk) that results in large hold timing violation(s) of -2.316 ns. Fixing large hold violations during routing might impact setup slack and result in more difficult timing closure
-Related violations: <none>
-
 TIMING-17#1 Warning
 Non-clocked sequential cell  
 The clock pin console_display/Hdot_delayed_reg[0]/C is not reached by a timing clock
@@ -222,320 +146,340 @@ Related violations: <none>
 
 TIMING-17#23 Warning
 Non-clocked sequential cell  
-The clock pin console_display/display_address_reg[10]/C is not reached by a timing clock
+The clock pin console_display/display_address_reg[0]_rep/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#24 Warning
 Non-clocked sequential cell  
-The clock pin console_display/display_address_reg[1]/C is not reached by a timing clock
+The clock pin console_display/display_address_reg[0]_rep__0/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#25 Warning
 Non-clocked sequential cell  
-The clock pin console_display/display_address_reg[2]/C is not reached by a timing clock
+The clock pin console_display/display_address_reg[10]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#26 Warning
 Non-clocked sequential cell  
-The clock pin console_display/display_address_reg[3]/C is not reached by a timing clock
+The clock pin console_display/display_address_reg[1]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#27 Warning
 Non-clocked sequential cell  
-The clock pin console_display/display_address_reg[4]/C is not reached by a timing clock
+The clock pin console_display/display_address_reg[1]_rep/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#28 Warning
 Non-clocked sequential cell  
-The clock pin console_display/display_address_reg[5]/C is not reached by a timing clock
+The clock pin console_display/display_address_reg[1]_rep__0/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#29 Warning
 Non-clocked sequential cell  
-The clock pin console_display/display_address_reg[6]/C is not reached by a timing clock
+The clock pin console_display/display_address_reg[2]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#30 Warning
 Non-clocked sequential cell  
-The clock pin console_display/display_address_reg[7]/C is not reached by a timing clock
+The clock pin console_display/display_address_reg[3]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#31 Warning
 Non-clocked sequential cell  
-The clock pin console_display/display_address_reg[8]/C is not reached by a timing clock
+The clock pin console_display/display_address_reg[4]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#32 Warning
 Non-clocked sequential cell  
-The clock pin console_display/display_address_reg[9]/C is not reached by a timing clock
+The clock pin console_display/display_address_reg[5]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#33 Warning
 Non-clocked sequential cell  
-The clock pin console_display/offset_reg[0]/C is not reached by a timing clock
+The clock pin console_display/display_address_reg[6]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#34 Warning
 Non-clocked sequential cell  
-The clock pin console_display/offset_reg[10]/C is not reached by a timing clock
+The clock pin console_display/display_address_reg[7]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#35 Warning
 Non-clocked sequential cell  
-The clock pin console_display/offset_reg[1]/C is not reached by a timing clock
+The clock pin console_display/display_address_reg[8]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#36 Warning
 Non-clocked sequential cell  
-The clock pin console_display/offset_reg[2]/C is not reached by a timing clock
+The clock pin console_display/display_address_reg[9]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#37 Warning
 Non-clocked sequential cell  
-The clock pin console_display/offset_reg[3]/C is not reached by a timing clock
+The clock pin console_display/offset_reg[0]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#38 Warning
 Non-clocked sequential cell  
-The clock pin console_display/offset_reg[4]/C is not reached by a timing clock
+The clock pin console_display/offset_reg[10]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#39 Warning
 Non-clocked sequential cell  
-The clock pin console_display/offset_reg[5]/C is not reached by a timing clock
+The clock pin console_display/offset_reg[1]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#40 Warning
 Non-clocked sequential cell  
-The clock pin console_display/offset_reg[6]/C is not reached by a timing clock
+The clock pin console_display/offset_reg[2]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#41 Warning
 Non-clocked sequential cell  
-The clock pin console_display/offset_reg[7]/C is not reached by a timing clock
+The clock pin console_display/offset_reg[3]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#42 Warning
 Non-clocked sequential cell  
-The clock pin console_display/offset_reg[8]/C is not reached by a timing clock
+The clock pin console_display/offset_reg[4]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#43 Warning
 Non-clocked sequential cell  
-The clock pin console_display/offset_reg[9]/C is not reached by a timing clock
+The clock pin console_display/offset_reg[5]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#44 Warning
 Non-clocked sequential cell  
-The clock pin console_display/opcode_reg[0]/C is not reached by a timing clock
+The clock pin console_display/offset_reg[6]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#45 Warning
 Non-clocked sequential cell  
-The clock pin console_display/opcode_reg[1]/C is not reached by a timing clock
+The clock pin console_display/offset_reg[7]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#46 Warning
 Non-clocked sequential cell  
-The clock pin console_display/opcode_reg[2]/C is not reached by a timing clock
+The clock pin console_display/offset_reg[8]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#47 Warning
 Non-clocked sequential cell  
-The clock pin console_display/opcode_reg[3]/C is not reached by a timing clock
+The clock pin console_display/offset_reg[9]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#48 Warning
 Non-clocked sequential cell  
-The clock pin console_display/opcode_reg[4]/C is not reached by a timing clock
+The clock pin console_display/opcode_reg[0]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#49 Warning
 Non-clocked sequential cell  
-The clock pin console_display/opcode_reg[5]/C is not reached by a timing clock
+The clock pin console_display/opcode_reg[1]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#50 Warning
 Non-clocked sequential cell  
-The clock pin console_display/opcode_reg[6]/C is not reached by a timing clock
+The clock pin console_display/opcode_reg[2]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#51 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/h_dot_int_reg[0]/C is not reached by a timing clock
+The clock pin console_display/opcode_reg[3]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#52 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/h_dot_int_reg[10]/C is not reached by a timing clock
+The clock pin console_display/opcode_reg[4]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#53 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/h_dot_int_reg[1]/C is not reached by a timing clock
+The clock pin console_display/opcode_reg[5]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#54 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/h_dot_int_reg[2]/C is not reached by a timing clock
+The clock pin console_display/opcode_reg[6]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#55 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/h_dot_int_reg[3]/C is not reached by a timing clock
+The clock pin console_display/timing/h_dot_int_reg[0]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#56 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/h_dot_int_reg[4]/C is not reached by a timing clock
+The clock pin console_display/timing/h_dot_int_reg[10]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#57 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/h_dot_int_reg[5]/C is not reached by a timing clock
+The clock pin console_display/timing/h_dot_int_reg[1]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#58 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/h_dot_int_reg[6]/C is not reached by a timing clock
+The clock pin console_display/timing/h_dot_int_reg[2]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#59 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/h_dot_int_reg[7]/C is not reached by a timing clock
+The clock pin console_display/timing/h_dot_int_reg[3]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#60 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/h_dot_int_reg[8]/C is not reached by a timing clock
+The clock pin console_display/timing/h_dot_int_reg[4]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#61 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/h_dot_int_reg[9]/C is not reached by a timing clock
+The clock pin console_display/timing/h_dot_int_reg[5]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#62 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/h_sync_reg/C is not reached by a timing clock
+The clock pin console_display/timing/h_dot_int_reg[6]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#63 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/h_sync_reg_lopt_replica/C is not reached by a timing clock
+The clock pin console_display/timing/h_dot_int_reg[7]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#64 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/v_line_int_reg[0]/C is not reached by a timing clock
+The clock pin console_display/timing/h_dot_int_reg[8]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#65 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/v_line_int_reg[1]/C is not reached by a timing clock
+The clock pin console_display/timing/h_dot_int_reg[9]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#66 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/v_line_int_reg[2]/C is not reached by a timing clock
+The clock pin console_display/timing/h_sync_reg/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#67 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/v_line_int_reg[3]/C is not reached by a timing clock
+The clock pin console_display/timing/h_sync_reg_lopt_replica/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#68 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/v_line_int_reg[4]/C is not reached by a timing clock
+The clock pin console_display/timing/v_line_int_reg[0]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#69 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/v_line_int_reg[5]/C is not reached by a timing clock
+The clock pin console_display/timing/v_line_int_reg[1]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#70 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/v_line_int_reg[6]/C is not reached by a timing clock
+The clock pin console_display/timing/v_line_int_reg[2]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#71 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/v_line_int_reg[7]/C is not reached by a timing clock
+The clock pin console_display/timing/v_line_int_reg[3]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#72 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/v_line_int_reg[8]/C is not reached by a timing clock
+The clock pin console_display/timing/v_line_int_reg[4]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#73 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/v_line_int_reg[9]/C is not reached by a timing clock
+The clock pin console_display/timing/v_line_int_reg[5]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#74 Warning
 Non-clocked sequential cell  
-The clock pin console_display/timing/v_sync_reg/C is not reached by a timing clock
+The clock pin console_display/timing/v_line_int_reg[6]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#75 Warning
 Non-clocked sequential cell  
-The clock pin console_display/vga_red_reg[3]/C is not reached by a timing clock
+The clock pin console_display/timing/v_line_int_reg[7]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#76 Warning
 Non-clocked sequential cell  
-The clock pin console_display/vga_red_reg[3]_lopt_replica/C is not reached by a timing clock
+The clock pin console_display/timing/v_line_int_reg[8]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#77 Warning
 Non-clocked sequential cell  
-The clock pin console_display/vga_red_reg[3]_lopt_replica_10/C is not reached by a timing clock
+The clock pin console_display/timing/v_line_int_reg[9]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#78 Warning
 Non-clocked sequential cell  
-The clock pin console_display/vga_red_reg[3]_lopt_replica_11/C is not reached by a timing clock
+The clock pin console_display/timing/v_sync_reg/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#79 Warning
 Non-clocked sequential cell  
-The clock pin console_display/vga_red_reg[3]_lopt_replica_2/C is not reached by a timing clock
+The clock pin console_display/vga_red_reg[3]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#80 Warning
 Non-clocked sequential cell  
-The clock pin console_display/vga_red_reg[3]_lopt_replica_3/C is not reached by a timing clock
+The clock pin console_display/vga_red_reg[3]_lopt_replica/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#81 Warning
 Non-clocked sequential cell  
-The clock pin console_display/vga_red_reg[3]_lopt_replica_4/C is not reached by a timing clock
+The clock pin console_display/vga_red_reg[3]_lopt_replica_10/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#82 Warning
 Non-clocked sequential cell  
-The clock pin console_display/vga_red_reg[3]_lopt_replica_5/C is not reached by a timing clock
+The clock pin console_display/vga_red_reg[3]_lopt_replica_11/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#83 Warning
 Non-clocked sequential cell  
-The clock pin console_display/vga_red_reg[3]_lopt_replica_6/C is not reached by a timing clock
+The clock pin console_display/vga_red_reg[3]_lopt_replica_2/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#84 Warning
 Non-clocked sequential cell  
-The clock pin console_display/vga_red_reg[3]_lopt_replica_7/C is not reached by a timing clock
+The clock pin console_display/vga_red_reg[3]_lopt_replica_3/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#85 Warning
 Non-clocked sequential cell  
-The clock pin console_display/vga_red_reg[3]_lopt_replica_8/C is not reached by a timing clock
+The clock pin console_display/vga_red_reg[3]_lopt_replica_4/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#86 Warning
+Non-clocked sequential cell  
+The clock pin console_display/vga_red_reg[3]_lopt_replica_5/C is not reached by a timing clock
+Related violations: <none>
+
+TIMING-17#87 Warning
+Non-clocked sequential cell  
+The clock pin console_display/vga_red_reg[3]_lopt_replica_6/C is not reached by a timing clock
+Related violations: <none>
+
+TIMING-17#88 Warning
+Non-clocked sequential cell  
+The clock pin console_display/vga_red_reg[3]_lopt_replica_7/C is not reached by a timing clock
+Related violations: <none>
+
+TIMING-17#89 Warning
+Non-clocked sequential cell  
+The clock pin console_display/vga_red_reg[3]_lopt_replica_8/C is not reached by a timing clock
+Related violations: <none>
+
+TIMING-17#90 Warning
 Non-clocked sequential cell  
 The clock pin console_display/vga_red_reg[3]_lopt_replica_9/C is not reached by a timing clock
 Related violations: <none>
@@ -822,7 +766,7 @@ Related violations: <none>
 
 TIMING-35#1 Warning
 No common node in paths with the same clock  
-The clock stm_sys_clk has paths without a common node. First path found between stm_sys_clk and dp_0/mem_r/rd_mem_data_reg[10]/D. Please review clock constraints
+The clock stm_sys_clk has paths without a common node. First path found between stm_sys_clk and dp_0/mem_r/rd_mem_data_reg[0]/D. Please review clock constraints
 Related violations: <none>
 
 

@@ -42,6 +42,8 @@ begin
         wait until falling_edge(clk); 
         wait until falling_edge(clk);
         wait until rising_edge(clk);      
+--        reset_execute <= '1';
+--        reset_load <= '0';
         reset_execute <= '0';
         reset_load <= '1';
         wait until rising_edge(clk);
@@ -51,6 +53,16 @@ begin
         wait until falling_edge(clk);    
         -- Do something?
         input_data <= "0000000010";
+        wait until falling_edge(clk); 
+        wait until falling_edge(clk); 
+        wait until falling_edge(clk); 
+        wait until falling_edge(clk);
+        wait until falling_edge(clk); 
+        wait until falling_edge(clk); 
+        wait until falling_edge(clk); 
+        wait until falling_edge(clk); 
+        wait until falling_edge(clk);
+        wait until falling_edge(clk);
         wait until falling_edge(clk);
         input_data <= "1010101000"; 
         wait until falling_edge(clk); 

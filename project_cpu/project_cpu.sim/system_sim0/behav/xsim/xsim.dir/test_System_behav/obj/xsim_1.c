@@ -243,8 +243,9 @@ extern void transaction_241(char*, char*, unsigned, unsigned, unsigned);
 extern void transaction_242(char*, char*, unsigned, unsigned, unsigned);
 extern void transaction_243(char*, char*, unsigned, unsigned, unsigned);
 extern void transaction_244(char*, char*, unsigned, unsigned, unsigned);
-extern void transaction_311(char*, char*, unsigned, unsigned, unsigned);
-extern void transaction_313(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_310(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_312(char*, char*, unsigned, unsigned, unsigned);
+extern void transaction_322(char*, char*, unsigned, unsigned, unsigned);
 extern void transaction_323(char*, char*, unsigned, unsigned, unsigned);
 extern void transaction_324(char*, char*, unsigned, unsigned, unsigned);
 extern void transaction_325(char*, char*, unsigned, unsigned, unsigned);
@@ -252,15 +253,14 @@ extern void transaction_326(char*, char*, unsigned, unsigned, unsigned);
 extern void transaction_327(char*, char*, unsigned, unsigned, unsigned);
 extern void transaction_328(char*, char*, unsigned, unsigned, unsigned);
 extern void transaction_329(char*, char*, unsigned, unsigned, unsigned);
-extern void transaction_330(char*, char*, unsigned, unsigned, unsigned);
-funcp funcTab[209] = {(funcp)execute_335, (funcp)execute_336, (funcp)execute_64, (funcp)execute_65, (funcp)execute_66, (funcp)execute_67, (funcp)execute_68, (funcp)execute_70, (funcp)execute_71, (funcp)execute_72, (funcp)execute_73, (funcp)execute_74, (funcp)execute_75, (funcp)execute_76, (funcp)execute_77, (funcp)execute_78, (funcp)execute_79, (funcp)execute_80, (funcp)execute_81, (funcp)execute_82, (funcp)execute_83, (funcp)execute_84, (funcp)execute_85, (funcp)execute_86, (funcp)execute_87, (funcp)execute_127, (funcp)execute_145, (funcp)execute_89, (funcp)execute_90, (funcp)execute_91, (funcp)execute_92, (funcp)execute_93, (funcp)execute_94, (funcp)execute_95, (funcp)execute_96, (funcp)execute_97, (funcp)execute_98, (funcp)vlog_const_rhs_process_execute_0_fast_no_reg_no_agg, (funcp)execute_365, (funcp)execute_371, (funcp)execute_372, (funcp)execute_103, (funcp)execute_105, (funcp)execute_107, (funcp)execute_108, (funcp)execute_109, (funcp)vlog_simple_process_execute_0_fast_no_reg_no_agg, (funcp)execute_351, (funcp)execute_354, (funcp)execute_407, (funcp)execute_113, (funcp)execute_115, (funcp)execute_117, (funcp)execute_118, (funcp)execute_119, (funcp)execute_120, (funcp)execute_121, (funcp)execute_122, (funcp)execute_387, (funcp)execute_391, (funcp)execute_124, (funcp)execute_126, (funcp)execute_129, (funcp)execute_131, (funcp)execute_132, (funcp)execute_135, (funcp)execute_136, (funcp)execute_138, (funcp)execute_139, (funcp)execute_140, (funcp)execute_142, (funcp)execute_144, (funcp)execute_147, (funcp)execute_149, (funcp)execute_151, (funcp)execute_153, (funcp)execute_155, (funcp)execute_157, (funcp)execute_158, (funcp)execute_159, (funcp)execute_160, (funcp)execute_161, (funcp)execute_162, (funcp)execute_163, (funcp)execute_164, (funcp)execute_165, (funcp)execute_166, (funcp)execute_167, (funcp)execute_168, (funcp)execute_169, (funcp)execute_170, (funcp)execute_172, (funcp)execute_173, (funcp)execute_174, (funcp)execute_175, (funcp)execute_176, (funcp)execute_178, (funcp)execute_179, (funcp)execute_180, (funcp)execute_181, (funcp)execute_182, (funcp)execute_183, (funcp)execute_184, (funcp)execute_185, (funcp)execute_186, (funcp)execute_187, (funcp)execute_188, (funcp)execute_189, (funcp)execute_190, (funcp)execute_191, (funcp)execute_192, (funcp)execute_193, (funcp)execute_194, (funcp)execute_195, (funcp)execute_196, (funcp)execute_197, (funcp)execute_198, (funcp)execute_199, (funcp)execute_200, (funcp)execute_201, (funcp)execute_202, (funcp)execute_203, (funcp)execute_204, (funcp)execute_205, (funcp)execute_206, (funcp)execute_207, (funcp)execute_208, (funcp)execute_209, (funcp)execute_210, (funcp)execute_211, (funcp)execute_212, (funcp)execute_213, (funcp)execute_214, (funcp)execute_215, (funcp)execute_216, (funcp)execute_221, (funcp)execute_328, (funcp)execute_329, (funcp)execute_330, (funcp)execute_331, (funcp)execute_332, (funcp)execute_333, (funcp)execute_334, (funcp)execute_218, (funcp)execute_219, (funcp)execute_220, (funcp)execute_223, (funcp)execute_231, (funcp)execute_263, (funcp)transaction_0, (funcp)vhdl_transfunc_eventcallback, (funcp)transaction_33, (funcp)transaction_34, (funcp)transaction_35, (funcp)transaction_42, (funcp)transaction_43, (funcp)transaction_44, (funcp)transaction_60, (funcp)transaction_138, (funcp)transaction_160, (funcp)transaction_161, (funcp)transaction_162, (funcp)transaction_163, (funcp)transaction_164, (funcp)transaction_165, (funcp)transaction_166, (funcp)transaction_168, (funcp)transaction_169, (funcp)transaction_170, (funcp)transaction_171, (funcp)transaction_172, (funcp)transaction_173, (funcp)transaction_174, (funcp)transaction_175, (funcp)transaction_176, (funcp)transaction_177, (funcp)transaction_178, (funcp)transaction_179, (funcp)transaction_180, (funcp)transaction_181, (funcp)transaction_182, (funcp)transaction_183, (funcp)vlog_transfunc_eventcallback, (funcp)transaction_229, (funcp)transaction_230, (funcp)transaction_231, (funcp)transaction_232, (funcp)transaction_233, (funcp)transaction_234, (funcp)transaction_235, (funcp)transaction_236, (funcp)transaction_237, (funcp)transaction_238, (funcp)transaction_239, (funcp)transaction_240, (funcp)transaction_241, (funcp)transaction_242, (funcp)transaction_243, (funcp)transaction_244, (funcp)transaction_311, (funcp)transaction_313, (funcp)transaction_323, (funcp)transaction_324, (funcp)transaction_325, (funcp)transaction_326, (funcp)transaction_327, (funcp)transaction_328, (funcp)transaction_329, (funcp)transaction_330};
+funcp funcTab[209] = {(funcp)execute_335, (funcp)execute_336, (funcp)execute_64, (funcp)execute_65, (funcp)execute_66, (funcp)execute_67, (funcp)execute_68, (funcp)execute_70, (funcp)execute_71, (funcp)execute_72, (funcp)execute_73, (funcp)execute_74, (funcp)execute_75, (funcp)execute_76, (funcp)execute_77, (funcp)execute_78, (funcp)execute_79, (funcp)execute_80, (funcp)execute_81, (funcp)execute_82, (funcp)execute_83, (funcp)execute_84, (funcp)execute_85, (funcp)execute_86, (funcp)execute_87, (funcp)execute_127, (funcp)execute_145, (funcp)execute_89, (funcp)execute_90, (funcp)execute_91, (funcp)execute_92, (funcp)execute_93, (funcp)execute_94, (funcp)execute_95, (funcp)execute_96, (funcp)execute_97, (funcp)execute_98, (funcp)vlog_const_rhs_process_execute_0_fast_no_reg_no_agg, (funcp)execute_365, (funcp)execute_371, (funcp)execute_372, (funcp)execute_103, (funcp)execute_105, (funcp)execute_107, (funcp)execute_108, (funcp)execute_109, (funcp)vlog_simple_process_execute_0_fast_no_reg_no_agg, (funcp)execute_351, (funcp)execute_354, (funcp)execute_407, (funcp)execute_113, (funcp)execute_115, (funcp)execute_117, (funcp)execute_118, (funcp)execute_119, (funcp)execute_120, (funcp)execute_121, (funcp)execute_122, (funcp)execute_387, (funcp)execute_391, (funcp)execute_124, (funcp)execute_126, (funcp)execute_129, (funcp)execute_131, (funcp)execute_132, (funcp)execute_135, (funcp)execute_136, (funcp)execute_138, (funcp)execute_139, (funcp)execute_140, (funcp)execute_142, (funcp)execute_144, (funcp)execute_147, (funcp)execute_149, (funcp)execute_151, (funcp)execute_153, (funcp)execute_155, (funcp)execute_157, (funcp)execute_158, (funcp)execute_159, (funcp)execute_160, (funcp)execute_161, (funcp)execute_162, (funcp)execute_163, (funcp)execute_164, (funcp)execute_165, (funcp)execute_166, (funcp)execute_167, (funcp)execute_168, (funcp)execute_169, (funcp)execute_170, (funcp)execute_172, (funcp)execute_173, (funcp)execute_174, (funcp)execute_175, (funcp)execute_176, (funcp)execute_178, (funcp)execute_179, (funcp)execute_180, (funcp)execute_181, (funcp)execute_182, (funcp)execute_183, (funcp)execute_184, (funcp)execute_185, (funcp)execute_186, (funcp)execute_187, (funcp)execute_188, (funcp)execute_189, (funcp)execute_190, (funcp)execute_191, (funcp)execute_192, (funcp)execute_193, (funcp)execute_194, (funcp)execute_195, (funcp)execute_196, (funcp)execute_197, (funcp)execute_198, (funcp)execute_199, (funcp)execute_200, (funcp)execute_201, (funcp)execute_202, (funcp)execute_203, (funcp)execute_204, (funcp)execute_205, (funcp)execute_206, (funcp)execute_207, (funcp)execute_208, (funcp)execute_209, (funcp)execute_210, (funcp)execute_211, (funcp)execute_212, (funcp)execute_213, (funcp)execute_214, (funcp)execute_215, (funcp)execute_216, (funcp)execute_221, (funcp)execute_328, (funcp)execute_329, (funcp)execute_330, (funcp)execute_331, (funcp)execute_332, (funcp)execute_333, (funcp)execute_334, (funcp)execute_218, (funcp)execute_219, (funcp)execute_220, (funcp)execute_223, (funcp)execute_231, (funcp)execute_263, (funcp)transaction_0, (funcp)vhdl_transfunc_eventcallback, (funcp)transaction_33, (funcp)transaction_34, (funcp)transaction_35, (funcp)transaction_42, (funcp)transaction_43, (funcp)transaction_44, (funcp)transaction_60, (funcp)transaction_138, (funcp)transaction_160, (funcp)transaction_161, (funcp)transaction_162, (funcp)transaction_163, (funcp)transaction_164, (funcp)transaction_165, (funcp)transaction_166, (funcp)transaction_168, (funcp)transaction_169, (funcp)transaction_170, (funcp)transaction_171, (funcp)transaction_172, (funcp)transaction_173, (funcp)transaction_174, (funcp)transaction_175, (funcp)transaction_176, (funcp)transaction_177, (funcp)transaction_178, (funcp)transaction_179, (funcp)transaction_180, (funcp)transaction_181, (funcp)transaction_182, (funcp)transaction_183, (funcp)vlog_transfunc_eventcallback, (funcp)transaction_229, (funcp)transaction_230, (funcp)transaction_231, (funcp)transaction_232, (funcp)transaction_233, (funcp)transaction_234, (funcp)transaction_235, (funcp)transaction_236, (funcp)transaction_237, (funcp)transaction_238, (funcp)transaction_239, (funcp)transaction_240, (funcp)transaction_241, (funcp)transaction_242, (funcp)transaction_243, (funcp)transaction_244, (funcp)transaction_310, (funcp)transaction_312, (funcp)transaction_322, (funcp)transaction_323, (funcp)transaction_324, (funcp)transaction_325, (funcp)transaction_326, (funcp)transaction_327, (funcp)transaction_328, (funcp)transaction_329};
 const int NumRelocateId= 209;
 
 void relocate(char *dp)
 {
 	iki_relocate(dp, "xsim.dir/test_System_behav/xsim.reloc",  (void **)funcTab, 209);
-	iki_vhdl_file_variable_register(dp + 98512);
-	iki_vhdl_file_variable_register(dp + 98568);
+	iki_vhdl_file_variable_register(dp + 98296);
+	iki_vhdl_file_variable_register(dp + 98352);
 
 
 	/*Populate the transaction function pointer field in the whole net structure */
@@ -276,45 +276,45 @@ void simulate(char *dp)
 	iki_schedule_processes_at_time_zero(dp, "xsim.dir/test_System_behav/xsim.reloc");
 	// Initialize Verilog nets in mixed simulation, for the cases when the value at time 0 should be propagated from the mixed language Vhdl net
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 117216, dp + 117480, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 117008, dp + 117272, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 101208, dp + 117536, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 100992, dp + 117328, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 114784, dp + 117592, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 114576, dp + 117384, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 114880, dp + 117648, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 114672, dp + 117440, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 117272, dp + 117704, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 117064, dp + 117496, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 115088, dp + 117760, 0, 8, 7, 15, 9, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 114880, dp + 117552, 0, 8, 7, 15, 9, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 117328, dp + 117816, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 117120, dp + 117608, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 117384, dp + 117872, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 117176, dp + 117664, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 101208, dp + 130216, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 100992, dp + 130008, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 114784, dp + 130272, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 114576, dp + 130064, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 114936, dp + 130328, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 114728, dp + 130120, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 130064, dp + 130384, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 129856, dp + 130176, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 114840, dp + 130440, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 114632, dp + 130232, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 115048, dp + 130496, 0, 8, 7, 15, 9, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 114840, dp + 130288, 0, 8, 7, 15, 9, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 110024, dp + 130552, 0, 15, 0, 15, 16, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 109816, dp + 130344, 0, 15, 0, 15, 16, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 101208, dp + 130664, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 100992, dp + 130456, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 114784, dp + 130720, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 114576, dp + 130512, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 114992, dp + 130776, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 114784, dp + 130568, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 130120, dp + 130832, 0, 0, 0, 0, 1, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 129912, dp + 130624, 0, 0, 0, 0, 1, 1);
 
-	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 115088, dp + 130888, 0, 8, 7, 15, 9, 1);
+	iki_vlog_schedule_transaction_signal_fast_vhdl_value_time_0(dp + 114880, dp + 130680, 0, 8, 7, 15, 9, 1);
 	iki_execute_processes();
 
 	// Schedule resolution functions for the multiply driven Verilog nets that have strength

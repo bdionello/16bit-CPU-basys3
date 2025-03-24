@@ -24,7 +24,9 @@ entity datapath is
         op_code_out    : out op_code_t;
         led_7seg_data  : out word_t;
         -- console display signals
-        display_fetch  : out display_fetch_type
+        display_fetch  : out display_fetch_type;
+        display_decode : out display_decode_type;
+        display_execute: out display_execute_type
         );        
 end datapath;
 
@@ -233,6 +235,16 @@ architecture data_path_arch of datapath is
             );
             
         --------------- Decode Stage Modules ------------------- 
+        display_decode.s2_pc <= pc_current_d;
+        display_decode.s2_inst <= instruction_d;
+        display_decode.s2_reg_a <= wr_index_d;
+        display_decode.s2_reg_b <= rd_index1_d;
+        display_decode.s2_reg_c <= rd_index2_d;
+        -- display_decode.s2_reg_a_data <=
+        display_decode.s2_reg_b_data <= rd_data1_d;
+        display_decode.s2_reg_c_data <= rd_data2_d;
+        display_decode.s2_immediate <= imm_fwd_d;
+        
         hazard_detect: entity work.hazard_detect_unit 
             port map (
                 -- inputs 
@@ -329,7 +341,28 @@ architecture data_path_arch of datapath is
                 rd_memory_ctl => memory_ctl_ex,
                 rd_write_back_ctl => write_back_ctl_ex             
             );   
-        --------------- Execute Stage Modules ------------------- 
+        --------------- Execute Stage Modules -------------------
+        display_execute.s3_pc <= pc_current_ex;
+     -- display_execute.s3_inst
+        display_execute.s3_reg_a <= wr_index_ex;
+    --  display_execute.s3_reg_b <= 
+    --  display_execute.s3_reg_c <=
+    --  display_execute.s3_reg_a_data <= alu_result_ex;
+        display_execute.s3_reg_b_data <= rd_data1_ex;
+        display_execute.s3_reg_c_data <= rd_data2_ex;
+        display_execute.s3_immediate <= imm_fwd_ex;
+        display_execute.s3_r_wb <= write_back_ctl_ex.reg_write;
+        display_execute.s3_r_wb_data <= alu_result_ex;
+        display_execute.s3_br_wb <= pc_src_ex;
+        display_execute.s3_br_wb_address <= pc_branch_addr_ex;
+        display_execute.s3_mr_wr <= memory_ctl_ex.memory_write;
+        display_execute.s3_mr_wr_address <= rd_data1_ex;
+        display_execute.s3_mr_wr_data <= rd_data2_ex;
+        display_execute.s3_mr_rd <= memory_ctl_ex.memory_read;
+        display_execute.s3_mr_rd_address <= rd_data1_ex;
+        display_execute.zero_flag <= alu_n_ex;
+        display_execute.negative_flag <= alu_z_ex;
+       -- display_execute.overflow_flag -- todo IMPLEMENT
         -- Execute
         -- Instantiate the ALU
         ALU_inst: entity work.ALU

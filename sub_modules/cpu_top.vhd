@@ -47,7 +47,9 @@ architecture rtl of cpu_top is
     signal in_port_i       : word_t;
     signal dip_switches_i  : word_t;    
     -- Console Display signals
-    signal display_fetch_i  :  display_fetch_type;    
+    signal display_fetch_i  :  display_fetch_type;
+    signal display_decode_i :  display_decode_type;  
+    signal display_execute_i:  display_execute_type;
           
 begin
     debug_console_i <= dip_switches_i(15);
@@ -75,7 +77,9 @@ begin
             op_code_out => op_code_i,
             led_7seg_data => led_7seg_data_i,
             -- Display console signals
-            display_fetch => display_fetch_i
+            display_fetch => display_fetch_i,
+            display_decode => display_decode_i,
+            display_execute => display_execute_i            
         );    
     ctrl_0: entity work.controller 
         port map (
@@ -116,36 +120,36 @@ begin
         --
         -- Stage 2 Decode
         --        
-            s2_pc => x"0000",
-            s2_inst => x"0000",        
-            s2_reg_a => "000",
-            s2_reg_b => "000",
-            s2_reg_c => "000",        
+            s2_pc => display_decode_i.s2_pc,
+            s2_inst => display_decode_i.s2_inst,        
+            s2_reg_a => display_decode_i.s2_reg_a,
+            s2_reg_b => display_decode_i.s2_reg_b,
+            s2_reg_c => display_decode_i.s2_reg_c,        
             s2_reg_a_data => x"0000",
-            s2_reg_b_data => x"0000",
-            s2_reg_c_data => x"0000",
-            s2_immediate => x"0000",        
+            s2_reg_b_data => display_decode_i.s2_reg_b_data,
+            s2_reg_c_data => display_decode_i.s2_reg_c_data,
+            s2_immediate => display_decode_i.s2_immediate,        
         --
         -- Stage 3 Execute
         --        
-            s3_pc => x"0000",
+            s3_pc => display_execute_i.s3_pc,
             s3_inst => x"0000",        
-            s3_reg_a => "000",
+            s3_reg_a => display_execute_i.s3_reg_a,
             s3_reg_b => "000",
             s3_reg_c => "000",        
             s3_reg_a_data => x"0000",
-            s3_reg_b_data => x"0000",
-            s3_reg_c_data => x"0000",
-            s3_immediate => x"0000",        
-            s3_r_wb => '0',
-            s3_r_wb_data => x"0000",        
-            s3_br_wb => '0',
-            s3_br_wb_address => x"0000",        
-            s3_mr_wr => '0',
-            s3_mr_wr_address => x"0000",
-            s3_mr_wr_data => x"0000",        
-            s3_mr_rd => '0',
-            s3_mr_rd_address => x"0000",        
+            s3_reg_b_data => display_execute_i.s3_reg_b_data,
+            s3_reg_c_data => display_execute_i.s3_reg_c_data,
+            s3_immediate => display_execute_i.s3_immediate,        
+            s3_r_wb => display_execute_i.s3_r_wb,
+            s3_r_wb_data => display_execute_i.s3_r_wb_data,        
+            s3_br_wb => display_execute_i.s3_br_wb,
+            s3_br_wb_address => display_execute_i.s3_br_wb_address,        
+            s3_mr_wr => display_execute_i.s3_mr_wr,
+            s3_mr_wr_address => display_execute_i.s3_mr_wr_address,
+            s3_mr_wr_data => display_execute_i.s3_mr_wr_data,        
+            s3_mr_rd => display_execute_i.s3_mr_rd,
+            s3_mr_rd_address => display_execute_i.s3_mr_rd_address,        
         --
         -- Stage 4 Memory
         --        
