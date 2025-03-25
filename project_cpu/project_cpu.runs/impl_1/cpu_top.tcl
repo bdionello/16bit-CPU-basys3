@@ -61,12 +61,15 @@ proc step_failed { step } {
 }
 
 set_msg_config -id {Common 17-41} -limit 10000000
+set_msg_config -id {Synth 8-256} -limit 10000
+set_msg_config -id {Synth 8-638} -limit 10000
 
 start_step write_bitstream
 set ACTIVE_STEP write_bitstream
 set rc [catch {
   create_msg_db write_bitstream.pb
   set_param xicom.use_bs_reader 1
+  set_param synth.incrementalSynthesisCache C:/Users/bdionello/AppData/Roaming/Xilinx/Vivado/.Xil/Vivado-7332-ws11-11/incrSyn
   open_checkpoint cpu_top_routed.dcp
   set_property webtalk.parent_dir C:/Users/bdionello/source/ECE449/project_cpu/project_cpu.cache/wt [current_project]
   set_property XPM_LIBRARIES XPM_MEMORY [current_project]

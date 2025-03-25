@@ -15,6 +15,8 @@ architecture behavioural of test_System is
     signal input_data : std_logic_vector (15 downto 6) := (others =>'0');
     signal dip_switches : std_logic_vector (15 downto 0);
     signal output_data : std_logic_vector (15 downto 0);
+    signal imm_in : std_logic_vector (7 downto 0);
+    signal imm_concat : std_logic_vector (15 downto 0);
 begin 
     cpu0 : ENTITY work.cpu_top PORT MAP(
     stm_sys_clk => clk,
@@ -40,7 +42,7 @@ begin
     process begin
         wait until falling_edge(clk); 
         wait until falling_edge(clk); 
-        wait until falling_edge(clk);     
+        wait until falling_edge(clk);      
 --        reset_execute <= '1';
 --        reset_load <= '0';
         reset_execute <= '0';

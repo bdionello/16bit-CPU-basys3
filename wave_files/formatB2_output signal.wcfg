@@ -12,15 +12,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="450166666fs"></ZoomStartTime>
-      <ZoomEndTime time="617966667fs"></ZoomEndTime>
-      <Cursor1Time time="590000000fs"></Cursor1Time>
+      <ZoomStartTime time="1274425696fs"></ZoomStartTime>
+      <ZoomEndTime time="1401114861fs"></ZoomEndTime>
+      <Cursor1Time time="1380000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="166"></NameColumnWidth>
-      <ValueColumnWidth column_width="214"></ValueColumnWidth>
+      <ValueColumnWidth column_width="194"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="27" />
+   <WVObjectSize size="39" />
    <wvobject fp_name="/test_System/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -73,6 +73,10 @@
       <obj_property name="ElementShortName">rd_pc[15:0]</obj_property>
       <obj_property name="ObjectShortName">rd_pc[15:0]</obj_property>
    </wvobject>
+   <wvobject fp_name="/test_System/cpu0/dp_0/fetch_r/rd_instruction" type="array">
+      <obj_property name="ElementShortName">rd_instruction[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_instruction[15:0]</obj_property>
+   </wvobject>
    <wvobject fp_name="/test_System/cpu0/dp_0/decode_r/rd_pc" type="array">
       <obj_property name="ElementShortName">rd_pc[15:0]</obj_property>
       <obj_property name="ObjectShortName">rd_pc[15:0]</obj_property>
@@ -104,9 +108,15 @@
       <obj_property name="ObjectShortName">.op_code_mem[6:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
+   <wvobject fp_name="/test_System/cpu0/dp_0/decoder/instr_decoded.imm" type="array">
+      <obj_property name="ElementShortName">.imm[7:0]</obj_property>
+      <obj_property name="ObjectShortName">.imm[7:0]</obj_property>
+   </wvobject>
    <wvobject fp_name="/test_System/cpu0/dp_0/hazard_detect/branch_decision" type="logic">
       <obj_property name="ElementShortName">branch_decision</obj_property>
       <obj_property name="ObjectShortName">branch_decision</obj_property>
+      <obj_property name="CustomSignalColor">#FF0000</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
    <wvobject fp_name="/test_System/cpu0/dp_0/hazard_detect/stall_pipeline_low" type="logic">
       <obj_property name="ElementShortName">stall_pipeline_low</obj_property>
@@ -123,7 +133,6 @@
    <wvobject fp_name="/test_System/cpu0/dp_0/Register_File_inst/reg_file" type="array">
       <obj_property name="ElementShortName">reg_file[0:7][15:0]</obj_property>
       <obj_property name="ObjectShortName">reg_file[0:7][15:0]</obj_property>
-      <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject fp_name="/test_System/cpu0/dp_0/ALU_inst/zero_flag" type="logic">
       <obj_property name="ElementShortName">zero_flag</obj_property>
@@ -132,5 +141,45 @@
    <wvobject fp_name="/test_System/cpu0/dp_0/ALU_inst/negative_flag" type="logic">
       <obj_property name="ElementShortName">negative_flag</obj_property>
       <obj_property name="ObjectShortName">negative_flag</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_System/cpu0/dp_0/decode_r/wr_immidate" type="array">
+      <obj_property name="ElementShortName">wr_immidate[15:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_immidate[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_System/cpu0/dp_0/decode_r/rd_immidate" type="array">
+      <obj_property name="ElementShortName">rd_immidate[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_immidate[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_System/cpu0/dp_0/immconcat/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_System/cpu0/dp_0/immconcat/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_System/cpu0/dp_0/immconcat/imm_op" type="logic">
+      <obj_property name="ElementShortName">imm_op</obj_property>
+      <obj_property name="ObjectShortName">imm_op</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_System/cpu0/dp_0/immconcat/imm_mode" type="logic">
+      <obj_property name="ElementShortName">imm_mode</obj_property>
+      <obj_property name="ObjectShortName">imm_mode</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_System/cpu0/dp_0/immconcat/imm_in" type="array">
+      <obj_property name="ElementShortName">imm_in[7:0]</obj_property>
+      <obj_property name="ObjectShortName">imm_in[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_System/cpu0/dp_0/immconcat/imm_out" type="array">
+      <obj_property name="ElementShortName">imm_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">imm_out[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_System/cpu0/dp_0/immconcat/imm_tmp_i" type="array">
+      <obj_property name="ElementShortName">imm_tmp_i[15:0]</obj_property>
+      <obj_property name="ObjectShortName">imm_tmp_i[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_System/cpu0/dp_0/immconcat/imm_last_i" type="array">
+      <obj_property name="ElementShortName">imm_last_i[15:0]</obj_property>
+      <obj_property name="ObjectShortName">imm_last_i[15:0]</obj_property>
    </wvobject>
 </wave_config>

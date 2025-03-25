@@ -47,6 +47,7 @@ architecture data_path_arch of datapath is
     signal rst_fetch_reg_f    : std_logic;   
     -- Decode stage signals -- Denoted by:'_d'
     signal instruction_d      : word_t;
+    signal instruction_fwd_d      : word_t;
     signal instr_decoded_d    : instruction_type;
     signal pc_current_d          : word_t;
     signal extended_disp_d    : word_t;    
@@ -150,15 +151,14 @@ architecture data_path_arch of datapath is
         rd_index2_d <=  instr_decoded_d.r_src when (instr_decoded_d.opcode = STORE) else
                         instr_decoded_d.rc when decode_ctl_d.reg_src = '0' else "000";
         
-        imm_temp_d <=   (instr_decoded_d.imm & X"00") when (instr_decoded_d.m_1 = '1') and (decode_ctl_d.imm_op = '1') else
-                        (X"00" & instr_decoded_d.imm) when (instr_decoded_d.m_1 = '0') and (decode_ctl_d.imm_op = '1') else
-                         X"0000";
+--        imm_temp_d <=   (instr_decoded_d.imm & X"00") when (instr_decoded_d.m_1 = '1') and (decode_ctl_d.imm_op = '1') else
+--                        (X"00" & instr_decoded_d.imm) when (instr_decoded_d.m_1 = '0') and (decode_ctl_d.imm_op = '1') else
+--                         X"0000";
                          
         inport_fwd_d <= in_port when instr_decoded_d.opcode = IN_OP else
                         X"0000";
                                        
-        out_port_enable_mem <= '1' when memory_ctl_mem.op_code_mem = OUT_OP else -- Ra to outport 
-                               '0';
+
          
         alu_shift_d <= instr_decoded_d.shift when (instr_decoded_d.opcode = SHL_OP or instr_decoded_d.opcode = SHR_OP) else
                        "0000";
@@ -167,10 +167,15 @@ architecture data_path_arch of datapath is
         decode_ctl_d <= decode_type_init_c when (flush_d_reg_i = '1') or (stall_pipeline_low_i = '0') else decode_ctl;        
         execute_ctl_d <= execute_type_init_c when (flush_d_reg_i = '1') or (stall_pipeline_low_i = '0') else execute_ctl;        
         memory_ctl_d <= memory_type_init_c when (flush_d_reg_i = '1') or (stall_pipeline_low_i = '0') else memory_ctl;        
-        write_back_ctl_d <= write_back_type_init_c when (flush_d_reg_i = '1') or (stall_pipeline_low_i = '0') else write_back_ctl;        
+        write_back_ctl_d <= write_back_type_init_c when (flush_d_reg_i = '1') or (stall_pipeline_low_i = '0') else write_back_ctl;   
         
-        ---------- Execute           
-                        
+        instruction_fwd_d <= instruction_d when stall_pipeline_low_i = '1' else 
+                             X"0000";
+        
+        ---------- Execute  
+        ---------- Memory         
+        out_port_enable_mem <= '1' when memory_ctl_mem.op_code_mem = OUT_OP else -- Ra to outport 
+                               '0';                
         ---------- Write back 
         -- register file write data mux
         wr_data_d <= memory_data_wb when write_back_ctl_wb.wb_src = MEMORY_DATA else
@@ -304,9 +309,12 @@ architecture data_path_arch of datapath is
         -- concatonate imm_upper and imm_lower    
         immconcat: entity work.immediate_concatenator 
             port map(
-                clear_low => decode_ctl_d.imm_op, -- clear when not a LOADIMM op  
-                imm_in => imm_temp_d,
-                imm_out => imm_fwd_d          
+                rst       => sys_rst,         -- Reset signal
+                clk       => sys_clk,         -- Clock signal
+                imm_op    => decode_ctl_d.imm_op,
+                imm_mode  => instr_decoded_d.m_1, 
+                imm_in    => instr_decoded_d.imm,
+                imm_out   => imm_fwd_d          
             );
             
         -- Decode
@@ -318,8 +326,8 @@ architecture data_path_arch of datapath is
                    disp_s          =>  instr_decoded_d.disp_s,  -- Short displacement (for BR)
                    extended_disp   =>  extended_disp_d  -- Short displacement (for BR)
             );
-            rst_decode_reg_d <= '1' when sys_rst = '1' or flush_d_reg_i ='1' else '0';
             
+        rst_decode_reg_d <= '1' when sys_rst = '1' or flush_d_reg_i ='1' else '0';            
         -- Decode
         decode_r: entity work.decode_register
             port map (
@@ -328,7 +336,7 @@ architecture data_path_arch of datapath is
                 clk => sys_clk,
                 wr_enable => '1', -- TODO hazard control 
                 -- inputs
-                wr_instruction => instruction_d,
+                wr_instruction => instruction_fwd_d,
                 wr_pc => pc_current_d,
                 -- register file
                 wr_reg_data1 => rd_data1_d,
@@ -362,9 +370,9 @@ architecture data_path_arch of datapath is
         display_execute.s3_pc <= pc_current_ex;
         display_execute.s3_inst <= instruction_ex;
         display_execute.s3_reg_a <= wr_index_ex;
-    --  display_execute.s3_reg_b <= 
-    --  display_execute.s3_reg_c <=
-    --  display_execute.s3_reg_a_data <= alu_result_ex;
+      -- display_execute.s3_reg_b <= 
+      -- display_execute.s3_reg_c <=
+      -- display_execute.s3_reg_a_data <= alu_result_ex;
         display_execute.s3_reg_b_data <= rd_data1_ex;
         display_execute.s3_reg_c_data <= rd_data2_ex;
         display_execute.s3_immediate <= imm_fwd_ex;
@@ -377,8 +385,8 @@ architecture data_path_arch of datapath is
         display_execute.s3_mr_wr_data <= rd_data2_ex;
         display_execute.s3_mr_rd <= memory_ctl_ex.memory_read;
         display_execute.s3_mr_rd_address <= rd_data1_ex;
-        display_execute.zero_flag <= alu_n_ex;
-        display_execute.negative_flag <= alu_z_ex;
+        display_execute.zero_flag <= alu_z_ex;
+        display_execute.negative_flag <= alu_n_ex;
        -- display_execute.overflow_flag -- todo IMPLEMENT
         -- Execute
         -- Instantiate the ALU
@@ -451,9 +459,15 @@ architecture data_path_arch of datapath is
         --------------- Memory Stage Modules ---------------- 
         display_memory.s4_pc <= pc_current_mem;
         display_memory.s4_inst <= instruction_mem;
-        display_memory.s4_reg_a <= wr_index_wb;
-        display_memory.s4_r_wb <= write_back_ctl_wb.reg_write;
-        display_memory.s4_r_wb_data <= wr_data_d;
+        display_memory.s4_reg_a <= wr_index_mem;
+        display_memory.s4_r_wb <= write_back_ctl_mem.reg_write;
+        display_memory.s4_r_wb_data <=  memory_data_mem when write_back_ctl_mem.wb_src = MEMORY_DATA else
+                                        alu_result_mem when write_back_ctl_mem.wb_src = ALU_RES else
+                                        imm_fwd_mem when write_back_ctl_mem.wb_src = IMM_FWD else
+                                        std_logic_vector(unsigned(pc_current_mem) + 2) when write_back_ctl_mem.wb_src = RETURN_PC else
+                                        inport_fwd_mem when write_back_ctl_mem.wb_src = INPORT_FWD else
+                                        rd_data1_mem when write_back_ctl_mem.wb_src = MOV_REG else
+                                        X"0000";
         
         out_r: entity work.out_register
             port map (                

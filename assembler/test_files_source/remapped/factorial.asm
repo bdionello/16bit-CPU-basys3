@@ -1,6 +1,6 @@
 LedDisplay:	equ		0xFFF2
 DipSwitches:	equ		0xFFF0
-DipSwitchMask:	equ		7			; Binary multiple as a mask
+DipSwitchMask:	equ		0x0007			; Binary multiple as a mask
 
 
 		org		0x410
