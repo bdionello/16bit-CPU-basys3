@@ -17,7 +17,6 @@ proc create_report { reportName command } {
   }
 }
 set_param xicom.use_bs_reader 1
-set_param synth.incrementalSynthesisCache C:/Users/bdionello/AppData/Roaming/Xilinx/Vivado/.Xil/Vivado-7332-ws11-11/incrSyn
 set_msg_config -id {Common 17-41} -limit 10000000
 set_msg_config -id {Synth 8-256} -limit 10000
 set_msg_config -id {Synth 8-638} -limit 10000
@@ -42,6 +41,8 @@ read_mem {
   {C:/Users/bdionello/source/ECE449/mem code/testB2_V3.mem}
   {C:/Users/bdionello/source/ECE449/mem code/load_hazard_test.mem}
   {C:/Users/bdionello/source/ECE449/mem code/boot_loader.mem}
+  {C:/Users/bdionello/source/ECE449/mem code/test_L_out.mem}
+  {C:/Users/bdionello/source/ECE449/mem code/test_loadHazard2.mem}
 }
 read_vhdl -library xil_defaultlib {
   C:/Users/bdionello/source/ECE449/sub_modules/decode/RF8_16.vhd

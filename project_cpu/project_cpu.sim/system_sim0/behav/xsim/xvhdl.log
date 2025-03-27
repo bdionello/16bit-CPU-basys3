@@ -1,8 +1,0 @@
-INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/bdionello/source/ECE449/sub_modules/decode/imm_concat.vhd" into library xil_defaultlib
-INFO: [VRFC 10-307] analyzing entity immediate_concatenator
-INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/bdionello/source/ECE449/sub_modules/datapath.vhd" into library xil_defaultlib
-INFO: [VRFC 10-307] analyzing entity datapath
-INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/bdionello/source/ECE449/sub_modules/cpu_top.vhd" into library xil_defaultlib
-INFO: [VRFC 10-307] analyzing entity cpu_top
-INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/bdionello/source/ECE449/sub_modules/testbench/systemTB_Boot.vhd" into library xil_defaultlib
-INFO: [VRFC 10-307] analyzing entity test_System

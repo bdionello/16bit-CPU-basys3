@@ -1,0 +1,6 @@
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/bdionello/source/ECE449/sub_modules/memory/rom.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity rom
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/bdionello/source/ECE449/sub_modules/memory/mem_manager.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity mem_manager
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/bdionello/source/ECE449/sub_modules/testbench/memory_TB.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity memory_TB

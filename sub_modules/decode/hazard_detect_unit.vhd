@@ -67,12 +67,12 @@ begin
                                     stall_pipeline_low <= '1';               
                                 end if; 
                                                
-                            when  SHL_OP | SHR_OP | STORE | MOV | TEST | BRR_N | BRR_Z | BR_N | BR_Z | RETURN_OP | LOADIMM | LOAD | OUT_OP =>
+                            when  SHL_OP | SHR_OP | STORE | MOV | TEST | BR_N | BR_Z | BR | BR_SUB | RETURN_OP | LOADIMM | LOAD | OUT_OP =>
                                 if (mem_read = '1') and ( dest_reg = source_reg1 )then
-                                    stall_count := 1;
+                                    stall_count := 2;
                                     stall_pipeline_low <= '0';
                                 elsif (reg_write = '1') and ( dest_reg = source_reg1 )then
-                                    stall_count := 1;
+                                    stall_count := 2;
                                     stall_pipeline_low <= '0';
                                 else 
                                     stall_count := 0;

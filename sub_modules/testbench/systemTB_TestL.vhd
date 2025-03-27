@@ -12,7 +12,7 @@ architecture behavioural of test_System is
     signal clk : std_logic;
     signal reset_execute : std_logic;
     signal reset_load : std_logic;
-    signal input_data : std_logic_vector (15 downto 0);
+    signal input_data : STD_LOGIC_VECTOR(15 DOWNTO 6);
     signal output_data : std_logic_vector (15 downto 0);
 begin 
     cpu0 : ENTITY work.cpu_top PORT MAP(
@@ -20,8 +20,8 @@ begin
     rst_ex => reset_execute, 
     rst_ld => reset_load, 
     in_port => input_data,
+    dip_switches => X"1111",
     out_port => output_data,
-    debug_console => debug_console_c,
     board_clock   => clk
     );
     -- system test clock
@@ -37,12 +37,17 @@ begin
     
     --system test process       
     process begin    
---        reset_execute <= '1';
---        reset_load <= '0';
---        wait until falling_edge(clk);
---        reset_execute <= '0';      
---        wait until falling_edge(clk);    
-        -- Do something?
+        wait until falling_edge(clk); 
+        wait until falling_edge(clk); 
+        wait until falling_edge(clk);      
+        reset_execute <= '1';
+        reset_load <= '0';
+--        reset_execute <= '0';
+--        reset_load <= '1';
+        wait until rising_edge(clk);
+        wait until rising_edge(clk);
+        reset_execute <= '0';
+        reset_load <= '0';   
         wait until falling_edge(clk); 
         wait until falling_edge(clk); 
         wait until falling_edge(clk); 

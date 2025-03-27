@@ -48,8 +48,8 @@ begin
             inst_addr => inst_addr_i,
             inst_out => inst_out_i,
             -- read_inst_enable => read_inst_enable_i,
-            in_port => in_port_i,
-            out_port =>  out_port_i      
+            dip_switches => in_port_i,
+            led_7seg_out =>  out_port_i      
          );
      -- Clock process
      CLK_PROC : process

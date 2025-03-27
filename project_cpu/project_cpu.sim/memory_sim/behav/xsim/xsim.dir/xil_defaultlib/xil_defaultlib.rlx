@@ -1,0 +1,9 @@
+0.6
+2017.4
+Dec 15 2017
+21:07:18
+C:/Users/bdionello/source/ECE449/sub_modules/cpu_types.vhd,1742844834,vhdl,C:/Users/bdionello/source/ECE449/sub_modules/memory/mem_manager.vhd,,,cpu_types,,,,,,,,
+C:/Users/bdionello/source/ECE449/sub_modules/memory/mem_manager.vhd,1742770860,vhdl,C:/Users/bdionello/source/ECE449/sub_modules/testbench/memory_TB.vhd,,,mem_manager,,,,,,,,
+C:/Users/bdionello/source/ECE449/sub_modules/memory/ram.vhd,1742770860,vhdl,C:/Users/bdionello/source/ECE449/sub_modules/memory/mem_manager.vhd,,,ram,,,,,,,,
+C:/Users/bdionello/source/ECE449/sub_modules/memory/rom.vhd,1743095860,vhdl,C:/Users/bdionello/source/ECE449/sub_modules/memory/mem_manager.vhd,,,rom,,,,,,,,
+C:/Users/bdionello/source/ECE449/sub_modules/testbench/memory_TB.vhd,1743095612,vhdl,,,,memory_tb,,,,,,,,

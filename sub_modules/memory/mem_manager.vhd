@@ -70,12 +70,12 @@ begin
                 rom_data_out_i;    
     
     -- Connect memory to physical input port (read from Dip switch)               
-    data_out <= dip_switches when (data_addr = X"FFF0") AND (read_data_enable = '1') AND (clock = '1') else
-                ram_a_data_out_i when (read_data_enable = '1') AND (clock = '1') else
+    data_out <= dip_switches when (data_addr = X"FFF0") AND (read_data_enable = '1') else
+                ram_a_data_out_i when (read_data_enable = '1')  else
                 X"0000";                             
     
     -- Connected to physical output port (Write to Display)                                  
-    led_7seg_out <= data_in when (data_addr = X"FFF2") AND (write_enable = '1') AND (clock = '1') else
+    led_7seg_out <= data_in when (data_addr = X"FFF2") AND (write_enable = '1') else
                     X"0000";
         
     rom_0 : entity work.rom

@@ -1,7 +1,7 @@
 Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
-| Date         : Mon Mar 24 22:42:10 2025
+| Date         : Thu Mar 27 13:27:36 2025
 | Host         : ws11-11 running 64-bit major release  (build 9200)
 | Command      : report_methodology -file cpu_top_methodology_drc_routed.rpt -pb cpu_top_methodology_drc_routed.pb -rpx cpu_top_methodology_drc_routed.rpx
 | Design       : cpu_top
@@ -23,14 +23,13 @@ Table of Contents
           Floorplan: design_1
       Design limits: <entire design considered>
              Max violations: <unlimited>
-             Violations found: 145
-+-----------+----------+---------------------------------------------+------------+
-| Rule      | Severity | Description                                 | Violations |
-+-----------+----------+---------------------------------------------+------------+
-| TIMING-17 | Warning  | Non-clocked sequential cell                 | 88         |
-| TIMING-18 | Warning  | Missing input or output delay               | 56         |
-| TIMING-35 | Warning  | No common node in paths with the same clock | 1          |
-+-----------+----------+---------------------------------------------+------------+
+             Violations found: 144
++-----------+----------+-------------------------------+------------+
+| Rule      | Severity | Description                   | Violations |
++-----------+----------+-------------------------------+------------+
+| TIMING-17 | Warning  | Non-clocked sequential cell   | 88         |
+| TIMING-18 | Warning  | Missing input or output delay | 56         |
++-----------+----------+-------------------------------+------------+
 
 2. REPORT DETAILS
 -----------------
@@ -752,11 +751,6 @@ Related violations: <none>
 TIMING-18#56 Warning
 Missing input or output delay  
 An output delay is missing on stm_ack relative to clock(s) stm_sys_clk
-Related violations: <none>
-
-TIMING-35#1 Warning
-No common node in paths with the same clock  
-The clock stm_sys_clk has paths without a common node. First path found between stm_sys_clk and dp_0/mem_r/rd_mem_data_reg[10]/D. Please review clock constraints
 Related violations: <none>
 
 

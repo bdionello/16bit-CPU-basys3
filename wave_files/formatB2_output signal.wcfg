@@ -12,15 +12,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="1274425696fs"></ZoomStartTime>
-      <ZoomEndTime time="1401114861fs"></ZoomEndTime>
-      <Cursor1Time time="1380000000fs"></Cursor1Time>
+      <ZoomStartTime time="208020000fs"></ZoomStartTime>
+      <ZoomEndTime time="372020001fs"></ZoomEndTime>
+      <Cursor1Time time="287820000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="166"></NameColumnWidth>
-      <ValueColumnWidth column_width="194"></ValueColumnWidth>
+      <ValueColumnWidth column_width="182"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="39" />
+   <WVObjectSize size="24" />
    <wvobject fp_name="/test_System/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -45,22 +45,6 @@
       <obj_property name="ElementShortName">stm_ack</obj_property>
       <obj_property name="ObjectShortName">stm_ack</obj_property>
    </wvobject>
-   <wvobject fp_name="/test_System/memory_size" type="other">
-      <obj_property name="ElementShortName">memory_size</obj_property>
-      <obj_property name="ObjectShortName">memory_size</obj_property>
-   </wvobject>
-   <wvobject fp_name="/test_System/clk_hz" type="other">
-      <obj_property name="ElementShortName">clk_hz</obj_property>
-      <obj_property name="ObjectShortName">clk_hz</obj_property>
-   </wvobject>
-   <wvobject fp_name="/test_System/clk_period" type="other">
-      <obj_property name="ElementShortName">clk_period</obj_property>
-      <obj_property name="ObjectShortName">clk_period</obj_property>
-   </wvobject>
-   <wvobject fp_name="/test_System/cpu0/dp_0/pc/rst" type="logic">
-      <obj_property name="ElementShortName">rst</obj_property>
-      <obj_property name="ObjectShortName">rst</obj_property>
-   </wvobject>
    <wvobject fp_name="/test_System/cpu0/dp_0/pc/wr_instr_addr" type="array">
       <obj_property name="ElementShortName">wr_instr_addr[15:0]</obj_property>
       <obj_property name="ObjectShortName">wr_instr_addr[15:0]</obj_property>
@@ -73,10 +57,6 @@
       <obj_property name="ElementShortName">rd_pc[15:0]</obj_property>
       <obj_property name="ObjectShortName">rd_pc[15:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/test_System/cpu0/dp_0/fetch_r/rd_instruction" type="array">
-      <obj_property name="ElementShortName">rd_instruction[15:0]</obj_property>
-      <obj_property name="ObjectShortName">rd_instruction[15:0]</obj_property>
-   </wvobject>
    <wvobject fp_name="/test_System/cpu0/dp_0/decode_r/rd_pc" type="array">
       <obj_property name="ElementShortName">rd_pc[15:0]</obj_property>
       <obj_property name="ObjectShortName">rd_pc[15:0]</obj_property>
@@ -84,14 +64,6 @@
    <wvobject fp_name="/test_System/cpu0/dp_0/execute_r/rd_pc" type="array">
       <obj_property name="ElementShortName">rd_pc[15:0]</obj_property>
       <obj_property name="ObjectShortName">rd_pc[15:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/test_System/cpu0/ctrl_0/state" type="other">
-      <obj_property name="ElementShortName">state</obj_property>
-      <obj_property name="ObjectShortName">state</obj_property>
-   </wvobject>
-   <wvobject fp_name="/test_System/cpu0/ctrl_0/boot_mode" type="other">
-      <obj_property name="ElementShortName">boot_mode</obj_property>
-      <obj_property name="ObjectShortName">boot_mode</obj_property>
    </wvobject>
    <wvobject fp_name="/test_System/cpu0/ctrl_0/op_code_i" type="array">
       <obj_property name="ElementShortName">op_code_i[6:0]</obj_property>
@@ -103,83 +75,50 @@
       <obj_property name="ObjectShortName">state_code[6:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
+   <wvobject fp_name="/test_System/cpu0/ctrl_0/state" type="other">
+      <obj_property name="ElementShortName">state</obj_property>
+      <obj_property name="ObjectShortName">state</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_System/cpu0/ctrl_0/boot_mode" type="other">
+      <obj_property name="ElementShortName">boot_mode</obj_property>
+      <obj_property name="ObjectShortName">boot_mode</obj_property>
+   </wvobject>
    <wvobject fp_name="/test_System/cpu0/dp_0/decode_r/rd_memory_ctl.op_code_mem" type="array">
       <obj_property name="ElementShortName">.op_code_mem[6:0]</obj_property>
       <obj_property name="ObjectShortName">.op_code_mem[6:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/test_System/cpu0/dp_0/decoder/instr_decoded.imm" type="array">
-      <obj_property name="ElementShortName">.imm[7:0]</obj_property>
-      <obj_property name="ObjectShortName">.imm[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/test_System/cpu0/dp_0/hazard_detect/branch_decision" type="logic">
-      <obj_property name="ElementShortName">branch_decision</obj_property>
-      <obj_property name="ObjectShortName">branch_decision</obj_property>
-      <obj_property name="CustomSignalColor">#FF0000</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
+   <wvobject fp_name="/test_System/cpu0/dp_0/memory_ctl_d.op_code_mem" type="array">
+      <obj_property name="ElementShortName">.op_code_mem[6:0]</obj_property>
+      <obj_property name="ObjectShortName">.op_code_mem[6:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/test_System/cpu0/dp_0/hazard_detect/stall_pipeline_low" type="logic">
       <obj_property name="ElementShortName">stall_pipeline_low</obj_property>
       <obj_property name="ObjectShortName">stall_pipeline_low</obj_property>
    </wvobject>
-   <wvobject fp_name="/test_System/cpu0/dp_0/hazard_detect/flush_f_reg" type="logic">
-      <obj_property name="ElementShortName">flush_f_reg</obj_property>
-      <obj_property name="ObjectShortName">flush_f_reg</obj_property>
-   </wvobject>
-   <wvobject fp_name="/test_System/cpu0/dp_0/hazard_detect/flush_d_reg" type="logic">
-      <obj_property name="ElementShortName">flush_d_reg</obj_property>
-      <obj_property name="ObjectShortName">flush_d_reg</obj_property>
-   </wvobject>
    <wvobject fp_name="/test_System/cpu0/dp_0/Register_File_inst/reg_file" type="array">
       <obj_property name="ElementShortName">reg_file[0:7][15:0]</obj_property>
       <obj_property name="ObjectShortName">reg_file[0:7][15:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/test_System/cpu0/dp_0/ALU_inst/zero_flag" type="logic">
-      <obj_property name="ElementShortName">zero_flag</obj_property>
-      <obj_property name="ObjectShortName">zero_flag</obj_property>
+   <wvobject fp_name="/test_System/cpu0/dp_0/mem/write_enable" type="logic">
+      <obj_property name="ElementShortName">write_enable</obj_property>
+      <obj_property name="ObjectShortName">write_enable</obj_property>
    </wvobject>
-   <wvobject fp_name="/test_System/cpu0/dp_0/ALU_inst/negative_flag" type="logic">
-      <obj_property name="ElementShortName">negative_flag</obj_property>
-      <obj_property name="ObjectShortName">negative_flag</obj_property>
+   <wvobject fp_name="/test_System/cpu0/dp_0/mem/read_data_enable" type="logic">
+      <obj_property name="ElementShortName">read_data_enable</obj_property>
+      <obj_property name="ObjectShortName">read_data_enable</obj_property>
    </wvobject>
-   <wvobject fp_name="/test_System/cpu0/dp_0/decode_r/wr_immidate" type="array">
-      <obj_property name="ElementShortName">wr_immidate[15:0]</obj_property>
-      <obj_property name="ObjectShortName">wr_immidate[15:0]</obj_property>
+   <wvobject fp_name="/test_System/cpu0/dp_0/mem/data_addr" type="array">
+      <obj_property name="ElementShortName">data_addr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_addr[15:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/test_System/cpu0/dp_0/decode_r/rd_immidate" type="array">
-      <obj_property name="ElementShortName">rd_immidate[15:0]</obj_property>
-      <obj_property name="ObjectShortName">rd_immidate[15:0]</obj_property>
+   <wvobject fp_name="/test_System/cpu0/dp_0/mem/data_in" type="array">
+      <obj_property name="ElementShortName">data_in[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_in[15:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/test_System/cpu0/dp_0/immconcat/rst" type="logic">
-      <obj_property name="ElementShortName">rst</obj_property>
-      <obj_property name="ObjectShortName">rst</obj_property>
-   </wvobject>
-   <wvobject fp_name="/test_System/cpu0/dp_0/immconcat/clk" type="logic">
-      <obj_property name="ElementShortName">clk</obj_property>
-      <obj_property name="ObjectShortName">clk</obj_property>
-   </wvobject>
-   <wvobject fp_name="/test_System/cpu0/dp_0/immconcat/imm_op" type="logic">
-      <obj_property name="ElementShortName">imm_op</obj_property>
-      <obj_property name="ObjectShortName">imm_op</obj_property>
-   </wvobject>
-   <wvobject fp_name="/test_System/cpu0/dp_0/immconcat/imm_mode" type="logic">
-      <obj_property name="ElementShortName">imm_mode</obj_property>
-      <obj_property name="ObjectShortName">imm_mode</obj_property>
-   </wvobject>
-   <wvobject fp_name="/test_System/cpu0/dp_0/immconcat/imm_in" type="array">
-      <obj_property name="ElementShortName">imm_in[7:0]</obj_property>
-      <obj_property name="ObjectShortName">imm_in[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/test_System/cpu0/dp_0/immconcat/imm_out" type="array">
-      <obj_property name="ElementShortName">imm_out[15:0]</obj_property>
-      <obj_property name="ObjectShortName">imm_out[15:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/test_System/cpu0/dp_0/immconcat/imm_tmp_i" type="array">
-      <obj_property name="ElementShortName">imm_tmp_i[15:0]</obj_property>
-      <obj_property name="ObjectShortName">imm_tmp_i[15:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/test_System/cpu0/dp_0/immconcat/imm_last_i" type="array">
-      <obj_property name="ElementShortName">imm_last_i[15:0]</obj_property>
-      <obj_property name="ObjectShortName">imm_last_i[15:0]</obj_property>
+   <wvobject fp_name="/test_System/cpu0/dp_0/mem/data_out" type="array">
+      <obj_property name="ElementShortName">data_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_out[15:0]</obj_property>
    </wvobject>
 </wave_config>
