@@ -14,9 +14,9 @@ Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 17140 
+INFO: Helper process launched with PID 10872 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:07 . Memory (MB): peak = 336.781 ; gain = 105.484
+Starting RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 336.520 ; gain = 105.355
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-638] synthesizing module 'cpu_top' [C:/Users/bdionello/source/ECE449/sub_modules/cpu_top.vhd:35]
 INFO: [Synth 8-638] synthesizing module 'datapath' [C:/Users/bdionello/source/ECE449/sub_modules/datapath.vhd:35]
@@ -246,23 +246,24 @@ INFO: [Synth 8-256] done synthesizing module 'decoder' (11#1) [C:/Users/bdionell
 INFO: [Synth 8-638] synthesizing module 'register_file' [C:/Users/bdionello/source/ECE449/sub_modules/decode/RF8_16.vhd:33]
 INFO: [Synth 8-226] default block is never used [C:/Users/bdionello/source/ECE449/sub_modules/decode/RF8_16.vhd:48]
 INFO: [Synth 8-256] done synthesizing module 'register_file' (12#1) [C:/Users/bdionello/source/ECE449/sub_modules/decode/RF8_16.vhd:33]
-INFO: [Synth 8-638] synthesizing module 'immediate_concatenator' [C:/Users/bdionello/source/ECE449/sub_modules/decode/imm_concat.vhd:19]
-INFO: [Synth 8-256] done synthesizing module 'immediate_concatenator' (13#1) [C:/Users/bdionello/source/ECE449/sub_modules/decode/imm_concat.vhd:19]
 INFO: [Synth 8-638] synthesizing module 'sign_extend' [C:/Users/bdionello/source/ECE449/sub_modules/decode/sign_extend.vhd:15]
-INFO: [Synth 8-256] done synthesizing module 'sign_extend' (14#1) [C:/Users/bdionello/source/ECE449/sub_modules/decode/sign_extend.vhd:15]
-INFO: [Synth 8-638] synthesizing module 'decode_register' [C:/Users/bdionello/source/ECE449/sub_modules/decode/decode_register.vhd:56]
-INFO: [Synth 8-256] done synthesizing module 'decode_register' (15#1) [C:/Users/bdionello/source/ECE449/sub_modules/decode/decode_register.vhd:56]
+INFO: [Synth 8-256] done synthesizing module 'sign_extend' (13#1) [C:/Users/bdionello/source/ECE449/sub_modules/decode/sign_extend.vhd:15]
+INFO: [Synth 8-638] synthesizing module 'decode_register' [C:/Users/bdionello/source/ECE449/sub_modules/decode/decode_register.vhd:58]
+INFO: [Synth 8-256] done synthesizing module 'decode_register' (14#1) [C:/Users/bdionello/source/ECE449/sub_modules/decode/decode_register.vhd:58]
 INFO: [Synth 8-638] synthesizing module 'ALU' [C:/Users/bdionello/source/ECE449/sub_modules/execute/alu.vhd:20]
 INFO: [Synth 8-226] default block is never used [C:/Users/bdionello/source/ECE449/sub_modules/execute/alu.vhd:30]
-INFO: [Synth 8-256] done synthesizing module 'ALU' (16#1) [C:/Users/bdionello/source/ECE449/sub_modules/execute/alu.vhd:20]
+INFO: [Synth 8-256] done synthesizing module 'ALU' (15#1) [C:/Users/bdionello/source/ECE449/sub_modules/execute/alu.vhd:20]
 INFO: [Synth 8-638] synthesizing module 'branch_unit' [C:/Users/bdionello/source/ECE449/sub_modules/memory/branch_unit.vhd:22]
-INFO: [Synth 8-256] done synthesizing module 'branch_unit' (17#1) [C:/Users/bdionello/source/ECE449/sub_modules/memory/branch_unit.vhd:22]
-INFO: [Synth 8-638] synthesizing module 'execute_register' [C:/Users/bdionello/source/ECE449/sub_modules/execute/execute_register.vhd:57]
-INFO: [Synth 8-256] done synthesizing module 'execute_register' (18#1) [C:/Users/bdionello/source/ECE449/sub_modules/execute/execute_register.vhd:57]
+INFO: [Synth 8-256] done synthesizing module 'branch_unit' (16#1) [C:/Users/bdionello/source/ECE449/sub_modules/memory/branch_unit.vhd:22]
+INFO: [Synth 8-638] synthesizing module 'execute_register' [C:/Users/bdionello/source/ECE449/sub_modules/execute/execute_register.vhd:59]
+INFO: [Synth 8-256] done synthesizing module 'execute_register' (17#1) [C:/Users/bdionello/source/ECE449/sub_modules/execute/execute_register.vhd:59]
 INFO: [Synth 8-638] synthesizing module 'out_register' [C:/Users/bdionello/source/ECE449/sub_modules/decode/out_register.vhd:16]
-INFO: [Synth 8-256] done synthesizing module 'out_register' (19#1) [C:/Users/bdionello/source/ECE449/sub_modules/decode/out_register.vhd:16]
+INFO: [Synth 8-256] done synthesizing module 'out_register' (18#1) [C:/Users/bdionello/source/ECE449/sub_modules/decode/out_register.vhd:16]
 INFO: [Synth 8-638] synthesizing module 'memory_register' [C:/Users/bdionello/source/ECE449/sub_modules/memory/memory_register.vhd:51]
-INFO: [Synth 8-256] done synthesizing module 'memory_register' (20#1) [C:/Users/bdionello/source/ECE449/sub_modules/memory/memory_register.vhd:51]
+INFO: [Synth 8-256] done synthesizing module 'memory_register' (19#1) [C:/Users/bdionello/source/ECE449/sub_modules/memory/memory_register.vhd:51]
+INFO: [Synth 8-638] synthesizing module 'immediate_concatenator' [C:/Users/bdionello/source/ECE449/sub_modules/decode/imm_concat.vhd:22]
+WARNING: [Synth 8-614] signal 'imm_r7_in' is read in the process but is not in the sensitivity list [C:/Users/bdionello/source/ECE449/sub_modules/decode/imm_concat.vhd:26]
+INFO: [Synth 8-256] done synthesizing module 'immediate_concatenator' (20#1) [C:/Users/bdionello/source/ECE449/sub_modules/decode/imm_concat.vhd:22]
 INFO: [Synth 8-5772] Detected attribute (* rw_addr_collision = "yes" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
 INFO: [Synth 8-256] done synthesizing module 'datapath' (21#1) [C:/Users/bdionello/source/ECE449/sub_modules/datapath.vhd:35]
 INFO: [Synth 8-638] synthesizing module 'controller' [C:/Users/bdionello/source/ECE449/sub_modules/controller.vhd:24]
@@ -423,6 +424,8 @@ WARNING: [Synth 8-3936] Found unconnected internal register 'Vline_delayed_reg' 
 INFO: [Synth 8-256] done synthesizing module 'console' (28#1) [C:/Users/bdionello/source/ECE449/sub_modules/debug_display/console.vhd:131]
 INFO: [Synth 8-5772] Detected attribute (* rw_addr_collision = "yes" *) on RAM gen_wr_a.gen_word_narrow.mem_reg 
 INFO: [Synth 8-256] done synthesizing module 'cpu_top' (29#1) [C:/Users/bdionello/source/ECE449/sub_modules/cpu_top.vhd:35]
+WARNING: [Synth 8-3331] design immediate_concatenator has unconnected port rst
+WARNING: [Synth 8-3331] design immediate_concatenator has unconnected port clk
 WARNING: [Synth 8-3331] design xpm_memory_base__parameterized0 has unconnected port sleep
 WARNING: [Synth 8-3331] design xpm_memory_base__parameterized0 has unconnected port rsta
 WARNING: [Synth 8-3331] design xpm_memory_base__parameterized0 has unconnected port regcea
@@ -508,7 +511,7 @@ WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port dinb[0]
 WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port injectsbiterrb
 WARNING: [Synth 8-3331] design xpm_memory_base has unconnected port injectdbiterrb
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 403.707 ; gain = 172.410
+Finished RTL Elaboration : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 403.297 ; gain = 172.133
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -518,7 +521,7 @@ Report Check Netlist:
 |1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
 +------+------------------+-------+---------+-------+------------------+
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 403.707 ; gain = 172.410
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 403.297 ; gain = 172.133
 ---------------------------------------------------------------------------------
 INFO: [Device 21-403] Loading part xc7a35tcpg236-1
 INFO: [Project 1-570] Preparing netlist for logic optimization
@@ -539,23 +542,23 @@ Completed Processing XDC Constraints
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.006 . Memory (MB): peak = 749.453 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.006 . Memory (MB): peak = 748.098 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:24 ; elapsed = 00:00:25 . Memory (MB): peak = 749.523 ; gain = 518.227
+Finished Constraint Validation : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 748.199 ; gain = 517.035
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35tcpg236-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:24 ; elapsed = 00:00:25 . Memory (MB): peak = 749.523 ; gain = 518.227
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 748.199 ; gain = 517.035
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 Applied set_property DONT_TOUCH = true for dp_0/mem/ram_0/xpm_memory_dpdistram_inst. (constraint file  auto generated constraint, line ).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:24 ; elapsed = 00:00:25 . Memory (MB): peak = 749.523 ; gain = 518.227
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 748.199 ; gain = 517.035
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-5546] ROM "ram_b_enable_i" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "rom_enable_i" won't be mapped to RAM because it is too sparse
@@ -570,8 +573,6 @@ INFO: [Synth 8-5544] ROM "reg_file[4]" won't be mapped to Block RAM because addr
 INFO: [Synth 8-5544] ROM "reg_file[5]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "reg_file[6]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "reg_file[7]" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
-INFO: [Synth 8-4471] merging register 'imm_out_reg[15:0]' into 'imm_last_i_reg[15:0]' [C:/Users/bdionello/source/ECE449/sub_modules/decode/imm_concat.vhd:29]
-WARNING: [Synth 8-6014] Unused sequential element imm_out_reg was removed.  [C:/Users/bdionello/source/ECE449/sub_modules/decode/imm_concat.vhd:29]
 INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the output of the operator [C:/Users/bdionello/source/ECE449/sub_modules/execute/alu.vhd:30]
 INFO: [Synth 8-5544] ROM "decode_ctl[reg_src]" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
 WARNING: [Synth 8-6014] Unused sequential element divider_reg was removed.  [C:/Users/bdionello/source/ECE449/sub_modules/debug_display/led_display.vhd:46]
@@ -585,7 +586,7 @@ INFO: [Synth 8-41] '+' operator could not be merged with '+' operator due to los
 INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the output of the operator [C:/Users/bdionello/source/ECE449/sub_modules/debug_display/console.vhd:1447]
 WARNING: [Synth 8-6014] Unused sequential element display_address_reg_rep was removed.  [C:/Users/bdionello/source/ECE449/sub_modules/debug_display/console.vhd:1465]
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:27 ; elapsed = 00:00:28 . Memory (MB): peak = 749.523 ; gain = 518.227
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:28 ; elapsed = 00:00:29 . Memory (MB): peak = 748.199 ; gain = 517.035
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -619,17 +620,19 @@ Detailed RTL Component Info :
 	                4 Bit    Registers := 5     
 	                3 Bit    Registers := 7     
 	                2 Bit    Registers := 2     
-	                1 Bit    Registers := 12    
+	                1 Bit    Registers := 18    
 +---RAMs : 
 	               4K Bit         RAMs := 1     
 +---Muxes : 
-	   2 Input     16 Bit        Muxes := 16    
+	   2 Input     16 Bit        Muxes := 19    
 	   8 Input     16 Bit        Muxes := 1     
+	   4 Input     16 Bit        Muxes := 2     
 	   2 Input     15 Bit        Muxes := 1     
 	   3 Input     15 Bit        Muxes := 1     
 	   2 Input     11 Bit        Muxes := 13    
 	  11 Input      9 Bit        Muxes := 1     
 	  11 Input      8 Bit        Muxes := 1     
+	   2 Input      8 Bit        Muxes := 1     
 	  27 Input      8 Bit        Muxes := 1     
 	  11 Input      7 Bit        Muxes := 1     
 	   2 Input      7 Bit        Muxes := 5     
@@ -637,25 +640,26 @@ Detailed RTL Component Info :
 	  11 Input      6 Bit        Muxes := 1     
 	   2 Input      6 Bit        Muxes := 2     
 	   2 Input      5 Bit        Muxes := 1     
-	   3 Input      4 Bit        Muxes := 2     
+	   4 Input      4 Bit        Muxes := 4     
 	   2 Input      4 Bit        Muxes := 4     
 	  11 Input      4 Bit        Muxes := 1     
+	   3 Input      4 Bit        Muxes := 1     
 	  10 Input      4 Bit        Muxes := 1     
-	   4 Input      4 Bit        Muxes := 3     
 	  11 Input      3 Bit        Muxes := 5     
 	   2 Input      3 Bit        Muxes := 20    
 	   9 Input      3 Bit        Muxes := 1     
-	   3 Input      2 Bit        Muxes := 2     
+	   4 Input      2 Bit        Muxes := 3     
 	   2 Input      2 Bit        Muxes := 1     
-	   4 Input      2 Bit        Muxes := 1     
-	   2 Input      1 Bit        Muxes := 16    
-	   3 Input      1 Bit        Muxes := 4     
+	   3 Input      2 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 17    
+	   4 Input      1 Bit        Muxes := 2     
 	  11 Input      1 Bit        Muxes := 3     
 	   8 Input      1 Bit        Muxes := 11    
 	   5 Input      1 Bit        Muxes := 2     
-	   6 Input      1 Bit        Muxes := 1     
+	   3 Input      1 Bit        Muxes := 2     
 	   9 Input      1 Bit        Muxes := 2     
 	  10 Input      1 Bit        Muxes := 1     
+	   6 Input      1 Bit        Muxes := 1     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -687,11 +691,11 @@ Detailed RTL Component Info :
 +---Adders : 
 	   2 Input      4 Bit       Adders := 1     
 +---Muxes : 
-	   3 Input      4 Bit        Muxes := 1     
+	   4 Input      4 Bit        Muxes := 1     
 	   2 Input      4 Bit        Muxes := 1     
-	   3 Input      2 Bit        Muxes := 1     
-	   3 Input      1 Bit        Muxes := 2     
-	   2 Input      1 Bit        Muxes := 2     
+	   4 Input      2 Bit        Muxes := 2     
+	   4 Input      1 Bit        Muxes := 2     
+	   2 Input      1 Bit        Muxes := 3     
 Module decoder 
 Detailed RTL Component Info : 
 +---Muxes : 
@@ -706,10 +710,6 @@ Module register_file
 Detailed RTL Component Info : 
 +---Muxes : 
 	   8 Input      1 Bit        Muxes := 8     
-Module immediate_concatenator 
-Detailed RTL Component Info : 
-+---Muxes : 
-	   2 Input     16 Bit        Muxes := 1     
 Module sign_extend 
 Detailed RTL Component Info : 
 +---Muxes : 
@@ -722,7 +722,7 @@ Detailed RTL Component Info :
 	                7 Bit    Registers := 1     
 	                4 Bit    Registers := 1     
 	                3 Bit    Registers := 3     
-	                1 Bit    Registers := 3     
+	                1 Bit    Registers := 5     
 Module ALU 
 Detailed RTL Component Info : 
 +---Adders : 
@@ -744,19 +744,25 @@ Detailed RTL Component Info :
 	               16 Bit    Registers := 7     
 	                7 Bit    Registers := 1     
 	                3 Bit    Registers := 2     
-	                1 Bit    Registers := 5     
+	                1 Bit    Registers := 7     
 Module memory_register 
 Detailed RTL Component Info : 
 +---Registers : 
 	               16 Bit    Registers := 6     
 	                3 Bit    Registers := 2     
-	                1 Bit    Registers := 1     
+	                1 Bit    Registers := 3     
+Module immediate_concatenator 
+Detailed RTL Component Info : 
++---Muxes : 
+	   2 Input     16 Bit        Muxes := 2     
 Module datapath 
 Detailed RTL Component Info : 
 +---Adders : 
 	   2 Input     16 Bit       Adders := 2     
 +---Muxes : 
-	   2 Input     16 Bit        Muxes := 5     
+	   2 Input     16 Bit        Muxes := 7     
+	   4 Input     16 Bit        Muxes := 2     
+	   2 Input      8 Bit        Muxes := 1     
 	   2 Input      7 Bit        Muxes := 2     
 	   2 Input      4 Bit        Muxes := 1     
 	   2 Input      3 Bit        Muxes := 10    
@@ -778,9 +784,9 @@ Detailed RTL Component Info :
 	   2 Input      1 Bit        Muxes := 7     
 	   5 Input      1 Bit        Muxes := 1     
 	   3 Input      1 Bit        Muxes := 2     
-	   6 Input      1 Bit        Muxes := 1     
 	   9 Input      1 Bit        Muxes := 2     
 	  10 Input      1 Bit        Muxes := 1     
+	   6 Input      1 Bit        Muxes := 1     
 Module led_display 
 Detailed RTL Component Info : 
 +---Adders : 
@@ -849,18 +855,18 @@ Finished Part Resource Summary
 ---------------------------------------------------------------------------------
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
+INFO: [Synth 8-5546] ROM "mem/ram_b_enable_i" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "mem/rom_enable_i" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "hazard_detect/stall_pipeline_low" won't be mapped to RAM because it is too sparse
+DSP Report: Generating DSP ALU_inst/temp_result0, operation Mode is: A2*B2.
+DSP Report: register decode_r/rd_reg_data2_reg is absorbed into DSP ALU_inst/temp_result0.
+DSP Report: register decode_r/rd_reg_data1_reg is absorbed into DSP ALU_inst/temp_result0.
+DSP Report: operator ALU_inst/temp_result0 is absorbed into DSP ALU_inst/temp_result0.
+WARNING: [Synth 8-6014] Unused sequential element divider_reg was removed.  [C:/Users/bdionello/source/ECE449/sub_modules/debug_display/led_display.vhd:46]
 WARNING: [Synth 8-6014] Unused sequential element h_dot_int_reg was removed.  [C:/Users/bdionello/source/ECE449/sub_modules/debug_display/video_timing.vhd:102]
 WARNING: [Synth 8-6014] Unused sequential element v_line_int_reg was removed.  [C:/Users/bdionello/source/ECE449/sub_modules/debug_display/video_timing.vhd:114]
 INFO: [Synth 8-5587] ROM size for "p_0_out" is below threshold of ROM address width. It will be mapped to LUTs
 INFO: [Synth 8-5546] ROM "p_0_out" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "dp_0/mem/ram_b_enable_i" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "dp_0/mem/rom_enable_i" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "dp_0/hazard_detect/stall_pipeline_low" won't be mapped to RAM because it is too sparse
-WARNING: [Synth 8-6014] Unused sequential element led_display_memory/divider_reg was removed.  [C:/Users/bdionello/source/ECE449/sub_modules/debug_display/led_display.vhd:46]
-DSP Report: Generating DSP dp_0/ALU_inst/temp_result0, operation Mode is: A2*B2.
-DSP Report: register dp_0/decode_r/rd_reg_data2_reg is absorbed into DSP dp_0/ALU_inst/temp_result0.
-DSP Report: register dp_0/decode_r/rd_reg_data1_reg is absorbed into DSP dp_0/ALU_inst/temp_result0.
-DSP Report: operator dp_0/ALU_inst/temp_result0 is absorbed into DSP dp_0/ALU_inst/temp_result0.
 WARNING: [Synth 8-3331] design xpm_memory_base__parameterized0 has unconnected port rsta
 WARNING: [Synth 8-3331] design xpm_memory_base__parameterized0 has unconnected port regcea
 WARNING: [Synth 8-3331] design xpm_memory_base__parameterized0 has unconnected port injectsbiterra
@@ -875,8 +881,6 @@ WARNING: [Synth 8-3331] design xpm_memory_base__parameterized0 has unconnected p
 WARNING: [Synth 8-3331] design xpm_memory_base__parameterized0 has unconnected port dinb[13]
 WARNING: [Synth 8-3331] design xpm_memory_base__parameterized0 has unconnected port dinb[12]
 WARNING: [Synth 8-3331] design xpm_memory_base__parameterized0 has unconnected port dinb[11]
-WARNING: [Synth 8-3331] design xpm_memory_base__parameterized0 has unconnected port dinb[10]
-WARNING: [Synth 8-3331] design xpm_memory_base__parameterized0 has unconnected port dinb[9]
 INFO: [Common 17-14] Message 'Synth 8-3331' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 warning: Removed RAM main_buffer_reg due to inactive write enable
 WARNING: [Synth 8-6014] Unused sequential element display_address_reg_rep was removed.  [C:/Users/bdionello/source/ECE449/sub_modules/debug_display/console.vhd:1465]
@@ -917,13 +921,13 @@ INFO: [Synth 8-3886] merging instance 'dp_0/mem_r/rd_inport_data_reg[2]' (FDR) t
 INFO: [Synth 8-3886] merging instance 'dp_0/mem_r/rd_inport_data_reg[3]' (FDR) to 'dp_0/mem_r/rd_inport_data_reg[4]'
 INFO: [Synth 8-3886] merging instance 'dp_0/mem_r/rd_inport_data_reg[4]' (FDR) to 'dp_0/mem_r/rd_inport_data_reg[5]'
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (\dp_0/mem_r/rd_inport_data_reg[5] )
+WARNING: [Synth 8-3332] Sequential element (dp_0/decode_r/rd_extended_disp_reg[0]) is unused and will be removed from module cpu_top.
+WARNING: [Synth 8-3332] Sequential element (dp_0/mem_r/rd_inport_data_reg[5]) is unused and will be removed from module cpu_top.
 WARNING: [Synth 8-3332] Sequential element (count_reg[1]) is unused and will be removed from module video_timing.
 WARNING: [Synth 8-3332] Sequential element (Vline_delayed_reg[6]) is unused and will be removed from module console.
 WARNING: [Synth 8-3332] Sequential element (Vline_delayed_reg[5]) is unused and will be removed from module console.
-WARNING: [Synth 8-3332] Sequential element (dp_0/decode_r/rd_extended_disp_reg[0]) is unused and will be removed from module cpu_top.
-WARNING: [Synth 8-3332] Sequential element (dp_0/mem_r/rd_inport_data_reg[5]) is unused and will be removed from module cpu_top.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:43 ; elapsed = 00:00:44 . Memory (MB): peak = 749.523 ; gain = 518.227
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:45 ; elapsed = 00:00:46 . Memory (MB): peak = 748.199 ; gain = 517.035
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -967,7 +971,7 @@ DSP: Preliminary Mapping  Report (see note below)
 +------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
 |Module Name | DSP Mapping | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
 +------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
-|cpu_top     | A2*B2       | 16     | 16     | -      | -      | 32     | 1    | 1    | -    | -    | -     | 0    | 0    | 
+|datapath    | A2*B2       | 16     | 16     | -      | -      | 32     | 1    | 1    | -    | -    | -     | 0    | 0    | 
 +------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
 
 Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
@@ -984,13 +988,13 @@ Report RTL Partitions:
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:56 ; elapsed = 00:00:58 . Memory (MB): peak = 814.375 ; gain = 583.078
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:58 ; elapsed = 00:01:00 . Memory (MB): peak = 812.164 ; gain = 581.000
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:57 ; elapsed = 00:00:59 . Memory (MB): peak = 838.188 ; gain = 606.891
+Finished Timing Optimization : Time (s): cpu = 00:00:59 ; elapsed = 00:01:01 . Memory (MB): peak = 835.801 ; gain = 604.637
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -1016,7 +1020,7 @@ Report RTL Partitions:
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:59 ; elapsed = 00:01:01 . Memory (MB): peak = 900.656 ; gain = 669.359
+Finished Technology Mapping : Time (s): cpu = 00:01:01 ; elapsed = 00:01:03 . Memory (MB): peak = 889.074 ; gain = 657.910
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1040,7 +1044,7 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:01:00 ; elapsed = 00:01:02 . Memory (MB): peak = 900.656 ; gain = 669.359
+Finished IO Insertion : Time (s): cpu = 00:01:02 ; elapsed = 00:01:04 . Memory (MB): peak = 889.074 ; gain = 657.910
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -1053,7 +1057,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:01:00 ; elapsed = 00:01:02 . Memory (MB): peak = 900.656 ; gain = 669.359
+Finished Renaming Generated Instances : Time (s): cpu = 00:01:02 ; elapsed = 00:01:04 . Memory (MB): peak = 889.074 ; gain = 657.910
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1065,25 +1069,25 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:01:00 ; elapsed = 00:01:02 . Memory (MB): peak = 900.656 ; gain = 669.359
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:01:02 ; elapsed = 00:01:04 . Memory (MB): peak = 889.074 ; gain = 657.910
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:01:00 ; elapsed = 00:01:02 . Memory (MB): peak = 900.656 ; gain = 669.359
+Finished Renaming Generated Ports : Time (s): cpu = 00:01:02 ; elapsed = 00:01:04 . Memory (MB): peak = 889.074 ; gain = 657.910
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:01:01 ; elapsed = 00:01:02 . Memory (MB): peak = 900.656 ; gain = 669.359
+Finished Handling Custom Attributes : Time (s): cpu = 00:01:02 ; elapsed = 00:01:04 . Memory (MB): peak = 889.074 ; gain = 657.910
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:01:01 ; elapsed = 00:01:02 . Memory (MB): peak = 900.656 ; gain = 669.359
+Finished Renaming Generated Nets : Time (s): cpu = 00:01:02 ; elapsed = 00:01:04 . Memory (MB): peak = 889.074 ; gain = 657.910
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -1103,16 +1107,16 @@ Report Cell Usage:
 |2     |CARRY4    |    46|
 |3     |DSP48E1   |     1|
 |4     |LUT1      |     8|
-|5     |LUT2      |   129|
-|6     |LUT3      |   279|
-|7     |LUT4      |   370|
-|8     |LUT5      |   484|
-|9     |LUT6      |   834|
-|10    |MUXF7     |   182|
+|5     |LUT2      |   118|
+|6     |LUT3      |   270|
+|7     |LUT4      |   378|
+|8     |LUT5      |   471|
+|9     |LUT6      |   888|
+|10    |MUXF7     |   185|
 |11    |MUXF8     |    18|
 |12    |RAM128X1D |    64|
 |13    |FDCE      |   160|
-|14    |FDRE      |   514|
+|14    |FDRE      |   520|
 |15    |FDSE      |     6|
 |16    |IBUF      |    30|
 |17    |OBUF      |    42|
@@ -1122,40 +1126,40 @@ Report Instance Areas:
 +------+----------------------------------+--------------------------------+------+
 |      |Instance                          |Module                          |Cells |
 +------+----------------------------------+--------------------------------+------+
-|1     |top                               |                                |  3170|
-|2     |  console_display                 |console                         |   653|
+|1     |top                               |                                |  3208|
+|2     |  console_display                 |console                         |   659|
 |3     |    timing                        |video_timing                    |   200|
-|4     |  ctrl_0                          |controller                      |   109|
-|5     |  dp_0                            |datapath                        |  2267|
+|4     |  ctrl_0                          |controller                      |   119|
+|5     |  dp_0                            |datapath                        |  2289|
 |6     |    ALU_inst                      |ALU                             |     5|
-|7     |    Register_File_inst            |register_file                   |   482|
+|7     |    Register_File_inst            |register_file                   |   481|
 |8     |    adder_pc                      |adder                           |     4|
-|9     |    branch_unit                   |branch_unit                     |    20|
-|10    |    decode_r                      |decode_register                 |   605|
-|11    |    execute_r                     |execute_register                |   305|
-|12    |    fetch_r                       |fetch_register                  |   319|
-|13    |    hazard_detect                 |hazard_detect_unit              |    28|
-|14    |    immconcat                     |immediate_concatenator          |    47|
-|15    |    mem                           |mem_manager                     |   246|
-|16    |      ram_0                       |ram__5                          |   115|
-|17    |        xpm_memory_dpdistram_inst |xpm_memory_dpdistram            |   100|
-|18    |          xpm_memory_base_inst    |xpm_memory_base__parameterized0 |   100|
-|19    |      rom_0                       |rom                             |   131|
-|20    |        xpm_memory_sprom_inst     |xpm_memory_sprom                |   131|
-|21    |          xpm_memory_base_inst    |xpm_memory_base                 |    84|
-|22    |    mem_r                         |memory_register                 |   138|
-|23    |    out_r                         |out_register                    |    16|
-|24    |    pc                            |program_counter                 |    42|
+|9     |    branch_unit                   |branch_unit                     |    21|
+|10    |    decode_r                      |decode_register                 |   610|
+|11    |    execute_r                     |execute_register                |   329|
+|12    |    fetch_r                       |fetch_register                  |   343|
+|13    |    hazard_detect                 |hazard_detect_unit              |    29|
+|14    |    mem                           |mem_manager                     |   230|
+|15    |      ram_0                       |ram__5                          |   115|
+|16    |        xpm_memory_dpdistram_inst |xpm_memory_dpdistram            |   100|
+|17    |          xpm_memory_base_inst    |xpm_memory_base__parameterized0 |   100|
+|18    |      rom_0                       |rom                             |   115|
+|19    |        xpm_memory_sprom_inst     |xpm_memory_sprom                |   115|
+|20    |          xpm_memory_base_inst    |xpm_memory_base                 |    84|
+|21    |    mem_r                         |memory_register                 |   156|
+|22    |    out_r                         |out_register                    |    16|
+|23    |    pc                            |program_counter                 |    41|
+|24    |    seg7_r                        |out_register_0                  |    16|
 |25    |  led_display_memory              |led_display                     |    66|
 +------+----------------------------------+--------------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:01:01 ; elapsed = 00:01:02 . Memory (MB): peak = 900.656 ; gain = 669.359
+Finished Writing Synthesis Report : Time (s): cpu = 00:01:02 ; elapsed = 00:01:04 . Memory (MB): peak = 889.074 ; gain = 657.910
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 98 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:44 ; elapsed = 00:00:55 . Memory (MB): peak = 900.656 ; gain = 323.543
-Synthesis Optimization Complete : Time (s): cpu = 00:01:01 ; elapsed = 00:01:02 . Memory (MB): peak = 900.656 ; gain = 669.359
+Synthesis finished with 0 errors, 0 critical warnings and 97 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:45 ; elapsed = 00:00:57 . Memory (MB): peak = 889.074 ; gain = 313.008
+Synthesis Optimization Complete : Time (s): cpu = 00:01:02 ; elapsed = 00:01:04 . Memory (MB): peak = 889.074 ; gain = 657.910
 INFO: [Project 1-571] Translating synthesized netlist
-INFO: [Netlist 29-17] Analyzing 341 Unisim elements for replacement
+INFO: [Netlist 29-17] Analyzing 344 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
@@ -1164,10 +1168,10 @@ INFO: [Project 1-111] Unisim Transformation Summary:
   RAM128X1D => RAM128X1D (RAMD64E, RAMD64E, MUXF7, MUXF7, RAMD64E, RAMD64E): 64 instances
 
 INFO: [Common 17-83] Releasing license: Synthesis
-206 Infos, 125 Warnings, 0 Critical Warnings and 0 Errors encountered.
+205 Infos, 125 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:01:04 ; elapsed = 00:01:07 . Memory (MB): peak = 900.656 ; gain = 674.941
+synth_design: Time (s): cpu = 00:01:05 ; elapsed = 00:01:09 . Memory (MB): peak = 889.074 ; gain = 663.145
 INFO: [Common 17-1381] The checkpoint 'C:/Users/bdionello/source/ECE449/project_cpu/project_cpu.runs/synth_1/cpu_top.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file cpu_top_utilization_synth.rpt -pb cpu_top_utilization_synth.pb
-report_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.038 . Memory (MB): peak = 900.656 ; gain = 0.000
-INFO: [Common 17-206] Exiting Vivado at Thu Mar 27 13:26:20 2025...
+report_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.040 . Memory (MB): peak = 889.074 ; gain = 0.000
+INFO: [Common 17-206] Exiting Vivado at Thu Mar 27 20:05:44 2025...

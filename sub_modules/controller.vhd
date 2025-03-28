@@ -107,19 +107,8 @@ begin
                             '0' when state = L2_LOAD_STATE else
                             '0' when state = L2_STORE_STATE else
                             '0' when state = L2_MOV_STATE else
-                            '0';
-                            
-    decode_ctl.imm_op  <= '0' when state = A1_STATE else
-                          '0' when state = A2_STATE else
-                          '0' when state = A3_STATE else
-                          '0' when state = B1_STATE else                              
-                          '0' when state = B2_STATE else
-                          '0' when state = RETURN_STATE else
-                          '1' when state = L1_LOAD_IMM_STATE else
-                          '0' when state = L2_LOAD_STATE else
-                          '0' when state = L2_STORE_STATE else
-                          '0' when state = L2_MOV_STATE else
-                          '0';
+                            '0';                    
+
                                                       
     -- alu_NOP, alu_ADD, alu_SUB, alu_MUL, alu_NAND, alu_SHL, alu_SHR, alu_TEST
     execute_ctl.alu_op <= alu_NOP when state = NOP_STATE else
@@ -203,4 +192,16 @@ begin
                                 '0' when state = L2_STORE_STATE else
                                 '1' when state = L2_MOV_STATE else
                                 '0'; 
+                                
+    write_back_ctl.imm_op  <= '0' when state = A1_STATE else
+                              '0' when state = A2_STATE else
+                              '0' when state = A3_STATE else
+                              '0' when state = B1_STATE else                              
+                              '0' when state = B2_STATE else
+                              '0' when state = RETURN_STATE else
+                              '1' when state = L1_LOAD_IMM_STATE else
+                              '0' when state = L2_LOAD_STATE else
+                              '0' when state = L2_STORE_STATE else
+                              '0' when state = L2_MOV_STATE else
+                              '0';
 end controller_arch ;

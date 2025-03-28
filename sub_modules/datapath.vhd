@@ -64,11 +64,12 @@ architecture data_path_arch of datapath is
     signal wr_index_d         : std_logic_vector(2 downto 0);
     signal rd_index1_d        : std_logic_vector(2 downto 0);
     signal rd_index2_d        : std_logic_vector(2 downto 0);      
-    signal imm_temp_d         : word_t;
     signal imm_fwd_d          : word_t;    
     signal inport_fwd_d       : word_t;
     signal alu_shift_d        : std_logic_vector(3 downto 0);
-    signal rst_decode_reg_d   : std_logic;
+    signal rst_decode_reg_d   : std_logic; 
+    signal reg_7_d : word_t;  
+     
     -- Execute stage signals -- Denoted by:'_ex'
     signal instruction_ex     : word_t;
     signal execute_ctl_ex     : execute_type; -- used in execute stage
@@ -79,6 +80,7 @@ architecture data_path_arch of datapath is
     signal rd_data2_ex        : word_t; -- Read data 2 from register file
     signal wr_index_ex        : std_logic_vector(2 downto 0);
     signal imm_fwd_ex         : word_t;
+    signal m_1_ex             : std_logic;
     signal inport_fwd_ex      : word_t;
     signal alu_shift_ex       : std_logic_vector(3 downto 0);
     signal pc_branch_addr_ex  : word_t;
@@ -87,12 +89,13 @@ architecture data_path_arch of datapath is
     signal alu_result_ex      : word_t;
     signal alu_z_ex           : std_logic;
     signal alu_n_ex           : std_logic;
-    signal pc_src_ex          : std_logic; -- signal to select pc mux      
+    signal pc_src_ex          : std_logic; -- signal to select pc mux  
+    
     -- Memory stage signals -- Denoted by:'_mem'
-    signal instruction_mem     : word_t;
+    signal instruction_mem    : word_t;
     signal memory_ctl_mem     : memory_type; -- used in memory stage
     signal write_back_ctl_mem : write_back_type; -- pass through
-    signal pc_current_mem        : word_t; -- UNUSED
+    signal pc_current_mem     : word_t; -- UNUSED
     -- alu
     signal alu_result_mem     : word_t;
     signal alu_z_mem          : std_logic;
@@ -103,9 +106,12 @@ architecture data_path_arch of datapath is
     signal wr_data_fwd_mem    : word_t; -- Data to write to register file
     signal wr_index_mem       : std_logic_vector(2 downto 0); 
     signal imm_fwd_mem        : word_t;
+    signal m_1_mem            : std_logic;
     signal inport_fwd_mem     : word_t;    
     signal extended_disp_mem  : word_t;
-    signal out_port_enable_mem  : std_logic; 
+    signal out_port_enable_mem  : std_logic;
+    signal seg7_enable_mem    : std_logic;
+    signal led_7seg_data_mem  :  word_t;
     -- Write back stage signals -- Denoted by:'_wb'
     signal instruction_wb     : word_t;
     signal write_back_ctl_wb  : write_back_type; -- used in wb stage
@@ -115,9 +121,11 @@ architecture data_path_arch of datapath is
     signal wr_data_fwd_wb     : word_t; -- Data to write to register file
     signal wr_index_wb        : std_logic_vector(2 downto 0); 
     signal imm_fwd_wb         : word_t;
+    signal imm_cat_wb         : word_t;
+    signal m_1_wb             : std_logic;
     signal inport_fwd_wb      : word_t;    
     signal alu_result_wb      : word_t; -- Data to write to register file
-  
+    
     begin
         --------------- Internal signal logic ----------------
         -- send NOP to controller when pipeline stalled
@@ -149,16 +157,10 @@ architecture data_path_arch of datapath is
                        instr_decoded_d.ra;
                                                     
         rd_index2_d <=  instr_decoded_d.r_src when (instr_decoded_d.opcode = STORE) else
-                        instr_decoded_d.rc when decode_ctl_d.reg_src = '0' else "000";
-        
---        imm_temp_d <=   (instr_decoded_d.imm & X"00") when (instr_decoded_d.m_1 = '1') and (decode_ctl_d.imm_op = '1') else
---                        (X"00" & instr_decoded_d.imm) when (instr_decoded_d.m_1 = '0') and (decode_ctl_d.imm_op = '1') else
---                         X"0000";
-                         
+                        instr_decoded_d.rc when decode_ctl_d.reg_src = '0' else "000";  
+                          
         inport_fwd_d <= in_port when instr_decoded_d.opcode = IN_OP else
-                        X"0000";
-                                       
-
+                        X"0000";                                    
          
         alu_shift_d <= instr_decoded_d.shift when (instr_decoded_d.opcode = SHL_OP or instr_decoded_d.opcode = SHR_OP) else
                        "0000";
@@ -170,17 +172,24 @@ architecture data_path_arch of datapath is
         write_back_ctl_d <= write_back_type_init_c when (flush_d_reg_i = '1') or (stall_pipeline_low_i = '0') else write_back_ctl;   
         
         instruction_fwd_d <= instruction_d when stall_pipeline_low_i = '1' else 
-                             X"0000";
-        
+                             X"0000"; 
+                             
+        imm_fwd_d <= (instr_decoded_d.imm & X"00") when (instr_decoded_d.m_1 = '1') and (write_back_ctl_d.imm_op = '1') else
+                     (X"00" & instr_decoded_d.imm) when (instr_decoded_d.m_1 = '0') and (write_back_ctl_d.imm_op = '1') else
+                       X"0000"; 
+                       
         ---------- Execute  
         ---------- Memory         
         out_port_enable_mem <= '1' when memory_ctl_mem.op_code_mem = OUT_OP else -- Ra to outport 
-                               '0';                
+                               '0';
+                               
+        seg7_enable_mem <= '1' when memory_ctl_mem.op_code_mem = STORE and rd_data1_mem = x"FFF2" else -- Ra to outport 
+                           '0';
         ---------- Write back 
         -- register file write data mux
         wr_data_d <= memory_data_wb when write_back_ctl_wb.wb_src = MEMORY_DATA else
                      alu_result_wb when write_back_ctl_wb.wb_src = ALU_RES else
-                     imm_fwd_wb when write_back_ctl_wb.wb_src = IMM_FWD else
+                     imm_cat_wb when write_back_ctl_wb.wb_src = IMM_FWD else
                      std_logic_vector(unsigned(pc_current_wb) + 2) when write_back_ctl_wb.wb_src = RETURN_PC else
                      inport_fwd_wb when write_back_ctl_wb.wb_src = INPORT_FWD else
                      rd_data1_wb when write_back_ctl_wb.wb_src = MOV_REG else
@@ -207,7 +216,7 @@ architecture data_path_arch of datapath is
                 inst_out => instruction_f, 
                 -- Memory Mapped ports
                 dip_switches => dip_switches,
-                led_7seg_out => led_7seg_data --: out STD_LOGIC_VECTOR (15 downto 0) := X"0000"            
+                led_7seg_out => led_7seg_data_mem --: out STD_LOGIC_VECTOR (15 downto 0) := X"0000"            
             ); 
                     
         -- Fetch          
@@ -243,7 +252,7 @@ architecture data_path_arch of datapath is
                 -- outputs               
                 rd_instruction => instruction_d, --: out std_logic_vector(15 downto 0);
                 rd_pc => pc_current_d          
-            );
+            ); 
             
         --------------- Decode Stage Modules ------------------- 
         display_decode.s2_pc <= pc_current_d;
@@ -280,12 +289,14 @@ architecture data_path_arch of datapath is
             port map (
                 instr => instruction_d,   -- Input instruction
                 instr_decoded => instr_decoded_d 
-        );       
+        );   
+        
+         
         -- Decode
         -- Instantiate the register_file
         Register_File_inst: entity work.register_file
             port map(
-                -- inputs 
+                -- inputs
                 rst       => sys_rst,         -- Reset signal
                 clk       => sys_clk,         -- Clock signal
                 rd_index1 => rd_index1_d,          -- Read index 1 (rb from Decoder)
@@ -303,20 +314,10 @@ architecture data_path_arch of datapath is
                 register_4 => display_register.register_4, 
                 register_5 => display_register.register_5, 
                 register_6 => display_register.register_6, 
-                register_7 => display_register.register_7 
-            ); 
-        -- Decode
-        -- concatonate imm_upper and imm_lower    
-        immconcat: entity work.immediate_concatenator 
-            port map(
-                rst       => sys_rst,         -- Reset signal
-                clk       => sys_clk,         -- Clock signal
-                imm_op    => decode_ctl_d.imm_op,
-                imm_mode  => instr_decoded_d.m_1, 
-                imm_in    => instr_decoded_d.imm,
-                imm_out   => imm_fwd_d          
+                register_7 => reg_7_d
             );
-            
+                         
+            display_register.register_7 <= reg_7_d;            
         -- Decode
         -- select, extend, and shift the displacement
         sign_extender: entity work.sign_extend
@@ -344,6 +345,7 @@ architecture data_path_arch of datapath is
                 wr_reg_write_index => wr_index_d,
                 wr_extended_disp => extended_disp_d,
                 wr_immidate => imm_fwd_d,
+                wr_m_1 => instr_decoded_d.m_1,
                 wr_inport_data => inport_fwd_d,
                 wr_alu_shift => alu_shift_d,          
                 -- contorller records
@@ -359,13 +361,15 @@ architecture data_path_arch of datapath is
                 rd_reg_write_index => wr_index_ex,
                 rd_extended_disp => extended_disp_ex,
                 rd_immidate => imm_fwd_ex,
+                rd_m_1 => m_1_ex,
                 rd_inport_data => inport_fwd_ex,
                 rd_alu_shift => alu_shift_ex,
                 -- contorller records 
                 rd_execute_ctl => execute_ctl_ex,
                 rd_memory_ctl => memory_ctl_ex,
                 rd_write_back_ctl => write_back_ctl_ex             
-            );   
+            );    -- instr_decoded_d.m_1 std_logic_vector(7 downto 0);
+            
         --------------- Execute Stage Modules -------------------
         display_execute.s3_pc <= pc_current_ex;
         display_execute.s3_inst <= instruction_ex;
@@ -433,6 +437,7 @@ architecture data_path_arch of datapath is
             wr_reg_data2 => rd_data2_ex,
             wr_reg_write_index => wr_index_ex,
             wr_immidate => imm_fwd_ex,
+            wr_m_1 => m_1_ex,
             wr_inport_data => inport_fwd_ex,           
             -- contorller records
             wr_memory_ctl => memory_ctl_ex,
@@ -450,6 +455,7 @@ architecture data_path_arch of datapath is
             rd_reg_data2 => rd_data2_mem, -- to alu in2
             rd_reg_write_index => wr_index_mem,
             rd_immidate => imm_fwd_mem,
+            rd_m_1 => m_1_mem,
             rd_inport_data => inport_fwd_mem,
             -- contorller records 
             rd_memory_ctl => memory_ctl_mem,
@@ -477,6 +483,16 @@ architecture data_path_arch of datapath is
                 wr_enable => out_port_enable_mem,
                 -- out puts
                 rd_data => out_port           
+            );
+            
+        seg7_r: entity work.out_register
+            port map (                
+                clk => sys_clk,
+                rst => sys_rst,
+                wr_data => led_7seg_data_mem,
+                wr_enable => seg7_enable_mem,
+                -- out puts
+                rd_data => led_7seg_data           
             );                                                      
         mem_r: entity work.memory_register
             port map(
@@ -492,7 +508,8 @@ architecture data_path_arch of datapath is
                 wr_mem_data => memory_data_mem,
                 wr_reg_write_index => wr_index_mem,
                 -- TODO add displacement
-                wr_immidate => imm_fwd_mem, 
+                wr_immidate => imm_fwd_mem,
+                wr_m_1 => m_1_mem, 
                 wr_inport_data => inport_fwd_mem,          
                 -- contorller records
                 wr_write_back_ctl => write_back_ctl_mem, 
@@ -507,9 +524,25 @@ architecture data_path_arch of datapath is
                 rd_reg_write_index => wr_index_wb,
                 -- 
                 rd_immidate => imm_fwd_wb,
+                rd_m_1 => m_1_wb,
                 rd_inport_data => inport_fwd_wb,
                 -- contorller records 
                 rd_write_back_ctl => write_back_ctl_wb            
             );
-
+            --------------- Write back Stage Modules ----------------
+            -- wb
+            -- concatonate imm_upper and imm_lower    
+            immconcat: entity work.immediate_concatenator 
+                port map(
+                    rst          => sys_rst,         -- Reset signal
+                    clk          => sys_clk,         -- Clock signal
+--                    wr_enable    => write_back_ctl_wb.reg_write,
+--                    imm_wb_index => wr_index_wb,
+                    imm_r7_in    => reg_7_d,
+                    imm_op       => write_back_ctl_wb.imm_op,
+                    imm_mode     => m_1_wb, 
+                    imm_in       => imm_fwd_wb,
+                    imm_out      => imm_cat_wb          
+                );
+                
 end data_path_arch ;

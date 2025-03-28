@@ -15,8 +15,7 @@ package cpu_types is
     -- Record types
     type decode_type is record
         reg_src : std_logic;
-        reg_dst : std_logic;
-        imm_op : std_logic;        
+        reg_dst : std_logic;                
     end record decode_type;
         
     type execute_type is record
@@ -32,7 +31,8 @@ package cpu_types is
 
     type write_back_type is record
         wb_src : wb_src_type;    
-        reg_write : std_logic;   
+        reg_write : std_logic;
+        imm_op : std_logic;   
     end record write_back_type;
     
     type instruction_type is record
@@ -142,8 +142,7 @@ package cpu_types is
                                                             r_src => (others => '0') );
                                                             
     constant decode_type_init_c : decode_type := ( reg_src => '0',
-                                                   reg_dst => '0',
-                                                   imm_op => '0');
+                                                   reg_dst => '0');
                                                         
     constant execute_type_init_c : execute_type := ( alu_op => alu_NOP ) ;                                                     
                                                      --alu_src => '0');
@@ -153,10 +152,10 @@ package cpu_types is
                                                    memory_write => '0');
                                                      
     constant write_back_type_init_c : write_back_type := ( wb_src  => NONE,    
-                                                           reg_write  => '0');  
+                                                           reg_write  => '0',
+                                                           imm_op => '0');  
                                                              
-    constant step_size_c : word_t := X"0002";
-           
+    constant step_size_c : word_t := X"0002";           
     -- ALU Operations
     constant NOP      : op_code_t := "0000000";
     constant ADD      : op_code_t := "0000001";

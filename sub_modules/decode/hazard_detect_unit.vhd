@@ -55,7 +55,7 @@ begin
                 elsif stall_count <= 0 then                
                         case op_code is
                             -- Operations that read a register and are suseptable to read after load hazard, require stalls 
-                            when ADD | SUB | MUL | NAND_OP  =>
+                            when ADD | SUB | MUL | NAND_OP | STORE  =>
                                 if (mem_read = '1') and ( dest_reg = source_reg1 or dest_reg = source_reg2 )then
                                     stall_count := 1;
                                     stall_pipeline_low <= '0';
@@ -67,17 +67,27 @@ begin
                                     stall_pipeline_low <= '1';               
                                 end if; 
                                                
-                            when  SHL_OP | SHR_OP | STORE | MOV | TEST | BR_N | BR_Z | BR | BR_SUB | RETURN_OP | LOADIMM | LOAD | OUT_OP =>
+                            when  SHL_OP | SHR_OP | TEST | BR_N | BR_Z | BR | BR_SUB | RETURN_OP | OUT_OP | LOAD | MOV =>
                                 if (mem_read = '1') and ( dest_reg = source_reg1 )then
-                                    stall_count := 2;
+                                    stall_count := 1;
                                     stall_pipeline_low <= '0';
                                 elsif (reg_write = '1') and ( dest_reg = source_reg1 )then
-                                    stall_count := 2;
+                                    stall_count := 1;
                                     stall_pipeline_low <= '0';
                                 else 
                                     stall_count := 0;
                                     stall_pipeline_low <= '1';             
-                                end if;                                                 
+                                end if;
+                                
+                            when LOADIMM =>
+                            if (mem_read = '1') and ( dest_reg = "111") then
+                                stall_count := 1;
+                                stall_pipeline_low <= '0';
+                            else 
+                                stall_count := 0;
+                                stall_pipeline_low <= '1';             
+                            end if; 
+                                                                             
                             when others => NULL;                     
                         end case;
                     else
