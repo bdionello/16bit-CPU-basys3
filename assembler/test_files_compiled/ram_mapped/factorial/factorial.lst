@@ -1,6 +1,6 @@
 
 ;
-; Created on Sun Mar 23 16:28:03 2025 with ECE 449 assembler v1.12 beta 1 (16 bit).
+; Created on Sun Mar 30 15:16:10 2025 with ECE 449 assembler v1.12 beta 1 (16 bit).
 ;
 ;Header Section
 RADIX 10
@@ -17,8 +17,8 @@ DATA
 1040 => "0010010111111111", -- 0410 - 25FF main:          loadimm.upper DipSwitches.hi
 1042 => "0010010011110000", -- 0412 - 24F0                loadimm.lower DipSwitches.lo
 1044 => "0010000110111000", -- 0414 - 21B8                load          r6,r7
-1046 => "0010010100000000", -- 0416 - 2500                loadimm.upper DipSwitchMask.hi
-1048 => "0010010000000111", -- 0418 - 2407                loadimm.lower DipSwitchMask.lo
+1046 => "0010010101111111", -- 0416 - 257F                loadimm.upper DipSwitchMask.hi
+1048 => "0010010011111111", -- 0418 - 24FF                loadimm.lower DipSwitchMask.lo
 1050 => "0000100110110111", -- 041A - 09B7                nand          r6,r6,r7
 1052 => "0000100110110110", -- 041C - 09B6                nand          r6,r6,r6
 1054 => "0010010100000000", -- 041E - 2500                loadimm.upper 0x00
@@ -47,7 +47,7 @@ DATA
 
 -------------------------------------------------------
 Symbol Table:
-DipSwitchMask       7 (0007)
+DipSwitchMask   32767 (7FFF)
 DipSwitches     65520 (FFF0)
 Done             1090 (0442)
 LedDisplay      65522 (FFF2)

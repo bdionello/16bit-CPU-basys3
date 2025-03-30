@@ -25,9 +25,14 @@ entity mem_manager is
         inst_addr        : in STD_LOGIC_VECTOR (15 downto 0);
         inst_out         : out STD_LOGIC_VECTOR (15 downto 0);
         -- read_inst_enable : in STD_LOGIC := '0'; -- used for debugging may not be needed for read only memory
-        -- Memory Mapped ports
-        dip_switches     : in STD_LOGIC_VECTOR (15 downto 0);
-        led_7seg_out     : out STD_LOGIC_VECTOR (15 downto 0)
+        
+        -- Memory Mapped ports        
+        dip_switches      : in STD_LOGIC_VECTOR (15 downto 0);
+        
+        display_data_addr : out STD_LOGIC_VECTOR (15 downto 0);        
+        video_data        : out STD_LOGIC_VECTOR (15 downto 0);
+        led_7seg_out      : out STD_LOGIC_VECTOR (15 downto 0);
+        display_enable    : out STD_LOGIC
         );
 end mem_manager;
 
@@ -58,7 +63,8 @@ begin
     -- Rom is accessed for instruction address space below 0x0400   
     rom_enable_i <= '1' when (inst_addr AND X"0400") = X"0000" else '0'; 
     -- ram port_a for data memory and writing user code, enabled for read or write not both, and address space above 0x0400 (assembly code must conform)                                        
-    ram_a_enable_i <= '1' when ((read_data_enable = '1') XOR (write_enable = '1')) AND ((data_addr AND X"0400") = X"0400") else '0';
+    ram_a_enable_i <= '1' when ((read_data_enable = '1') XOR (write_enable = '1')) AND ((data_addr AND X"0400") = X"0400") AND not( (data_addr = X"FFF2") OR ((signed(data_addr )<= -513) AND (signed(data_addr ))>=-1024) ) else
+                      '0';
     -- ram port_b for user code instruction read, memory space above 0x0400                     
     ram_b_enable_i <= '1' when ((inst_addr AND X"0400") = X"0400") else '0';
     write_enable_i <= "1" when (write_enable = '1') else "0";
@@ -74,10 +80,21 @@ begin
                 ram_a_data_out_i when (read_data_enable = '1')  else
                 X"0000";                             
     
-    -- Connected to physical output port (Write to Display)                                  
+    -- Connected to physical output port (Write to 7 seg display)                                  
     led_7seg_out <= data_in when (data_addr = X"FFF2") AND (write_enable = '1') else
-                    X"0000";
-        
+                    X"0000";         
+     
+    -- Connected to physical output port (Write to video Display in range X"FC00" to X"FDFF" ( -1024 to -513)                                  
+    video_data <= data_in when (signed(data_addr ) <= -513) AND (signed(data_addr ) >= -1024) AND (write_enable = '1') else
+                  X"0000";               
+    
+    display_data_addr <= data_addr when ( (data_addr = X"FFF2") OR ((signed(data_addr )<= -513) AND (signed(data_addr ))>=-1024) ) AND (write_enable = '1') else 
+                         X"0000";
+                         
+    display_enable <= '1' when ( (data_addr = X"FFF2") OR ((signed(data_addr )<= -513) AND (signed(data_addr ))>=-1024) ) AND (write_enable = '1') else
+                      '0';                         
+    
+         
     rom_0 : entity work.rom
         port map(
             clk => clock,

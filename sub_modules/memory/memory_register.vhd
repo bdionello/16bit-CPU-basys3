@@ -22,6 +22,7 @@ entity memory_register is
            wr_pc              : in word_t;
            -- alu
            wr_alu_result      : in word_t;
+           wr_alu_o            : in std_logic;  
           -- register file
            wr_reg_data1       : in word_t;
            wr_mem_data        : in word_t;
@@ -35,6 +36,7 @@ entity memory_register is
            rd_pc              : out word_t;
            -- alu
            rd_alu_result      : out word_t;
+           rd_alu_o           : out std_logic;
            -- register file
            rd_reg_data1       : out word_t;
            rd_mem_data        : out word_t;       
@@ -57,6 +59,7 @@ architecture Behavioral of memory_register is
                 if(rst='1') then 
                     rd_pc <= (others=>'0');
                     rd_alu_result  <= (others=>'0');
+                    rd_alu_o <= '0';
                     rd_reg_data1  <= (others=>'0');
                     rd_mem_data    <= (others=>'0');
                     rd_reg_write_index  <= (others=>'0');
@@ -67,6 +70,7 @@ architecture Behavioral of memory_register is
                 elsif(wr_enable='1') then
                     rd_pc <= wr_pc;
                     rd_alu_result <= wr_alu_result;
+                    rd_alu_o <= wr_alu_o;
                     rd_reg_data1 <= wr_reg_data1;
                     rd_mem_data <= wr_mem_data;
                     rd_reg_write_index <= wr_reg_write_index;

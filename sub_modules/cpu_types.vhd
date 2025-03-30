@@ -95,7 +95,7 @@ package cpu_types is
         s3_mr_rd_address :  STD_LOGIC_VECTOR( 15 downto 0 );
         zero_flag     :  STD_LOGIC;
         negative_flag :  STD_LOGIC;
-       -- overflow_flag :  STD_LOGIC;   -- TODO IMPLEMENT ME
+        overflow_flag :  STD_LOGIC;
     end record display_execute_type;
         
     type display_memory_type is record
@@ -115,14 +115,14 @@ package cpu_types is
         register_5    :  STD_LOGIC_VECTOR ( 15 downto 0 );
         register_6    :  STD_LOGIC_VECTOR ( 15 downto 0 );
         register_7    :  STD_LOGIC_VECTOR ( 15 downto 0 );
---        register_0_of :  STD_LOGIC;
---        register_1_of :  STD_LOGIC;
---        register_2_of :  STD_LOGIC;
---        register_3_of :  STD_LOGIC;
---        register_4_of :  STD_LOGIC;
---        register_5_of :  STD_LOGIC;
---        register_6_of :  STD_LOGIC;
---        register_7_of :  STD_LOGIC;   
+        register_0_of :  STD_LOGIC;
+        register_1_of :  STD_LOGIC;
+        register_2_of :  STD_LOGIC;
+        register_3_of :  STD_LOGIC;
+        register_4_of :  STD_LOGIC;
+        register_5_of :  STD_LOGIC;
+        register_6_of :  STD_LOGIC;
+        register_7_of :  STD_LOGIC;   
     end record display_register_type;
     
     

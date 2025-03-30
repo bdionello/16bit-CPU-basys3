@@ -24,6 +24,7 @@ entity execute_register is
            wr_alu_result       : in word_t;
            wr_alu_z            : in std_logic;
            wr_alu_n            : in std_logic;  
+           wr_alu_o            : in std_logic;  
           -- register file
            wr_reg_data1        : in word_t;
            wr_reg_data2        : in word_t;
@@ -42,6 +43,7 @@ entity execute_register is
            rd_alu_result       : out word_t;
            rd_alu_z            : out std_logic;
            rd_alu_n            : out std_logic;
+           rd_alu_o            : out std_logic;  
            -- register file
            rd_reg_data1        : out word_t;
            rd_reg_data2        : out word_t;        
@@ -68,6 +70,7 @@ architecture Behavioral of execute_register is
                     rd_alu_result  <= (others=>'0');
                     rd_alu_z <= '0';
                     rd_alu_n <= '0';
+                    rd_alu_o <= '0';
                     rd_reg_data1  <= (others=>'0');
                     rd_reg_data2  <= (others=>'0');
                     rd_reg_write_index  <= (others=>'0');
@@ -82,6 +85,7 @@ architecture Behavioral of execute_register is
                     rd_alu_result <= wr_alu_result;
                     rd_alu_z <= wr_alu_z;
                     rd_alu_n <= wr_alu_n;
+                    rd_alu_o <= wr_alu_o;
                     rd_reg_data1 <= wr_reg_data1;
                     rd_reg_data2 <= wr_reg_data2;
                     rd_reg_write_index <= wr_reg_write_index;

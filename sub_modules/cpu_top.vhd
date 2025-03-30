@@ -33,27 +33,31 @@ entity cpu_top is port (
 end entity cpu_top ;
 
 architecture rtl of cpu_top is
-    signal sys_rst_i       : std_logic;
-    signal ctl_wr_enable_i : std_logic;
-    signal debug_console_i : std_logic;
-    signal decode_ctl_i    : decode_type;   
-    signal ex_stage_ctl_i  : execute_type;
-    signal mem_stage_ctl_i : memory_type;   
-    signal wb_stage_ctl_i  : write_back_type;    
-    signal op_code_i       : op_code_t; -- instruction
-    signal boot_mode_i     : boot_mode_type;
-    signal led_7seg_data_i : word_t;
-    signal out_port_i      : word_t;
-    signal in_port_i       : word_t;
-    signal dip_switches_i  : word_t;    
+    signal sys_rst_i          : std_logic;
+    signal ctl_wr_enable_i    : std_logic;
+    signal debug_console_i    : std_logic;  -- switch from video memory to debug console
+    signal display_enable_i    : std_logic; -- enable video memory write or 7 seg write
+    signal decode_ctl_i       : decode_type;   
+    signal ex_stage_ctl_i     : execute_type;
+    signal mem_stage_ctl_i    : memory_type;   
+    signal wb_stage_ctl_i     : write_back_type;    
+    signal op_code_i          : op_code_t; -- instruction
+    signal boot_mode_i        : boot_mode_type;
+    signal led_7seg_data_i    : word_t;
+    signal video_data_i       : word_t;
+    signal display_addr_i     : word_t; -- address for video display or 7 seg
+    signal out_port_i         : word_t;
+    signal in_port_i          : word_t;
+    signal dip_switches_i     : word_t;    
     -- Console Display signals
-    signal display_fetch_i  :  display_fetch_type;
-    signal display_decode_i :  display_decode_type;  
-    signal display_execute_i:  display_execute_type;
-    signal display_memory_i :  display_memory_type;
+    signal display_fetch_i    :  display_fetch_type;
+    signal display_decode_i   :  display_decode_type;  
+    signal display_execute_i  :  display_execute_type;
+    signal display_memory_i   :  display_memory_type;
     signal display_register_i :  display_register_type;
           
 begin
+  
     debug_console_i <= dip_switches_i(15);    
     dip_switches_i <= dip_switches;
     out_port <= out_port_i;
@@ -74,6 +78,9 @@ begin
             memory_ctl => mem_stage_ctl_i,
             write_back_ctl => wb_stage_ctl_i, 
             -- outputs
+            video_data => video_data_i,
+            display_enable => display_enable_i,
+            display_data_addr => display_addr_i,
             ctl_wr_enable => ctl_wr_enable_i,
             out_port => out_port_i,
             op_code_out => op_code_i,
@@ -105,10 +112,10 @@ begin
    ------------ Debug and display --------------    
    led_display_memory : entity work.led_display
        port map (       
-               addr_write => x"FFF2",
+               addr_write => display_addr_i,
                clk => stm_sys_clk,
                data_in => led_7seg_data_i,
-               en_write => '1',       
+               en_write => display_enable_i,       
                board_clock => board_clock,
                led_segments => led_segments,
                led_digits => led_digits
@@ -173,20 +180,20 @@ begin
             register_5 => display_register_i.register_5,
             register_6 => display_register_i.register_6,
             register_7 => display_register_i.register_7,        
-            register_0_of => '0',
-            register_1_of => '0',
-            register_2_of => '0',
-            register_3_of => '0',
-            register_4_of => '0',
-            register_5_of => '0',
-            register_6_of => '0',
-            register_7_of => '0',        
+            register_0_of => display_register_i.register_0_of,
+            register_1_of => display_register_i.register_1_of,
+            register_2_of => display_register_i.register_2_of,
+            register_3_of => display_register_i.register_3_of,
+            register_4_of => display_register_i.register_4_of,
+            register_5_of => display_register_i.register_5_of,
+            register_6_of => display_register_i.register_6_of,
+            register_7_of => display_register_i.register_7_of,      
         --
         -- CPU Flags
         --
             zero_flag => display_execute_i.zero_flag,
             negative_flag => display_execute_i.negative_flag,
-            overflow_flag => '0',        
+            overflow_flag => display_execute_i.overflow_flag,        
         --
         -- Debug screen enable
         --
@@ -195,9 +202,9 @@ begin
         -- Text console display memory access signals ( clk is the processor clock )
         --        
             clk => stm_sys_clk,
-            addr_write => x"0000",
-            data_in => x"0000",
-            en_write => '0',        
+            addr_write => display_addr_i,
+            data_in => video_data_i,
+            en_write => display_enable_i,        
         --
         -- Video related signals
         --        

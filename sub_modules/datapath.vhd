@@ -19,10 +19,16 @@ entity datapath is
         memory_ctl     : in memory_type;   
         write_back_ctl : in write_back_type;
         -- outputs
-        ctl_wr_enable  : out std_logic;
-        out_port       : out word_t;
-        op_code_out    : out op_code_t;
-        led_7seg_data  : out word_t;
+        
+        
+        ctl_wr_enable     : out std_logic;
+        out_port          : out word_t;
+        op_code_out       : out op_code_t;
+        led_7seg_data     : out word_t;
+        video_data        : out word_t;
+        display_data_addr : out word_t;
+        display_enable    : out std_logic;
+        
         -- console display signals
         display_fetch  : out display_fetch_type;
         display_decode : out display_decode_type;
@@ -89,6 +95,7 @@ architecture data_path_arch of datapath is
     signal alu_result_ex      : word_t;
     signal alu_z_ex           : std_logic;
     signal alu_n_ex           : std_logic;
+    signal alu_o_ex           : std_logic;
     signal pc_src_ex          : std_logic; -- signal to select pc mux  
     
     -- Memory stage signals -- Denoted by:'_mem'
@@ -99,7 +106,8 @@ architecture data_path_arch of datapath is
     -- alu
     signal alu_result_mem     : word_t;
     signal alu_z_mem          : std_logic;
-    signal alu_n_mem          : std_logic;    
+    signal alu_n_mem          : std_logic;
+    signal alu_o_mem           : std_logic;    
     signal rd_data1_mem       : word_t;
     signal rd_data2_mem       : word_t;
     signal memory_data_mem     : word_t;    
@@ -113,6 +121,7 @@ architecture data_path_arch of datapath is
     signal seg7_enable_mem    : std_logic;
     signal led_7seg_data_mem  :  word_t;
     -- Write back stage signals -- Denoted by:'_wb'
+    signal alu_o_wb           : std_logic;
     signal instruction_wb     : word_t;
     signal write_back_ctl_wb  : write_back_type; -- used in wb stage
     signal pc_current_wb      : word_t;
@@ -216,8 +225,13 @@ architecture data_path_arch of datapath is
                 inst_out => instruction_f, 
                 -- Memory Mapped ports
                 dip_switches => dip_switches,
-                led_7seg_out => led_7seg_data_mem --: out STD_LOGIC_VECTOR (15 downto 0) := X"0000"            
+                led_7seg_out => led_7seg_data_mem,
+                video_data => video_data,
+                display_data_addr => display_data_addr,
+                display_enable => display_enable       
             ); 
+            
+
                     
         -- Fetch          
         pc: entity work.program_counter
@@ -314,7 +328,18 @@ architecture data_path_arch of datapath is
                 register_4 => display_register.register_4, 
                 register_5 => display_register.register_5, 
                 register_6 => display_register.register_6, 
-                register_7 => reg_7_d
+                register_7 => reg_7_d,
+                
+                o_flag_0 => display_register.register_0_of,
+                o_flag_1 => display_register.register_1_of,
+                o_flag_2 => display_register.register_2_of,
+                o_flag_3 => display_register.register_3_of,
+                o_flag_4 => display_register.register_4_of,
+                o_flag_5 => display_register.register_5_of,
+                o_flag_6 => display_register.register_6_of,
+                o_flag_7 => display_register.register_7_of,
+                
+                of_flag => alu_o_wb
             );
                          
             display_register.register_7 <= reg_7_d;            
@@ -391,7 +416,7 @@ architecture data_path_arch of datapath is
         display_execute.s3_mr_rd_address <= rd_data1_ex;
         display_execute.zero_flag <= alu_z_ex;
         display_execute.negative_flag <= alu_n_ex;
-       -- display_execute.overflow_flag -- todo IMPLEMENT
+        display_execute.overflow_flag <= alu_o_ex; -- todo IMPLEMENT
         -- Execute
         -- Instantiate the ALU
         ALU_inst: entity work.ALU
@@ -404,7 +429,8 @@ architecture data_path_arch of datapath is
                 -- outputs
                 alu_out      => alu_result_ex,      -- ALU result                               
                 negative_flag => alu_n_ex, -- Negative flag
-                zero_flag    => alu_z_ex    -- Zero flag
+                zero_flag    => alu_z_ex,    -- Zero flag
+                overflow_flag => alu_o_ex
             );
         -- Execute     
         branch_unit: entity work.branch_unit
@@ -432,6 +458,7 @@ architecture data_path_arch of datapath is
             wr_alu_result => alu_result_ex,
             wr_alu_z => alu_z_ex,
             wr_alu_n => alu_n_ex,
+            wr_alu_o => alu_o_ex,
             -- register file
             wr_reg_data1 => rd_data1_ex,
             wr_reg_data2 => rd_data2_ex,
@@ -450,6 +477,7 @@ architecture data_path_arch of datapath is
             rd_alu_result => alu_result_mem,
             rd_alu_z => alu_z_mem,
             rd_alu_n => alu_n_mem,
+            rd_alu_o => alu_o_mem,
             -- register file
             rd_reg_data1 => rd_data1_mem, -- to alu in1
             rd_reg_data2 => rd_data2_mem, -- to alu in2
@@ -503,6 +531,7 @@ architecture data_path_arch of datapath is
                 wr_pc => pc_current_mem,
                 -- alu
                 wr_alu_result => alu_result_mem,
+                wr_alu_o => alu_o_mem,
                 -- register file
                 wr_reg_data1 => rd_data1_mem,
                 wr_mem_data => memory_data_mem,
@@ -518,6 +547,7 @@ architecture data_path_arch of datapath is
                 rd_pc => pc_current_wb,
                 -- alu
                 rd_alu_result => alu_result_wb,
+                rd_alu_o => alu_o_wb,
                 -- register file
                 rd_reg_data1 => rd_data1_wb,
                 rd_mem_data => memory_data_wb,       
