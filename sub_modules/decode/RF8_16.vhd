@@ -50,7 +50,7 @@ type reg_array is array (integer range 0 to 7) of std_logic_vector(15 downto 0);
 --internals signals
 signal reg_file : reg_array;
 
-type of_array is array (integer range 0 to 7) of std_logic;
+type of_array is array (integer range 0 to 7) of std_logic; 
 --internals signals
 signal of_flags : of_array;
 
@@ -61,6 +61,7 @@ begin
             if(rst='1') then
                 for i in 0 to 7 loop
                     reg_file(i)<= (others => '0'); 
+                    of_flags <= (others => '0'); 
                 end loop;        
             elsif (falling_edge(clk) and (wr_enable='1')) then   -- write on falling edge          
                 case wr_index(2 downto 0) is

@@ -23,7 +23,7 @@ begin
     rst_ex => reset_execute, 
     rst_ld => reset_load, 
     in_port => input_data,
-    dip_switches => X"1111",
+    dip_switches => dip_switches,
     out_port => output_data,
     board_clock   => clk
     );
@@ -42,11 +42,12 @@ begin
     process begin
         wait until falling_edge(clk); 
         wait until falling_edge(clk); 
-        wait until falling_edge(clk);      
---        reset_execute <= '1';
---        reset_load <= '0';
-        reset_execute <= '0';
-        reset_load <= '1';
+        wait until falling_edge(clk);  
+        dip_switches <= x"0009";    
+        reset_execute <= '1';
+        reset_load <= '0';
+--        reset_execute <= '0';
+--        reset_load <= '1';
         wait until rising_edge(clk);
         wait until rising_edge(clk);
         reset_execute <= '0';
@@ -61,13 +62,11 @@ begin
         wait until falling_edge(clk); 
         wait until falling_edge(clk); 
         wait until falling_edge(clk);  
-        input_data <= "0000000010";
+        --input_data <= "0000000010";
         wait until falling_edge(clk); 
         wait until falling_edge(clk);
-        input_data <= "1010101000";
-        wait until falling_edge(clk); 
-        wait until falling_edge(clk);
-        wait until falling_edge(clk); 
+       -- input_data <= "1010101000";
+       -- wait until falling_edge(clk); 
         wait until falling_edge(clk);
         wait until falling_edge(clk); 
         wait until falling_edge(clk);
@@ -83,9 +82,11 @@ begin
         wait until falling_edge(clk);
         wait until falling_edge(clk); 
         wait until falling_edge(clk);
-        input_data <= "0000000000";              
+        wait until falling_edge(clk); 
+        wait until falling_edge(clk);
+       -- input_data <= "0000000000";              
         wait on output_data ;
-        input_data <= "0000000010";
+        --input_data <= "0000000010";
         wait until falling_edge(clk);
         wait until falling_edge(clk);
         wait until falling_edge(clk); 
@@ -118,7 +119,7 @@ begin
         wait until falling_edge(clk);
         wait until falling_edge(clk); 
         wait until falling_edge(clk);
-        input_data <= "0101010100"; 
+        --input_data <= "0101010100"; 
         wait until falling_edge(clk); 
         wait until falling_edge(clk);
         wait until falling_edge(clk); 
@@ -126,7 +127,7 @@ begin
         wait until falling_edge(clk); 
         wait until falling_edge(clk); 
         wait until falling_edge(clk);  
-        input_data <= "0101010100";
+        --input_data <= "0101010100";
         wait on output_data ;
         wait until falling_edge(clk); 
         wait until falling_edge(clk); 
